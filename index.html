@@ -8,12 +8,11 @@
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { margin: 0; padding: 0; background: linear-gradient(135deg, #f5f7fa, #c3cfe2); color: #333; min-height: 100vh; }
         
-        /* ഗ്രേഡിയന്റ് ഹെഡർ & ലോഗോ */
         header { background: linear-gradient(135deg, #6200ea, #b388ff); color: white; padding: 15px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .logo-container { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 5px; }
         .app-logo { width: 40px; height: 40px; background: white; color: #6200ea; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
 
-        .container { padding: 15px; max-width: 700px; margin: auto; }
+        .container { padding: 15px; max-width: 750px; margin: auto; }
         .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 15px; }
         h2, h3 { margin-top: 0; color: #6200ea; }
         input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; }
@@ -21,7 +20,7 @@
         button:hover { background: linear-gradient(135deg, #3700b3, #6200ea); }
         
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { border: 1px solid #eee; padding: 10px; text-align: center; font-size: 13px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: center; font-size: 13px; }
         th { background-color: #6200ea; color: white; }
         .action-btn { background: #0288d1; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; margin: 2px; }
         .hidden { display: none; }
@@ -29,12 +28,11 @@
         
         .birthday-banner { background: linear-gradient(135deg, #ffeb3b, #ff9800); color: #d32f2f; padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         
-        /* ഐഡി കാർഡ് ഡിസൈൻ */
         .id-card { background: linear-gradient(135deg, #6200ea, #b388ff); color: white; padding: 25px; border-radius: 15px; box-shadow: 0 8px 20px rgba(98,0,234,0.3); margin-bottom: 15px; }
         .id-card h3 { color: white; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 8px; }
         
         .nav-tabs { display: flex; justify-content: space-around; background: #e0e0e0; padding: 6px; border-radius: 8px; margin-bottom: 15px; }
-        .nav-tabs button { background: transparent; color: #333; width: auto; padding: 8px 14px; font-size: 14px; box-shadow: none; font-weight: normal; }
+        .nav-tabs button { background: transparent; color: #333; width: auto; padding: 8px 12px; font-size: 13px; box-shadow: none; font-weight: normal; }
         .nav-tabs button.active { background: #6200ea; color: white; border-radius: 6px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
     </style>
 </head>
@@ -45,7 +43,7 @@
             <div class="app-logo">ധ</div>
             <h2 style="margin: 0; font-size: 20px; color: white;">ധ്വനി പുരുഷ സ്വയം സഹായ സംഘം</h2>
         </div>
-        <p style="margin: 0; font-size: 13px; opacity: 0.9;">രജിസ്റ്റർഡ് ക്ലബ് മാനേജ്മെന്റ് സിസ്റ്റം</p>
+        <p style="margin: 0; font-size: 13px; opacity: 0.9;">അറ്റൻഡൻസ് & സേവിങ്സ് മാനേജ്മെന്റ് സിസ്റ്റം</p>
     </header>
 
     <div class="container">
@@ -76,7 +74,7 @@
             <button style="background: #555;" onclick="logout()">ലോഗൗട്ട്</button>
         </div>
 
-        <!-- അഡ്മിൻ ഡാഷ്‌ബോർഡ് -->
+        <!-- അഡ്മിൻ ഡാഷ്‌ബോർഡ് (മാനേജ്മെന്റ് & എഡിറ്റിംഗ്) -->
         <div id="admin-dashboard" class="card hidden">
             <h3>അഡ്മിൻ മാനേജ്മെന്റ് പാനൽ</h3>
             
@@ -88,24 +86,21 @@
                 <label style="font-size: 12px; color: #666;">ജനനത്തീയതി (DOB):</label>
                 <input type="date" id="new-dob">
                 <input type="text" id="new-address" placeholder="മുഴുവൻ വിലാസം (അഡ്രസ്)">
-                <input type="text" id="new-amount" placeholder="അടച്ച തുക / പലിശ (₹)">
-                <select id="new-attendance">
-                    <option value="വന്നു">ഹാജർ: വന്നു</option>
-                    <option value="വന്നില്ല">ഹാജർ: വന്നില്ല</option>
-                </select>
+                <input type="text" id="new-amount" placeholder="ആദ്യ അടച്ച തുക (₹)">
+                <input type="text" id="new-weeks" placeholder="ഹാജരായ ആഴ്ചകൾ (ഉദാ: ആഴ്ച 1, ആഴ്ച 2)">
                 <button onclick="addMember()">മെമ്പറെ ആഡ് ചെയ്യുക</button>
             </div>
 
-            <h3>അംഗങ്ങളുടെ ലിസ്റ്റും അപ്ഡേറ്റും</h3>
+            <h3>അംഗങ്ങളുടെ വിവരങ്ങളും എഡിറ്റിംഗും</h3>
             <div style="overflow-x:auto;">
                 <table>
                     <thead>
                         <tr>
-                            <th>പേര് & ബ്ലഡ്</th>
+                            <th>പേര്</th>
                             <th>ഫോൺ</th>
-                            <th>തുക/പലിശ</th>
-                            <th>ഹാജർ</th>
-                            <th>ആക്ഷൻ</th>
+                            <th>തുക (₹)</th>
+                            <th>ഹാജരായ ആഴ്ചകൾ</th>
+                            <th>മാറ്റം വരുത്താൻ</th>
                         </tr>
                     </thead>
                     <tbody id="admin-table-body"></tbody>
@@ -115,20 +110,20 @@
             <button style="background: #555;" onclick="logout()">ലോഗൗട്ട്</button>
         </div>
 
-        <!-- മെമ്പർ ഡാഷ്‌ബോർഡ് (ഹോം, പ്രൊഫൈൽ, റിപ്പോർട്ട്സ്) -->
+        <!-- മെമ്പർ ഡാഷ്‌ബോർഡ് (ഹോം, പ്രൊഫൈൽ, റിപ്പോർട്ട്) -->
         <div id="member-dashboard" class="card hidden">
             <div id="bday-alert" class="hidden"></div>
             
             <div class="nav-tabs">
                 <button id="tab-home-btn" class="active" onclick="switchTab('home')">ഹോം</button>
-                <button id="tab-profile-btn" onclick="switchTab('profile')">ഐഡി പ്രൊഫൈൽ</button>
+                <button id="tab-profile-btn" onclick="switchTab('profile')">ഐഡി കാർഡ്</button>
                 <button id="tab-report-btn" onclick="switchTab('report')">റിപ്പോർട്ട്</button>
             </div>
 
             <!-- ഹോം ടാബ് -->
             <div id="tab-home" class="tab-content">
                 <h3>സ്വാഗതം, <span id="home-welcome-name"></span>!</h3>
-                <p>ധ്വനി പുരുഷ സ്വയം സഹായ സംഘത്തിന്റെ ഔദ്യോഗിക ആപ്പിലേക്ക് സ്വാഗതം. നിങ്ങളുടെ പ്രതിമാസ സേവിങ്സ് വിവരങ്ങളും ഹാജർ നിലയും പ്രൊഫൈൽ കാർഡും പരിശോധിക്കാവുന്നതാണ്.</p>
+                <p>ധ്വനി പുരുഷ സ്വയം സഹായ സംഘത്തിന്റെ ഔദ്യോഗിക ആപ്പിലേക്ക് സ്വാഗതം. നിങ്ങളുടെ പ്രതിമാസ സേവിങ്സ് വിവരങ്ങളും ഹാജർ വിവരങ്ങളും ഇവിടെ പരിശോധിക്കാവുന്നതാണ്.</p>
             </div>
 
             <!-- പ്രൊഫൈൽ / ഐഡി കാർഡ് ടാബ് -->
@@ -149,10 +144,10 @@
 
             <!-- റിപ്പോർട്ട് ടാബ് -->
             <div id="tab-report" class="tab-content hidden">
-                <h3>നിങ്ങളുടെ സ്റ്റാറ്റസ് റിപ്പോർട്ട്</h3>
+                <h3>നിങ്ങളുടെ സമ്പൂർണ്ണ റിപ്പോർട്ട്</h3>
                 <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
-                    <p><strong>അടച്ച തുക / പലിശ:</strong> ₹<span id="my-amount"></span></p>
-                    <p><strong>ഹാജർ നില:</strong> <span id="my-attendance"></span></p>
+                    <p><strong>മൊത്തം അടച്ച തുക / പലിശ:</strong> ₹<span id="my-amount"></span></p>
+                    <p><strong>ഹാജരായ ആഴ്ചകളുടെ വിവരങ്ങൾ:</strong> <span id="my-attendance-weeks" style="color: #6200ea; font-weight: bold;"></span></p>
                 </div>
             </div>
 
@@ -163,9 +158,9 @@
 
     <script>
         let members = JSON.parse(localStorage.getItem('dhwani_members')) || [
-            { name: 'രാജ് (സൂപ്പർ അഡ്മിൻ)', phone: '9999999999', blood: 'O+ve', dob: '1990-01-01', address: 'ധ്വനി നഗർ, കാസർഗോഡ്', amount: '5000', attendance: 'വന്നു', role: 'superadmin' },
-            { name: 'വിനോദ് (അഡ്മിൻ)', phone: '9123456780', blood: 'B+ve', dob: '1992-05-15', address: 'പനയാൽ, കാസർഗോഡ്', amount: '1500', attendance: 'വന്നു', role: 'admin' },
-            { name: 'സുരേഷ് (മെമ്പർ)', phone: '9876543210', blood: 'A+ve', dob: '1995-09-29', address: 'ബേക്കൽ, കാസർഗോഡ്', amount: '1000', attendance: 'വന്നു', role: 'member' }
+            { name: 'രാജ് (സൂപ്പർ അഡ്മിൻ)', phone: '9999999999', blood: 'O+ve', dob: '1990-01-01', address: 'ധ്വനി നഗർ, കാസർഗോഡ്', amount: '5000', weeks: 'ആഴ്ച 1, ആഴ്ച 2, ആഴ്ച 3', role: 'superadmin' },
+            { name: 'വിനോദ് (അഡ്മിൻ)', phone: '9123456780', blood: 'B+ve', dob: '1992-05-15', address: 'പനയാൽ, കാസർഗോഡ്', amount: '1500', weeks: 'ആഴ്ച 1, ആഴ്ച 2', role: 'admin' },
+            { name: 'സുരേഷ് (മെമ്പർ)', phone: '9876543210', blood: 'A+ve', dob: '1995-09-29', address: 'ബേക്കൽ, കാസർഗോഡ്', amount: '1000', weeks: 'ആഴ്ച 1', role: 'member' }
         ];
 
         let loggedInUser = null;
@@ -198,7 +193,7 @@
                 document.getElementById('my-dob').innerText = user.dob || '-';
                 document.getElementById('my-address').innerText = user.address || '-';
                 document.getElementById('my-amount').innerText = user.amount || '0';
-                document.getElementById('my-attendance').innerText = user.attendance || '-';
+                document.getElementById('my-attendance-weeks').innerText = user.weeks || 'ലഭ്യമല്ല';
 
                 checkBirthday(user.dob);
             }
@@ -238,14 +233,14 @@
             let dob = document.getElementById('new-dob').value;
             let address = document.getElementById('new-address').value.trim();
             let amount = document.getElementById('new-amount').value.trim();
-            let attendance = document.getElementById('new-attendance').value;
+            let weeks = document.getElementById('new-weeks').value.trim();
 
             if (name === '' || phone === '') {
                 alert('അംഗത്തിന്റെ പേരും ഫോൺ നമ്പറും നിർബന്ധമാണ്!');
                 return;
             }
 
-            members.push({ name, phone, blood, dob, address, amount: amount || '0', attendance, role: 'member' });
+            members.push({ name, phone, blood, dob, address, amount: amount || '0', weeks: weeks || 'ഇല്ല', role: 'member' });
             localStorage.setItem('dhwani_members', JSON.stringify(members));
 
             document.getElementById('new-name').value = '';
@@ -254,17 +249,18 @@
             document.getElementById('new-dob').value = '';
             document.getElementById('new-address').value = '';
             document.getElementById('new-amount').value = '';
+            document.getElementById('new-weeks').value = '';
 
             renderAdminTable();
             alert('പുതിയ അംഗത്തെ വിജയകരമായി ചേർത്തു!');
         }
 
         function updateMemberData(index) {
-            let newAmount = prompt('പുതിയ തുക / പലിശ നൽകുക:', members[index].amount);
-            let newAtt = prompt('ഹാജർ നില മാറ്റുക (വന്നു / വന്നില്ല):', members[index].attendance);
+            let newAmount = prompt('പുതിയ തുക നൽകുക:', members[index].amount);
+            let newWeeks = prompt('ഹാജരായ ആഴ്ചകൾ നൽകുക:', members[index].weeks);
             
             if (newAmount !== null) members[index].amount = newAmount;
-            if (newAtt !== null) members[index].attendance = newAtt;
+            if (newWeeks !== null) members[index].weeks = newWeeks;
 
             localStorage.setItem('dhwani_members', JSON.stringify(members));
             renderAdminTable();
@@ -321,7 +317,7 @@
                         <td><strong>${m.name}</strong><br><small>${m.blood || ''}</small></td>
                         <td>${m.phone}</td>
                         <td>₹${m.amount || 0}</td>
-                        <td>${m.attendance || '-'}</td>
+                        <td><small>${m.weeks || 'ഇല്ല'}</small></td>
                         <td>
                             <button class="action-btn" onclick="updateMemberData(${index})">എഡിറ്റ്</button>
                             <button class="action-btn" style="background:#d32f2f;" onclick="deleteMember(${index})">ഡിലീറ്റ്</button>
