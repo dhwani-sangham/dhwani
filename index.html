@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ധ്വനി പുരുഷ സ്വയം സഹായ സംഘം</title>
+    <title>ധ്വനി പുരുഷ സ്വയം സഹായ സംഘം - ഡാറ്റ മാനേജ്‌മെന്റ് സിസ്റ്റം</title>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { margin: 0; padding: 0; background-color: #f4f6f9; color: #333; padding-bottom: 80px; }
@@ -25,7 +25,7 @@
         .dash-box { background: white; padding: 20px 15px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 4px solid #6200ea; text-align: center; cursor: pointer; transition: 0.2s; }
         .dash-box:hover { transform: translateY(-2px); background: #faf5ff; }
         .dash-box h4 { margin: 0 0 5px 0; font-size: 13px; color: #555; }
-        .dash-box .val { font-size: 18px; font-weight: bold; color: #000; }
+        .dash-box .val { font-size: 16px; font-weight: bold; color: #000; }
 
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); border-top: 1px solid #eee; z-index: 1000; }
         .nav-item { text-align: center; color: #666; font-size: 12px; cursor: pointer; background: none; border: none; }
@@ -39,7 +39,7 @@
         button.action-btn { background: #6200ea; color: white; border: none; padding: 12px; border-radius: 6px; width: 100%; font-weight: bold; cursor: pointer; font-size: 15px; }
         
         /* ബോക്സ് ക്ലിക്ക് ചെയ്യുമ്പോൾ വരുന്ന പോപ്പ്-അപ്പ് വിൻഡോ (Modal) */
-        #box-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 3000; }
+        #box-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 3000; }
         .modal-card { background: white; width: 92%; max-width: 500px; max-height: 85vh; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
         .modal-body { overflow-y: auto; flex-grow: 1; margin: 10px 0; }
 
@@ -48,7 +48,7 @@
         .sheet-table th, .sheet-table td { border: 1px solid #ccc; padding: 8px 10px; text-align: center; font-size: 13px; }
         .sheet-table th { background: #6200ea; color: white; position: sticky; top: 0; }
         .sheet-table tr:nth-child(even) { background-color: #fafafa; }
-        .checkbox-large { width: 20px; height: 20px; cursor: pointer; }
+        .checkbox-large { width: 22px; height: 22px; cursor: pointer; }
     </style>
 
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -61,7 +61,7 @@
         <div class="popup-box">
             <div class="popup-logo">ധ</div>
             <h3 style="margin: 0 0 5px 0; color: #6200ea;">ധ്വനി പുരുഷ സ്വയം സഹായ സംഘം</h3>
-            <p style="font-size: 13px; color: #666; margin-bottom: 15px;">സ്വാഗതം! ആപ്പിലേക്ക് പ്രവേശിക്കുക.</p>
+            <p style="font-size: 13px; color: #666; margin-bottom: 15px;">സ്വാഗതം! ഡാറ്റ മാനേജ്‌മെന്റ് സിസ്റ്റത്തിലേക്ക് പ്രവേശിക്കുക.</p>
             <button class="action-btn" onclick="openLoginSection()">ആപ്പ് തുറക്കുക</button>
         </div>
     </div>
@@ -103,7 +103,7 @@
             <div class="dashboard-grid">
                 <div class="dash-box" onclick="openBoxModal('vari')">
                     <h4>വരിസംഖ്യ രജിസ്റ്റർ</h4>
-                    <div class="val" id="box-vari-val">തൊട്ട് നോക്കുക</div>
+                    <div class="val" id="box-vari-val">സ്റ്റാറ്റസ് കാണുക</div>
                     <small style="color: #6200ea;">ലിസ്റ്റ് & മാർക്ക് →</small>
                 </div>
                 <div class="dash-box" style="border-left-color: #2196f3;" onclick="openBoxModal('kuri300')">
@@ -137,16 +137,16 @@
             </div>
         </div>
 
-        <!-- റിപ്പോർട്ട്സ് ടാബ് -->
+        <!-- റിപ്പോർട്ട്സ് ടാബ് (മെമ്പർമാർക്ക് സ്വന്തം സ്റ്റാറ്റസ് കാണാൻ) -->
         <div id="tab-reports-content" class="card hidden">
-            <h3>ധ്വനി അക്കൗണ്ട്സ് സംഗ്രഹം</h3>
-            <p style="font-size: 13px; color: #666;">നിങ്ങളുടെ സ്വന്തം സ്റ്റാറ്റസ് ഇവിടെ പരിശോധിക്കാം:</p>
+            <h3>എന്റെ അക്കൗണ്ട്സ് സംഗ്രഹം</h3>
+            <p style="font-size: 13px; color: #666;">നിങ്ങളുടെ നിലവിലെ സ്റ്റാറ്റസ്:</p>
             <div class="sheet-table-wrapper">
                 <table class="sheet-table">
                     <thead>
                         <tr>
                             <th>വിഭാഗം</th>
-                            <th>നിലവിലെ അവസ്ഥ</th>
+                            <th>സ്റ്റാറ്റസ്</th>
                         </tr>
                     </thead>
                     <tbody id="my-report-body"></tbody>
@@ -154,7 +154,7 @@
             </div>
         </div>
 
-        <!-- മാനേജ്മെന്റ് / സെറ്റിംഗ്സ് ടാബ് (സൂപ്പർ അഡ്മിന് മാത്രം മെമ്പർമാരെ ആഡ് ചെയ്യാൻ) -->
+        <!-- മാനേജ്മെന്റ് / സെറ്റിംഗ്സ് ടാബ് (സൂപ്പർ അഡ്മിന് മാത്രം പുതിയ അംഗങ്ങളെ ചേർക്കാൻ) -->
         <div id="tab-settings-content" class="card hidden">
             <h3>മാനേജ്മെന്റ് പാനൽ</h3>
             
@@ -202,7 +202,7 @@
             <h3 id="modal-title" style="color: #6200ea; margin-top: 0;">രജിസ്റ്റർ ചാർട്ട്</h3>
             <div id="modal-desc" style="font-size: 12px; color: #666; margin-bottom: 10px;"></div>
             
-            <!-- പുറത്തുനിന്നുള്ളവരെ കുറിയിൽ ചേർക്കാനുള്ള ചെറിയ ഫോം (കുറി ബോക്സുകളിൽ മാത്രം കാണിക്കും) -->
+            <!-- പുറത്തുനിന്നുള്ളവരെ കുറിയിൽ ചേർക്കാനുള്ള ചെറിയ ഫോം -->
             <div id="modal-add-external" class="hidden" style="background: #f1f3f4; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
                 <input type="text" id="ext-name" placeholder="പുറത്തുനിന്നുള്ള ആളുടെ പേര്" style="margin: 4px 0; padding: 6px;">
                 <button style="background: #2e7d32; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;" onclick="addExternalPerson()">കുറിയിലേക്ക് ചേർക്കുക</button>
@@ -214,7 +214,7 @@
                         <thead>
                             <tr>
                                 <th>പേര് & ഐഡി</th>
-                                <th id="modal-col-header">സ്റ്റാറ്റസ് (ടിക്ക് ചെയ്യുക)</th>
+                                <th>സ്റ്റാറ്റസ് (ടിക്ക് ചെയ്യുക)</th>
                             </tr>
                         </thead>
                         <tbody id="modal-table-body"></tbody>
@@ -223,7 +223,7 @@
             </div>
 
             <div style="display: flex; gap: 10px; margin-top: 10px;">
-                <button class="action-btn" id="modal-submit-btn" style="background: #2e7d32;" onclick="submitModalChanges()">സബ്മിറ്റ് ചെയ്യുക</button>
+                <button class="action-btn" style="background: #2e7d32;" onclick="submitModalChanges()">സബ്മിറ്റ് ചെയ്യുക</button>
                 <button class="action-btn" style="background: #666;" onclick="closeBoxModal()">ക്ലോസ്</button>
             </div>
         </div>
@@ -388,9 +388,8 @@
             alert('അംഗത്തെ വിജയകരമായി ചേർത്തു!');
         }
 
-        // ബോക്സ് ക്ലിക്ക് ചെയ്യുമ്പോൾ ലിസ്റ്റ് തുറക്കൽ
+        // ബോക്സ് ക്ലിക്ക് ചെയ്യുമ്പോൾ ലിസ്റ്റ് തുറക്കൽ (അഡ്മിൻമാർക്ക് മാത്രം)
         function openBoxModal(boxType) {
-            // സുരക്ഷാ പരിശോധന: സാധാരണ മെമ്പർമാർക്ക് ഇത് തുറക്കാൻ അനുവാദമില്ല
             if (!currentUser || (currentUser.role !== 'admin' && currentUser.role !== 'superadmin')) {
                 alert('ഈ രജിസ്റ്റർ പരിശോധിക്കാനും മാർക്ക് ചെയ്യാനും അഡ്മിൻ അനുമതി ആവശ്യമാണ്!');
                 return;
