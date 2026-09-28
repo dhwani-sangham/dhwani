@@ -26,12 +26,6 @@
         .dash-box h4 { margin: 0 0 5px 0; font-size: 13px; color: #555; }
         .dash-box .val { font-size: 16px; font-weight: bold; color: #000; }
 
-        .member-card-item { background: white; padding: 12px 15px; margin: 10px 15px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; border-left: 4px solid #ff4081; }
-        
-        .btn-group { display: flex; gap: 5px; }
-        .mark-btn { background: #0288d1; color: white; border: none; padding: 6px 10px; border-radius: 5px; font-size: 12px; cursor: pointer; font-weight: bold; }
-        .del-btn { background: #d32f2f; color: white; border: none; padding: 6px 10px; border-radius: 5px; font-size: 12px; cursor: pointer; font-weight: bold; }
-
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); border-top: 1px solid #eee; z-index: 1000; }
         .nav-item { text-align: center; color: #666; font-size: 12px; cursor: pointer; background: none; border: none; }
         .nav-item.active { color: #6200ea; font-weight: bold; }
@@ -48,6 +42,8 @@
         .sheet-table th, .sheet-table td { border: 1px solid #ccc; padding: 8px 10px; text-align: center; font-size: 13px; }
         .sheet-table th { background: #6200ea; color: white; position: sticky; top: 0; }
         .sheet-table tr:nth-child(even) { background-color: #fafafa; }
+        
+        .register-checkbox { width: 18px; height: 18px; cursor: pointer; }
     </style>
 
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -139,11 +135,11 @@
                 <table class="sheet-table">
                     <thead>
                         <tr>
-                            <th>മെമ്പർ ഐഡി</th>
+                            <th>ഐഡി</th>
                             <th>പേര്</th>
-                            <th>ഫോൺ നമ്പർ</th>
-                            <th>വരിസംഖ്യ</th>
-                            <th>കുറി</th>
+                            <th>വരിസംഖ്യ (₹600)</th>
+                            <th>₹300 കുറി</th>
+                            <th>₹1000 കുറി</th>
                             <th>ഹാജർ</th>
                         </tr>
                     </thead>
@@ -152,7 +148,7 @@
             </div>
         </div>
 
-        <!-- സെറ്റിംഗ്സ് / അഡ്മിൻ പാനൽ -->
+        <!-- സെറ്റിംഗ്സ് / അഡ്മിൻ പാനൽ (നേരിട്ട് ടിക്ക് ചെയ്യാവുന്ന രജിസ്റ്റർ ഷീറ്റ്) -->
         <div id="tab-settings-content" class="card hidden">
             <h3 id="panel-title">മാനേജ്മെന്റ് പാനൽ</h3>
             
@@ -171,10 +167,24 @@
                 <button class="action-btn" onclick="addMember()">മെമ്പറെ ആഡ് ചെയ്യുക</button>
             </div>
 
-            <h4 style="margin-top: 20px;">അംഗങ്ങളുടെ ലിസ്റ്റ് & മാർക്കിംഗ് പാനൽ</h4>
-            <p style="font-size: 12px; color: #666;">ഓരോ അംഗത്തിന്റെയും നേരെ കാണുന്ന 'മാർക്ക് ചെയ്യുക' ബട്ടൺ വഴി വരിസംഖ്യയും കുറിയും ഹാജറും എഡിറ്റ് ചെയ്യാം.</p>
+            <h4 style="margin-top: 20px;">അറ്റൻഡൻസ് & കുറി രജിസ്റ്റർ (നേരിട്ട് ടിക്ക് ചെയ്യുക)</h4>
+            <p style="font-size: 12px; color: #666;">അഡ്മിൻമാർക്കും സൂപ്പർ അഡ്മിൻമാർക്കും ഇവിടെ ചെക്ക് ബോക്സുകളിൽ ടിക്ക് ചെയ്ത് തുകയും ഹാജറും തത്സമയം അപ്ഡേറ്റ് ചെയ്യാം.</p>
             
-            <div id="admin-member-list-container" style="max-height: 450px; overflow-y: auto; margin-top: 10px;"></div>
+            <div class="sheet-table-wrapper">
+                <table class="sheet-table">
+                    <thead>
+                        <tr>
+                            <th>പേര് & റോൾ</th>
+                            <th>വരിസംഖ്യ (₹600)</th>
+                            <th>₹300 കുറി</th>
+                            <th>₹1000 കുറി</th>
+                            <th>ഹാജർ</th>
+                            <th id="del-th">ആക്ഷൻ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-register-body"></tbody>
+                </table>
+            </div>
 
             <br>
             <button class="action-btn" style="background: #555;" onclick="logout()">ലോഗൗട്ട് ചെയ്യുക</button>
@@ -229,9 +239,9 @@
                 });
             } else {
                 let defaultMembers = {
-                    'm0': { memberId: 'DHW-00', name: 'സൂപ്പർ അഡ്മിൻ', phone: '9999999999', blood: 'O+ve', address: 'കാസർഗോഡ്', vari: 'വന്നു (₹600)', kuri: '₹300 കുറി അടച്ചു', attendance: 'വന്നു', role: 'superadmin' },
-                    'm1': { memberId: 'DHW-01', name: 'പ്രസിഡന്റ്', phone: '9123456780', blood: 'B+ve', address: 'പനയാൽ', vari: 'വന്നു (₹600)', kuri: '₹300 കുറി അടച്ചു', attendance: 'വന്നു', role: 'admin' },
-                    'm2': { memberId: 'DHW-02', name: 'സുഭാഷ്', phone: '9876543210', blood: 'A+ve', address: 'ബേക്കൽ', vari: 'വന്നില്ല (ഇല്ല)', kuri: 'കുറിയില്ല', attendance: 'വന്നില്ല', role: 'member' }
+                    'm0': { memberId: 'DHW-00', name: 'സൂപ്പർ അഡ്മിൻ', phone: '9999999999', blood: 'O+ve', address: 'കാസർഗോഡ്', variPaid: true, kuri300Paid: true, kuri1000Paid: false, attendance: true, role: 'superadmin' },
+                    'm1': { memberId: 'DHW-01', name: 'പ്രസിഡന്റ്', phone: '9123456780', blood: 'B+ve', address: 'പനയാൽ', variPaid: true, kuri300Paid: true, kuri1000Paid: true, attendance: true, role: 'admin' },
+                    'm2': { memberId: 'DHW-02', name: 'സുഭാഷ്', phone: '9876543210', blood: 'A+ve', address: 'ബേക്കൽ', variPaid: false, kuri300Paid: false, kuri1000Paid: false, attendance: false, role: 'member' }
                 };
                 db.ref('members').set(defaultMembers);
                 return;
@@ -279,10 +289,10 @@
             document.getElementById('profile-blood').innerText = user.blood || '-';
             document.getElementById('profile-address').innerText = user.address || '-';
 
-            document.getElementById('box-vari').innerText = user.vari || '₹0';
-            document.getElementById('box-kuri300').innerText = user.kuri || '₹0';
-            document.getElementById('box-kuri1000').innerText = '₹1000';
-            document.getElementById('box-attendance').innerText = user.attendance || 'ഹാജർ';
+            document.getElementById('box-vari').innerText = user.variPaid ? '₹600 (അടച്ചു)' : '₹0 (കുടിശ്ശിക)';
+            document.getElementById('box-kuri300').innerText = user.kuri300Paid ? 'അടച്ചു' : '-';
+            document.getElementById('box-kuri1000').innerText = user.kuri1000Paid ? 'അടച്ചു' : '-';
+            document.getElementById('box-attendance').innerText = user.attendance ? 'വന്നു' : 'വന്നില്ല';
 
             if (user.role === 'superadmin' || user.role === 'admin') {
                 let saControls = document.getElementById('super-admin-controls');
@@ -341,7 +351,7 @@
             }
 
             let newRef = db.ref('members').push();
-            newRef.set({ memberId, name, phone, blood, address, vari: 'വന്നു (₹600)', kuri: '₹300 കുറി', attendance: 'വന്നു', role });
+            newRef.set({ memberId, name, phone, blood, address, variPaid: false, kuri300Paid: false, kuri1000Paid: false, attendance: false, role });
 
             document.getElementById('new-member-id').value = '';
             document.getElementById('new-name').value = '';
@@ -352,34 +362,19 @@
             alert('അംഗത്തെ വിജയകരമായി ചേർത്തു!');
         }
 
-        function editSheetData(firebaseKey) {
+        function updateMemberCheckbox(firebaseKey, field, checkbox) {
             if (!currentUser || (currentUser.role !== 'admin' && currentUser.role !== 'superadmin')) {
-                alert('ഈ വിവരങ്ങൾ മാറ്റാൻ അനുമതി വേണം!');
+                alert('ഇത് മാറ്റാൻ അഡ്മിൻ അനുമതി വേണം!');
+                checkbox.checked = !checkbox.checked;
                 return;
             }
 
-            let m = members.find(item => item.firebaseKey === firebaseKey);
-            if (!m) return;
+            let updateObj = {};
+            updateObj[field] = checkbox.checked;
 
-            let vari = prompt(`${m.name}-ന്റെ വരിസംഖ്യ സ്റ്റാറ്റസ് (ഉദാ: വന്നു / വന്നില്ല):`, m.vari);
-            let kuri = prompt(`${m.name}-ന്റെ കുറി സ്റ്റാറ്റസ്:`, m.kuri);
-            let attendance = prompt(`${m.name}-ന്റെ ഹാജർ (വന്നു / വന്നില്ല):`, m.attendance);
-            
-            let newRole = m.role;
-            if (currentUser.role === 'superadmin') {
-                let rolePrompt = prompt(`പദവി മാറ്റുക (member / admin / superadmin):`, m.role);
-                if (rolePrompt) newRole = rolePrompt;
-            }
-
-            let updates = {};
-            if (vari !== null) updates.vari = vari;
-            if (kuri !== null) updates.kuri = kuri;
-            if (attendance !== null) updates.attendance = attendance;
-            if (newRole !== null) updates.role = newRole;
-
-            db.ref('members/' + firebaseKey).update(updates, (error) => {
-                if (!error) {
-                    alert('വിവരങ്ങൾ ലൈവ് ആയി അപ്ഡേറ്റ് ചെയ്തു!');
+            db.ref('members/' + firebaseKey).update(updateObj, (error) => {
+                if (error) {
+                    alert('അപ്ഡേറ്റ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു!');
                 }
             });
         }
@@ -401,49 +396,57 @@
 
         function renderSheets() {
             let reportBody = document.getElementById('finance-sheet-body');
-            let adminMemberList = document.getElementById('admin-member-list-container');
+            let adminRegisterBody = document.getElementById('admin-register-body');
             
-            if (!reportBody || !adminMemberList) return;
+            if (!reportBody || !adminRegisterBody) return;
 
             reportBody.innerHTML = '';
-            adminMemberList.innerHTML = '';
+            adminRegisterBody.innerHTML = '';
 
             let isAdminOrSuper = currentUser && (currentUser.role === 'admin' || currentUser.role === 'superadmin');
             let isSuper = currentUser && currentUser.role === 'superadmin';
 
-            members.forEach((m) => {
-                let attColor = (m.attendance && m.attendance.includes('ഇല്ല')) ? 'color: red; font-weight: bold;' : 'color: green;';
+            document.getElementById('del-th').style.display = isSuper ? '' : 'none';
 
+            members.forEach((m) => {
+                let variText = m.variPaid ? '₹600 (അടച്ചു)' : '-';
+                let kuri3Text = m.kuri300Paid ? 'അടച്ചു' : '-';
+                let kuri1Text = m.kuri1000Paid ? 'അടച്ചു' : '-';
+                let attText = m.attendance ? 'വന്നു' : 'വന്നില്ല';
+                let attColor = m.attendance ? 'color: green; font-weight: bold;' : 'color: red; font-weight: bold;';
+
+                // റിപ്പോർട്ട്സ് ടേബിൾ
                 reportBody.innerHTML += `
                     <tr>
                         <td><strong>${m.memberId || '-'}</strong></td>
                         <td>${m.name}</td>
-                        <td>${m.phone || '-'}</td>
-                        <td>${m.vari || '-'}</td>
-                        <td>${m.kuri || '-'}</td>
-                        <td style="${attColor}">${m.attendance || '-'}</td>
+                        <td>${variText}</td>
+                        <td>${kuri3Text}</td>
+                        <td>${kuri1Text}</td>
+                        <td style="${attColor}">${attText}</td>
                     </tr>
                 `;
 
+                // അഡ്മിൻ / സൂപ്പർ അഡ്മിൻ പാനലിലെ നേരിട്ട് ടിക്ക് ചെയ്യാവുന്ന രജിസ്റ്റർ ഷീറ്റ്
                 if (isAdminOrSuper) {
                     let roleBadge = m.role === 'superadmin' ? '👑 സൂപ്പർ അഡ്മിൻ' : m.role === 'admin' ? '⭐ അഡ്മിൻ' : 'അംഗം';
                     
-                    let actionButtons = `<button class="mark-btn" onclick="editSheetData('${m.firebaseKey}')">മാർക്ക് ചെയ്യുക</button>`;
-                    if (isSuper) {
-                        actionButtons += `<button class="del-btn" onclick="deleteMember('${m.firebaseKey}')">ഡിലീറ്റ്</button>`;
-                    }
+                    let variChecked = m.variPaid ? 'checked' : '';
+                    let k3Checked = m.kuri300Paid ? 'checked' : '';
+                    let k1Checked = m.kuri1000Paid ? 'checked' : '';
+                    let attChecked = m.attendance ? 'checked' : '';
 
-                    adminMemberList.innerHTML += `
-                        <div class="member-card-item">
-                            <div>
-                                <strong>${m.memberId || ''} - ${m.name}</strong><br>
-                                <small style="color: #666;">ഫോൺ: ${m.phone || '-'} | പദവി: ${roleBadge}</small><br>
-                                <small style="color: #00897b;">വരി: ${m.vari || '-'} | കുറി: ${m.kuri || '-'} | ഹാജർ: <span style="${attColor}">${m.attendance || '-'}</span></small>
-                            </div>
-                            <div class="btn-group">
-                                ${actionButtons}
-                            </div>
-                        </div>
+                    let delButton = isSuper ? `<td><button style="background:red; color:white; border:none; padding:5px 8px; border-radius:4px; cursor:pointer;" onclick="deleteMember('${m.firebaseKey}')">ഡിലീറ്റ്</button></td>` : '';
+
+                    adminRegisterBody.innerHTML += `
+                        <tr>
+                            <td><strong>${m.memberId || ''} - ${m.name}</strong><br><small style="color:#666;">(${roleBadge})</small></td>
+                            <td><input type="checkbox" class="register-checkbox" ${variChecked} onchange="updateMemberCheckbox('${m.firebaseKey}', 'variPaid', this)"></td>
+                            <td><input type="checkbox" class="register-checkbox" ${k3Checked} onchange="updateMemberCheckbox('${m.firebaseKey}', 'kuri300Paid', this)"></td>
+                            <td><input type="checkbox" class="register-checkbox" ${k1Checked} onchange="updateMemberCheckbox('${m.firebaseKey}', 'kuri1000Paid', this)"></td>
+                            <td><input type="checkbox" class="register-checkbox" ${attChecked} onchange="updateMemberCheckbox('${m.firebaseKey}', 'attendance', this)"></td>
+                            ${isSuper ? delButton : ''}
+                        </tr>
                     `;
                 }
             });
