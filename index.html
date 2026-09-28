@@ -130,6 +130,7 @@
                         <tr>
                             <th>മെമ്പർ ഐഡി</th>
                             <th>പേര്</th>
+                            <th>ഫോൺ നമ്പർ</th>
                             <th>വരിസംഖ്യ</th>
                             <th>കുറി</th>
                             <th>ഹാജർ</th>
@@ -152,18 +153,19 @@
                 <input type="text" id="new-address" placeholder="വിലാസം">
                 <select id="new-role">
                     <option value="member">സാധാരണ മെമ്പർ</option>
-                    <option value="admin">അഡ്മിൻ (പ്രസിഡന്റ് / സെക്രട്ടറി / ട്രഷറർ / വൈസ് പ്രസിഡന്റ്)</option>
+                    <option value="admin">അഡ്മിൻ (ഭാരവാഹി)</option>
                     <option value="superadmin">സൂപ്പർ അഡ്മിൻ</option>
                 </select>
                 <button class="action-btn" onclick="addMember()">മെമ്പറെ ആഡ് ചെയ്യുക</button>
             </div>
 
-            <h4>ഹാജറും തുകയും മാർക്ക് ചെയ്യാനുള്ള പാനൽ</h4>
+            <h4>അംഗങ്ങളുടെ വിവരങ്ങളും ഫിനാൻസ് പാനലും</h4>
             <div class="sheet-table-wrapper">
                 <table class="sheet-table">
                     <thead>
                         <tr>
                             <th>ഐഡി & പേര്</th>
+                            <th>ഫോൺ നമ്പർ</th>
                             <th>വരിസംഖ്യ</th>
                             <th>കുറി</th>
                             <th>ഹാജർ</th>
@@ -356,7 +358,6 @@
             let kuri = prompt(`${m.name}-ന്റെ കുറി തുക നൽകുക:`, m.kuri);
             let attendance = prompt(`${m.name}-ന്റെ ഹാജർ (വന്നു / വന്നില്ല):`, m.attendance);
             
-            // അഡ്മിന് വേണമെങ്കിൽ സാധാരണ അംഗത്തെ അഡ്മിൻ ആകാനും സാധിക്കും (സൂപ്പർ അഡ്മിൻ പവറുകൾ സൂപ്പർ അഡ്മിന് മാത്രം)
             let newRole = m.role;
             if (currentUser.role === 'superadmin') {
                 let rolePrompt = prompt(`പദവി മാറ്റുക (member / admin / superadmin):`, m.role);
@@ -406,10 +407,12 @@
             members.forEach((m) => {
                 let attColor = (m.attendance && m.attendance.includes('ഇല്ല')) ? 'color: red; font-weight: bold;' : 'color: green;';
 
+                // റിപ്പോർട്ട്സ് ടാബിൽ എല്ലാ മെമ്പർമാരുടെയും ഫോൺ നമ്പറും വിവരങ്ങളും കാണാം
                 reportBody.innerHTML += `
                     <tr>
                         <td><strong>${m.memberId || '-'}</strong></td>
                         <td>${m.name}</td>
+                        <td>${m.phone || '-'}</td>
                         <td>${m.vari || '₹0'}</td>
                         <td>${m.kuri || '₹0'}</td>
                         <td style="${attColor}">${m.attendance || '-'}</td>
@@ -423,9 +426,11 @@
                     actionBtns = `<td>${editBtn} ${delBtn}</td>`;
                 }
 
+                // അഡ്മിൻ / മാനേജ്മെന്റ് പാനലിൽ മുഴുവൻ ഡീറ്റെയിൽസും കാണാം
                 adminBody.innerHTML += `
                     <tr>
                         <td><strong>${m.memberId || '-'}</strong> - ${m.name}<br><small style="color:#666;">(${m.role === 'superadmin' ? 'Super Admin' : m.role === 'admin' ? 'Admin' : 'Member'})</small></td>
+                        <td>${m.phone || '-'}</td>
                         <td>${m.vari || '₹0'}</td>
                         <td>${m.kuri || '₹0'}</td>
                         <td style="${attColor}">${m.attendance || '-'}</td>
