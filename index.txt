@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ധ്വനി പുരുഷ സ്വയം സഹായ സംഘം</title>
+<style>
+:root {
+--primary-grad: linear-gradient(135deg, #4f46e5, #7c3aed, #a855f7);
+--emerald-grad: linear-gradient(135deg, #059669, #10b981);
+--amber-grad: linear-gradient(135deg, #d97706, #f59e0b);
+--rose-grad: linear-gradient(135deg, #e11d48, #f43f5e);
+--bday-grad: linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6);
+--gold-grad: linear-gradient(135deg, #b45309, #f59e0b, #fbbf24, #f59e0b);
+--bg-mesh: radial-gradient(at 0% 0%, #ede9fe 0px, transparent 50%),
+radial-gradient(at 100% 100%, #dbeafe 0px, transparent 50%),
+#f8fafc;
+}
+• { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 0; }
+body { background: var(--bg-mesh); min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 18px 10px; color: #1e293b; }
+.page-title { text-align: center; max-width: 440px; margin-bottom: 12px; }
+.page-title h1 { font-size: 20px; font-weight: 900; background: linear-gradient(135deg, #4338ca, #be185d); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.page-title p { font-size: 11.5px; color: #64748b; margin-top: 2px; }
+.role-nav { display: flex; background: rgba(255, 255, 255, 0.85); border: 1px solid #cbd5e1; border-radius: 14px; padding: 3px; width: 100%; max-width: 390px; margin-bottom: 12px; }
+.role-nav button { flex: 1; padding: 8px 4px; border: none; border-radius: 10px; background: transparent; font-size: 11.5px; font-weight: 800; color: #64748b; cursor: pointer; transition: all 0.2s; }
+.role-nav button.active.m-tab { background: var(--primary-grad); color: white; }
+.role-nav button.active.a-tab { background: var(--emerald-grad); color: white; }
+.role-nav button.active.s-tab { background: linear-gradient(135deg, #831843, #be185d); color: white; }
+.mobile-case { width: 100%; max-width: 385px; height: 765px; background: #0f172a; border-radius: 42px; padding: 10px; box-shadow: 0 25px 60px -15px rgba(30, 27, 75, 0.35); display: flex; flex-direction: column; position: relative; overflow: hidden; }
+.screen-display { background: #f8fafc; flex: 1; border-radius: 34px; overflow-y: auto; overflow-x: hidden; position: relative; display: flex; flex-direction: column; }
+.top-fixed-bar { position: sticky; top: 0; z-index: 200; background: linear-gradient(135deg, #fff5f7 0%, #ffffff 50%, #fdf2f8 100%) !important; border-bottom: 2.5px solid #be185d; box-shadow: 0 4px 15px rgba(190, 24, 93, 0.12); }
+.island-bar { height: 20px; display: flex; justify-content: center; align-items: center; background: transparent; }
+.dynamic-island { width: 90px; height: 14px; background: #0f172a; border-radius: 20px; }
+.splash-screen { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #fdf2f8, #fce7f3, #fbcfe8); z-index: 500; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 34px; transition: opacity 0.5s ease; }
+.rotating-d-emblem { width: 120px; height: 120px; border-radius: 50%; background: #ffffff; box-shadow: 0 15px 35px rgba(225, 29, 72, 0.25), 0 0 40px rgba(251, 207, 232, 0.8); display: flex; align-items: center; justify-content: center; border: 3.5px solid #f43f5e; overflow: hidden; margin-bottom: 22px; animation: popUpDownLogo 2.4s ease-in-out infinite; }
+.rotating-d-emblem b { font-size: 55px; font-weight: 900; color: #be185d; }
+@keyframes popUpDownLogo { 0%, 100% { transform: translateY(10px) scale(0.9); } 50% { transform: translateY(-10px) scale(1.05); } }
+.splash-progress-track { width: 135px; height: 5px; background: rgba(190, 24, 93, 0.15); border-radius: 10px; overflow: hidden; }
+.splash-progress-fill { width: 100%; height: 100%; background: linear-gradient(90deg, #f43f5e, #be185d); border-radius: 10px; animation: loadTrack 2s ease-in-out infinite; }
+@keyframes loadTrack { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+.brand-top-bar { background: transparent; padding: 6px 12px 8px; display: flex; align-items: center; justify-content: space-between; }
+.brand-logo-full-wrap { display: flex; align-items: center; background: linear-gradient(135deg, #ffffff 0%, #fff1f2 100%); border: 1.5px solid #f43f5e; border-radius: 12px; padding: 4px 8px; box-shadow: 0 3px 10px rgba(244, 63, 94, 0.18); font-weight: 900; color: #be185d; font-size: 13px; }
+.office-badge-tag { font-size: 9.5px; font-weight: 800; color: #be185d; background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%) !important; border: 1.5px solid #f43f5e; padding: 4px 8px; border-radius: 8px; }
+.bottom-nav-bar { display: flex; align-items: center; justify-content: space-around; background: #ffffff; border-top: 1.5px solid #f1f5f9; padding: 7px 6px 9px; position: sticky; bottom: 0; z-index: 150; box-shadow: 0 -4px 16px rgba(15, 23, 42, 0.06); border-bottom-left-radius: 34px; border-bottom-right-radius: 34px; }
+.nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: #64748b; font-size: 10px; font-weight: 700; cursor: pointer; flex: 1; transition: all 0.2s ease; }
+.nav-item.active { color: #be185d; font-weight: 900; }
+.nav-icon { font-size: 18px; }
+.member-hero-strip { background: var(--primary-grad); padding: 12px 14px 14px; border-bottom-left-radius: 22px; border-bottom-right-radius: 22px; color: white; display: flex; align-items: center; gap: 11px; cursor: pointer; }
+.member-avatar-img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid white; }
+.content-zone { flex: 1; padding: 13px; }
+.prized-animated-card { background: linear-gradient(135deg, #1e1b4b, #312e81, #4338ca); border: 2px solid #fbbf24; border-radius: 22px; padding: 13px 14px; margin-bottom: 11px; color: white; position: relative; overflow: hidden; }
+.prized-ribbon { position: absolute; top: 9px; right: -28px; background: linear-gradient(135deg, #d97706, #fbbf24, #f59e0b); color: #451a03; font-size: 9px; font-weight: 900; padding: 3px 28px; transform: rotate(45deg); }
+.trophy-badge { background: linear-gradient(135deg, #f59e0b, #fbbf24); color: #451a03; font-size: 10px; font-weight: 900; padding: 3px 9px; border-radius: 20px; }
+.prized-content { display: flex; align-items: center; gap: 12px; margin-top: 6px; }
+.prized-avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2.5px solid #fbbf24; }
+.section-label { font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; margin: 8px 2px 8px; display: flex; justify-content: space-between; }
+.folder-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 11px; margin-bottom: 11px; }
+.folder-tile { background: white; border-radius: 20px; padding: 13px 11px; border: 1px solid rgba(226, 232, 240, 0.9); box-shadow: 0 6px 16px -4px rgba(15, 23, 42, 0.05); display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; cursor: pointer; }
+.tile-icon { width: 34px; height: 34px; border-radius: 11px; display: flex; align-items: center; justify-content: center; color: white; font-size: 16px; margin-bottom: 6px; }
+.tile-icon.green { background: var(--emerald-grad); }
+.tile-icon.violet { background: var(--primary-grad); }
+.tile-icon.rose { background: var(--rose-grad); }
+.tile-icon.amber { background: var(--amber-grad); }
+.tile-title { font-size: 10px; font-weight: 700; color: #64748b; }
+.tile-value { font-size: 17px; font-weight: 900; color: #0f172a; margin-top: 1px; }
+.tile-sub-hint { font-size: 9px; font-weight: 800; margin-top: 3px; }
+.modal-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(4px); display: none; align-items: flex-end; z-index: 200; }
+.sheet-modal { background: white; width: 100%; border-top-left-radius: 28px; border-top-right-radius: 28px; padding: 18px 14px 24px; max-height: 88%; overflow-y: auto; }
+.sheet-bar { width: 44px; height: 5px; background: #cbd5e1; border-radius: 4px; margin: 0 auto 12px; }
+.sheet-head-title { font-size: 15px; font-weight: 900; color: #0f172a; display: flex; justify-content: space-between; }
+.close-modal-btn { width: 100%; padding: 11px; background: #f1f5f9; color: #1e293b; border: none; border-radius: 12px; font-weight: 800; font-size: 12px; cursor: pointer; margin-top: 10px; }
+.toast { position: absolute; bottom: 65px; left: 50%; transform: translateX(-50%); background: #0f172a; color: white; font-size: 11px; padding: 8px 16px; border-radius: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s; z-index: 300; }
+</style>
+</head>
+<body>
+
+<div class="page-title">
+<h1>ധ്വനി പുരുഷ സ്വയം സഹായ സംഘം</h1>
+<p>മെമ്പർമാർക്കും അഡ്മിന്മാർക്കും തുല്യമായ അക്കൗണ്ട് & ഡാഷ്‌ബോർഡ് സംവിധാനം</p>
+</div>
+
+<div class="role-nav">
+<button class="active m-tab" onclick="switchUser(2)">👤 സുരേഷ് (മെമ്പർ)</button>
+<button class="a-tab" onclick="switchUser(1)">⚡ വിനോദ് (അഡ്മിൻ)</button>
+<button class="s-tab" onclick="switchUser(0)">👑 രാജേഷ് (സൂപ്പർ അഡ്മിൻ)</button>
+</div>
+
+<div class="mobile-case">
+<div id="splashScreen" class="splash-screen">
+<div class="rotating-d-emblem"><b>D</b></div>
+<div class="splash-progress-track"><div class="splash-progress-fill"></div></div>
+<div style="font-size:11px; color:#be185d; font-weight:700; margin-top:12px;">സുരക്ഷിതമായി ലോഗിൻ ചെയ്യുന്നു...</div>
+</div>
+
+<div class="screen-display">
+<div class="top-fixed-bar">
+<div class="island-bar"><div class="dynamic-island"></div></div>
+<div class="brand-top-bar">
+<div class="brand-logo-full-wrap">ധ്വനി സ്വയം സഹായ സംഘം</div>
+<div class="office-badge-tag">Reg No : KSR/CA/32/2021</div>
+</div>
+</div>
+
+<div id="mainHeader" class="member-hero-strip" onclick="setTab('profile')"></div>
+<div id="mainContent" class="content-zone"></div>
+
+<nav class="bottom-nav-bar">
+<div class="nav-item active" id="nav-home" onclick="setTab('home')">
+<span class="nav-icon">🏠</span>
+<span>Home</span>
+</div>
+<div class="nav-item" id="nav-profile" onclick="setTab('profile')">
+<span class="nav-icon">👤</span>
+<span>Profile</span>
+</div>
+<div class="nav-item" id="nav-reports" onclick="setTab('reports')">
+<span class="nav-icon">📊</span>
+<span>Reports</span>
+</div>
+<div class="nav-item" id="nav-settings" onclick="setTab('settings')">
+<span class="nav-icon">⚙️</span>
+<span>Settings</span>
+</div>
+</nav>
+<div id="toast" class="toast">അപ്ഡേറ്റ് ചെയ്തു!</div>
+
+<div id="upiModal" class="modal-overlay" onclick="closeModals()">
+<div class="sheet-modal" onclick="event.stopPropagation()">
+<div class="sheet-bar"></div>
+<div class="sheet-head-title"><span>UPI വഴി അടയ്ക്കുക</span><span onclick="closeModals()" style="cursor:pointer;">✕</span></div>
+<div style="padding:15px 0; text-align:center;">
+<div style="font-size:22px; font-weight:900; color:#be185d; margin-bottom:6px;">₹2,450</div>
+<div style="font-size:11px; color:#475569; margin-bottom:12px;">UPI ID: <b>dhwani.sangham@sbi</b></div>
+<button style="width:100%; padding:10px; background:#059669; color:white; border:none; border-radius:10px; font-weight:800; cursor:pointer;" onclick="showToastAlert('UPI ആപ്പിലേക്ക് പോകുന്നു...'); closeModals();">Google Pay / PhonePe വഴി അടയ്ക്കുക</button>
+</div>
+<button class="close-modal-btn" onclick="closeModals()">ക്ലോസ് ചെയ്യുക</button>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+let currentTab = 'home';
+let currentUserIndex = 2;
+
+let prizedWinner = {
+name: "ഹരിദാസ് എം",
+id: "DHW-06",
+photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+kuriType: "ആഴ്ചക്കുറി (Week 38 ലേലം)",
+prizedAmount: "₹24,500",
+date: "ഇന്നത്തെ യോഗത്തിൽ വിളിച്ചെടുത്തത്"
+};
+
+let sanghamMembers = [
+{ id: "DHW-01", name: "രാജേഷ് പി", roleType: "super_admin", badgeTitle: "👑 പ്രസിഡന്റ് (Super Admin)", phone: "9847111111", photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80", bloodGroup: "O +ve", savings: "₹14,200", weeklyKuri: "₹300/ആഴ്ച (1 കുറി)", monthlyKuri: "₹1,000", totalDue: "₹1,400" },
+{ id: "DHW-02", name: "വിനോദ് കെ", roleType: "admin", badgeTitle: "⚡ ട്രഷറർ (Admin)", phone: "9847222222", photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80", bloodGroup: "A +ve", savings: "₹13,800", weeklyKuri: "₹600/ആഴ്ച (2 കുറി)", monthlyKuri: "₹1,000", totalDue: "₹1,700" },
+{ id: "DHW-03", name: "സുരേഷ് കുമാർ", roleType: "member", badgeTitle: "👤 അംഗം (Member)", phone: "9847055555", photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80", bloodGroup: "B +ve", savings: "₹12,500", weeklyKuri: "₹600/ആഴ്ച (2 കുറി)", monthlyKuri: "₹1,000", totalDue: "₹2,450" }
+ ];
+
+function switchUser(idx) {
+currentUserIndex = idx;
+document.querySelectorAll('.role-nav button').forEach(b => b.classList.remove('active'));
+if(idx === 2) document.querySelector('.m-tab').classList.add('active');
+if(idx === 1) document.querySelector('.a-tab').classList.add('active');
+if(idx === 0) document.querySelector('.s-tab').classList.add('active');
+render();
+}
+
+function setTab(tab) {
+currentTab = tab;
+document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+const activeEl = document.getElementById('nav-' + tab);
+if (activeEl) activeEl.classList.add('active');
+render();
+}
+
+function showToastAlert(msg) {
+const t = document.getElementById('toast');
+t.innerText = msg;
+t.style.opacity = '1';
+setTimeout(() => { t.style.opacity = '0'; }, 2200);
+}
+
+function closeModals() {
+document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none');
+}
+
+function openUpiModal() {
+document.getElementById('upiModal').style.display = 'flex';
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+setTimeout(() => {
+const splash = document.getElementById('splashScreen');
+if(splash) {
+splash.style.opacity = '0';
+splash.style.pointerEvents = 'none';
+setTimeout(() => { splash.style.display = 'none'; }, 400);
+}
+}, 1000);
+});
+
+function render() {
+const main = document.getElementById('mainContent');
+const header = document.getElementById('mainHeader');
+const user = sanghamMembers[currentUserIndex];
+
+header.innerHTML = &lt;img class="member-avatar-img" src="${user.photo}">
+<div style="flex:1;">
+<div style="font-weight:900; font-size:13px;">${user.name}&lt;/div&gt; &lt;div style="font-size:10px; opacity:0.9;"&gt;${user.badgeTitle} • ID: ${user.id}&lt;/div&gt; &lt;/div&gt; &lt;div style="font-size: 18px;"&gt;🔔&lt;/div&gt;;
+
+if (currentTab === 'home') {
+main.innerHTML = &lt;div class="prized-animated-card"&gt; &lt;div class="prized-ribbon"&gt;PRIZED&lt;/div&gt; &lt;div style="display:flex; align-items:center; gap:6px; margin-bottom:8px;"&gt; &lt;span class="trophy-badge"&gt;🏆 കുറി ലേലം ഉറപ്പിച്ചു!&lt;/span&gt; &lt;span style="font-size:10px; color:#fde68a;"&gt;${prizedWinner.kuriType}</span>
+</div>
+<div class="prized-content">
+<img class="prized-avatar" src="${prizedWinner.photo}"&gt; &lt;div&gt; &lt;div style="font-size:14px; font-weight:900;"&gt;${prizedWinner.name} (${prizedWinner.id})&lt;/div&gt; &lt;div style="font-size:9.5px; color:#cbd5e1;"&gt;${prizedWinner.date}</div>
+<div style="font-size:10.5px; color:#fde68a; font-weight:800; margin-top:3px;">വിളിച്ച തുക: `${prizedWinner.prizedAmount}</div>
+</div>
+</div>
+</div>
+
+<div class="section-label"><span>വ്യക്തിഗത കണക്കുകൾ</span></div>
+<div class="folder-grid">
+<div class="folder-tile" onclick="setTab('reports')">
+<div class="tile-icon green">💰</div>
+<div>
+<div class="tile-title">ആഴ്ച സമ്പാദ്യം</div>
+<div class="tile-value">latex
+{user.savings}&lt;/div&gt; &lt;div class="tile-sub-hint" style="color:#059669;"&gt;വിശദാംശങ്ങൾ ➔&lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class="folder-tile" onclick="setTab('reports')"&gt; &lt;div class="tile-icon violet"&gt;🗓️&lt;/div&gt; &lt;div&gt; &lt;div class="tile-title"&gt;ആഴ്ചക്കുറി&lt;/div&gt; &lt;div class="tile-value" style="font-size:13px;"&gt;
+
+{user.weeklyKuri}</div>
+<div class="tile-sub-hint" style="color:#6366f1;">വിശദാംശങ്ങൾ ➔</div>
+</div>
+</div>
+<div class="folder-tile" onclick="setTab('reports')">
+<div class="tile-icon rose">🏷️</div>
+<div>
+<div class="tile-title">മാസക്കുറി</div>
+<div class="tile-value">latex
+{user.monthlyKuri}&lt;/div&gt; &lt;div class="tile-sub-hint" style="color:#e11d48;"&gt;വിശദാംശങ്ങൾ ➔&lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;div class="folder-tile" style="border:1.5px solid #fecaca; background:#fff1f2;" onclick="openUpiModal()"&gt; &lt;div class="tile-icon amber"&gt;💳&lt;/div&gt; &lt;div&gt; &lt;div class="tile-title" style="color:#9f1239;"&gt;അടയ്ക്കാനുള്ള തുക&lt;/div&gt; &lt;div class="tile-value" style="color:#be123c;"&gt;
+
+{user.totalDue}</div>
+<div class="tile-sub-hint" style="color:#15803d;">UPI അടയ്ക്കാം ➔</div>
+</div>
+</div>
+</div>
+
+<div style="background:white; border-radius:18px; border:1.5px solid #fbcfe8; padding:13px; margin-top:10px;">
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+<span style="font-size:11.5px; font-weight:800;">ഇന്നത്തെ ആകെ അടവ്:</span>
+<span style="color:#be123c; font-size:15px; font-weight:900;">{user.photo}" style="width: 70px; height: 80px; border-radius: 12px; object-fit: cover; border: 2px solid #fbbf24;">
+<div>
+<div style="font-size: 15px; font-weight: 900;">latex
+{user.name}&lt;/div&gt; &lt;div style="font-size: 10px; color: #a7f3d0; margin-top: 2px;"&gt;
+
+{user.badgeTitle}</div>
+<div style="margin-top: 6px; font-size: 10px; color: #e2e8f0;">
+<div>ഐഡി: <b>{user.phone}</b></div>
+<div>ബ്ലഡ് ഗ്രൂപ്പ്: <b>{user.savings}</div>
+</div>
+<div style="background:white; border-radius:14px; padding:12px; border:1px solid #e2e8f0; margin-bottom:8px;">
+<b style="font-size:12px;">ആഴ്ചക്കുറി വിവരങ്ങൾ</b>
+<div style="font-size:11px; color:#6366f1; font-weight:800; margin-top:2px;">തവണ: Week 39 • ${user.weeklyKuri}</div>
+</div>
+<button onclick="showToastAlert('പാസ്‌ബുക്ക് Excel ഡൗൺലോഡ് ആയി!') style="width:100%; padding:10px; background:#0284c7; color:white; border:none; border-radius:12px; font-weight:800; cursor:pointer; margin-top:8px;">📊 പാസ്‌ബുക്ക് എക്സ്പോർട്ട് ചെയ്യുക</button>
+; } else if (currentTab === 'settings') { main.innerHTML =
+<div class="section-label"><span>ക്രമീകരണങ്ങൾ</span></div>
+<div style="background:white; border-radius:14px; border:1px solid #e2e8f0; overflow:hidden;">
+<div style="padding:12px; border-bottom:1px solid #f1f5f9; font-size:11.5px; cursor:pointer;" onclick="showToastAlert('സുരക്ഷാ പിൻ ഉടൻ ലഭ്യമാകും')">🔒 സുരക്ഷാ പിൻ മാറ്റുക</div>
+<div style="padding:12px; border-bottom:1px solid #f1f5f9; font-size:11.5px; cursor:pointer;" onclick="showToastAlert('വാട്സ്ആപ്പ് രസീത് ആക്റ്റീവാണ്')">💬 വാട്‌സ്ആപ്പ് രസീത് ക്രമീകരണം</div>
+<div style="padding:12px; font-size:11.5px; cursor:pointer;" onclick="showToastAlert('ഹെൽപ്‌ലൈൻ: 9847111111')">📞 ഹെൽപ്‌ഡെസ്ക് & ഭാരവാഹികൾ</div>
+</div>
+<button onclick="showToastAlert('ലോഗ്ഔട്ട് ചെയ്തു!')" style="width:100%; padding:11px; background:#fff1f2; color:#be123c; border:1.5px solid #fecaca; border-radius:12px; font-weight:800; cursor:pointer; margin-top:14px;">🚪 Log Out</button>
+`;
+}
+}
+
+render();
+</script>
+</body>
+</html>
