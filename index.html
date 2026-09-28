@@ -72,7 +72,6 @@
     <!-- മെയിൻ ആപ്പ് കണ്ടെയ്നർ -->
     <div id="main-app" class="container hidden">
         
-        <!-- ഫിക്സഡ് ടോപ്പ് ബാർ -->
         <div class="top-header">
             <div class="logo-area">
                 <div class="logo-circle">ധ</div>
@@ -113,7 +112,6 @@
             </div>
         </div>
 
-        <!-- പ്രൊഫൈൽ ടാബ് -->
         <div id="tab-profile-content" class="card hidden">
             <h3>മെമ്പർ ഐഡി പ്രൊഫൈൽ</h3>
             <p><strong>മെമ്പർ ഐഡി / റോൾ നമ്പർ:</strong> <span id="profile-id" style="color: #6200ea; font-weight: bold;"></span></p>
@@ -124,7 +122,6 @@
             <p><strong>വിലാസം:</strong> <span id="profile-address"></span></p>
         </div>
 
-        <!-- ഫിനാൻസ് ഷീറ്റ് റിപ്പോർട്ട്സ് ടാബ് -->
         <div id="tab-reports-content" class="card hidden">
             <h3>ധ്വനി ഫിനാൻസ് & അറ്റൻഡൻസ് ഷീറ്റ്</h3>
             <div class="sheet-table-wrapper">
@@ -134,7 +131,7 @@
                             <th>മെമ്പർ ഐഡി</th>
                             <th>പേര്</th>
                             <th>വരിസംഖ്യ</th>
-                            <th>കുറി (₹300/1000)</th>
+                            <th>കുറി</th>
                             <th>ഹാജർ</th>
                         </tr>
                     </thead>
@@ -143,14 +140,12 @@
             </div>
         </div>
 
-        <!-- സെറ്റിംഗ്സ് / അഡ്മിൻ പാനൽ -->
         <div id="tab-settings-content" class="card hidden">
             <h3 id="panel-title">മാനേജ്മെന്റ് പാനൽ</h3>
             
-            <!-- സൂപ്പർ അഡ്മിൻ മാത്രം കാണുന്ന അംഗങ്ങളെ ചേർക്കാനുള്ള ബോക്സ് -->
             <div id="super-admin-controls" class="hidden" style="background: #e8eaf6; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
                 <h4 style="color: #3f51b5; margin-top:0;">പുതിയ അംഗത്തെ ചേർക്കുക (Super Admin Only)</h4>
-                <input type="text" id="new-member-id" placeholder="മെമ്പർ ഐഡി / റോൾ നമ്പർ (ഉദാ: DHW-01)">
+                <input type="text" id="new-member-id" placeholder="മെമ്പർ ഐഡി (ഉദാ: DHW-01)">
                 <input type="text" id="new-name" placeholder="പേര്">
                 <input type="text" id="new-phone" placeholder="ഫോൺ നമ്പർ (ലോഗിൻ നമ്പർ)">
                 <input type="text" id="new-blood" placeholder="ബ്ലഡ് ഗ്രൂപ്പ്">
@@ -158,6 +153,7 @@
                 <select id="new-role">
                     <option value="member">സാധാരണ മെമ്പർ</option>
                     <option value="admin">അഡ്മിൻ (പ്രസിഡന്റ് / സെക്രട്ടറി / ട്രഷറർ / വൈസ് പ്രസിഡന്റ്)</option>
+                    <option value="superadmin">സൂപ്പർ അഡ്മിൻ</option>
                 </select>
                 <button class="action-btn" onclick="addMember()">മെമ്പറെ ആഡ് ചെയ്യുക</button>
             </div>
@@ -223,7 +219,6 @@
         db.ref('members').on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                // ഫയർബേസ് കീ (ID) അടക്കം അറേ ആയി സേവ് ചെയ്യുക (ഡിലീറ്റ് ചെയ്യാൻ എളുപ്പത്തിന്)
                 members = [];
                 Object.keys(data).forEach(key => {
                     members.push({ firebaseKey: key, ...data[key] });
@@ -285,13 +280,11 @@
             document.getElementById('box-kuri1000').innerText = '₹1000';
             document.getElementById('box-attendance').innerText = user.attendance || 'ഹാജർ';
 
-            if (user.role === 'superadmin') {
-                document.getElementById('super-admin-controls').classList.remove('hidden');
-                document.getElementById('panel-title').innerText = 'സൂപ്പർ അഡ്മിൻ മാനേജ്മെന്റ് പാനൽ';
-            } else {
-                document.getElementById('super-admin-controls').classList.add('hidden');
-                document.getElementById('panel-title').innerText = 'അഡ്മിൻ ഫിനാൻസ് പാനൽ';
+            if (user.role === 'superadmin' || user.role === 'admin') {
+                document.getElementById('super-admin-controls').style.display = (user.role === 'superadmin') ? 'block' : 'none';
+                document.getElementById('panel-title').innerText = (user.role === 'superadmin') ? 'സൂപ്പർ അഡ്മിൻ മാനേജ്മെന്റ് പാനൽ' : 'അഡ്മിൻ ഫിനാൻസ് പാനൽ';
             }
+            renderSheets();
         }
 
         function switchTab(tab) {
@@ -321,7 +314,7 @@
         }
 
         function addMember() {
-            if (currentUser.role !== 'superadmin') {
+            if (!currentUser || currentUser.role !== 'superadmin') {
                 alert('പുതിയ അംഗങ്ങളെ ചേർക്കാൻ സൂപ്പർ അഡ്മിന് മാത്രമേ അധികാരമുള്ളൂ!');
                 return;
             }
@@ -351,17 +344,30 @@
         }
 
         function editSheetData(firebaseKey) {
+            if (!currentUser || (currentUser.role !== 'admin' && currentUser.role !== 'superadmin')) {
+                alert('ഈ വിവരങ്ങൾ മാറ്റാൻ അഡ്മിൻ അനുമതി വേണം!');
+                return;
+            }
+
             let m = members.find(item => item.firebaseKey === firebaseKey);
             if (!m) return;
 
             let vari = prompt(`${m.name}-ന്റെ വരിസംഖ്യ തുക നൽകുക:`, m.vari);
             let kuri = prompt(`${m.name}-ന്റെ കുറി തുക നൽകുക:`, m.kuri);
             let attendance = prompt(`${m.name}-ന്റെ ഹാജർ (വന്നു / വന്നില്ല):`, m.attendance);
+            
+            // അഡ്മിന് വേണമെങ്കിൽ സാധാരണ അംഗത്തെ അഡ്മിൻ ആകാനും സാധിക്കും (സൂപ്പർ അഡ്മിൻ പവറുകൾ സൂപ്പർ അഡ്മിന് മാത്രം)
+            let newRole = m.role;
+            if (currentUser.role === 'superadmin') {
+                let rolePrompt = prompt(`പദവി മാറ്റുക (member / admin / superadmin):`, m.role);
+                if (rolePrompt) newRole = rolePrompt;
+            }
 
             let updates = {};
             if (vari !== null) updates.vari = vari;
             if (kuri !== null) updates.kuri = kuri;
             if (attendance !== null) updates.attendance = attendance;
+            if (newRole !== null) updates.role = newRole;
 
             db.ref('members/' + firebaseKey).update(updates, (error) => {
                 if (!error) {
@@ -371,7 +377,7 @@
         }
 
         function deleteMember(firebaseKey) {
-            if (currentUser.role !== 'superadmin') {
+            if (!currentUser || currentUser.role !== 'superadmin') {
                 alert('അംഗങ്ങളെ ഡിലീറ്റ് ചെയ്യാൻ സൂപ്പർ അഡ്മിന് മാത്രമേ അധികാരമുള്ളൂ!');
                 return;
             }
@@ -389,6 +395,8 @@
             let reportBody = document.getElementById('finance-sheet-body');
             let adminBody = document.getElementById('admin-finance-body');
             
+            if (!reportBody || !adminBody) return;
+
             reportBody.innerHTML = '';
             adminBody.innerHTML = '';
 
@@ -400,7 +408,7 @@
 
                 reportBody.innerHTML += `
                     <tr>
-                        <td><strong>${m.memberId}</strong></td>
+                        <td><strong>${m.memberId || '-'}</strong></td>
                         <td>${m.name}</td>
                         <td>${m.vari || '₹0'}</td>
                         <td>${m.kuri || '₹0'}</td>
@@ -417,7 +425,7 @@
 
                 adminBody.innerHTML += `
                     <tr>
-                        <td><strong>${m.memberId}</strong> - ${m.name}<br><small style="color:#666;">(${m.role === 'superadmin' ? 'Super Admin' : m.role === 'admin' ? 'Admin' : 'Member'})</small></td>
+                        <td><strong>${m.memberId || '-'}</strong> - ${m.name}<br><small style="color:#666;">(${m.role === 'superadmin' ? 'Super Admin' : m.role === 'admin' ? 'Admin' : 'Member'})</small></td>
                         <td>${m.vari || '₹0'}</td>
                         <td>${m.kuri || '₹0'}</td>
                         <td style="${attColor}">${m.attendance || '-'}</td>
@@ -430,7 +438,7 @@
         function logout() {
             currentUser = null;
             document.getElementById('main-app').classList.add('hidden');
-            document.getElementById('login-section').classList.remove('hidden');
+            document.getElementById('welcome-popup').style.display = 'flex';
             document.getElementById('login-phone').value = '';
         }
     </script>
