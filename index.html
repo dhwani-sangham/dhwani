@@ -8,12 +8,10 @@
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { margin: 0; padding: 0; background-color: #f4f6f9; color: #333; padding-bottom: 70px; }
         
-        /* പോപ്പ്-അപ്പ് വെൽക്കം നോട്ടിഫിക്കേഷൻ */
         #welcome-popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 2000; }
         .popup-box { background: white; padding: 25px; border-radius: 15px; text-align: center; width: 85%; max-width: 400px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
         .popup-logo { width: 60px; height: 60px; background: #6200ea; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; margin: 0 auto 15px auto; border: 2px solid #ff4081; }
 
-        /* ഫിക്സഡ് ടോപ്പ് ബാർ */
         .top-header { position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; background: white; padding: 12px 15px; border-bottom: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .logo-area { display: flex; align-items: center; gap: 8px; border: 1px solid #ff4081; padding: 5px 12px; border-radius: 20px; }
         .logo-circle { width: 28px; height: 28px; background: #6200ea; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; }
@@ -23,7 +21,6 @@
         .user-info { display: flex; align-items: center; gap: 12px; }
         .user-avatar { width: 45px; height: 45px; background: #ddd; border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; font-weight: bold; color: #333; font-size: 18px; }
 
-        /* പ്രധാന ബോക്സുകൾ (ഡാഷ്‌ബോർഡ് ഗ്രേഡ്) */
         .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 15px; }
         .dash-box { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 4px solid #6200ea; text-align: center; }
         .dash-box h4 { margin: 0 0 5px 0; font-size: 13px; color: #555; }
@@ -52,7 +49,7 @@
 </head>
 <body>
 
-    <!-- പോപ്പ്-അപ്പ് നോട്ടിഫിക്കേഷൻ (വെൽക്കം ലോഗോ) -->
+    <!-- പോപ്പ്-അപ്പ് നോട്ടിഫിക്കേഷൻ -->
     <div id="welcome-popup">
         <div class="popup-box">
             <div class="popup-logo">ധ</div>
@@ -96,7 +93,6 @@
         </div>
 
         <div id="tab-home-content">
-            <!-- 4 പ്രധാന ബോക്സുകൾ -->
             <div class="dashboard-grid">
                 <div class="dash-box">
                     <h4>വരിസംഖ്യ</h4>
@@ -117,7 +113,7 @@
             </div>
         </div>
 
-        <!-- പ്രൊഫൈൽ ടാബ് (மெമ്പർ ഐഡിയും വിവരങ്ങളും) -->
+        <!-- പ്രൊഫൈൽ ടാബ് -->
         <div id="tab-profile-content" class="card hidden">
             <h3>മെമ്പർ ഐഡി പ്രൊഫൈൽ</h3>
             <p><strong>മെമ്പർ ഐഡി / റോൾ നമ്പർ:</strong> <span id="profile-id" style="color: #6200ea; font-weight: bold;"></span></p>
@@ -166,7 +162,7 @@
                 <button class="action-btn" onclick="addMember()">മെമ്പറെ ആഡ് ചെയ്യുക</button>
             </div>
 
-            <h4>ഹാജറും തുകയും മാർക്ക് ചെയ്യാനുള്ള പാനൽ (അഡ്മിൻ & സൂപ്പർ അഡ്മിൻ)</h4>
+            <h4>ഹാജറും തുകയും മാർക്ക് ചെയ്യാനുള്ള പാനൽ</h4>
             <div class="sheet-table-wrapper">
                 <table class="sheet-table">
                     <thead>
@@ -175,7 +171,7 @@
                             <th>വരിസംഖ്യ</th>
                             <th>കുറി</th>
                             <th>ഹാജർ</th>
-                            <th id="action-th">ആക്ഷൻ</th>
+                            <th>ആക്ഷൻ</th>
                         </tr>
                     </thead>
                     <tbody id="admin-finance-body"></tbody>
@@ -185,7 +181,6 @@
             <button class="action-btn" style="background: #555;" onclick="logout()">ലോഗൗട്ട് ചെയ്യുക</button>
         </div>
 
-        <!-- ബോട്ടം നാവിഗേഷൻ -->
         <div class="bottom-nav">
             <button class="nav-item active" id="nav-home" onclick="switchTab('home')">
                 <div>🏠</div>Home
@@ -228,14 +223,19 @@
         db.ref('members').on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                members = Object.values(data);
+                // ഫയർബേസ് കീ (ID) അടക്കം അറേ ആയി സേവ് ചെയ്യുക (ഡിലീറ്റ് ചെയ്യാൻ എളുപ്പത്തിന്)
+                members = [];
+                Object.keys(data).forEach(key => {
+                    members.push({ firebaseKey: key, ...data[key] });
+                });
             } else {
-                members = [
-                    { memberId: 'DHW-00', name: 'സൂപ്പർ അഡ്മിൻ', phone: '9999999999', blood: 'O+ve', address: 'കാസർഗോഡ്', vari: '₹600', kuri: '₹300', attendance: 'വന്നു', role: 'superadmin' },
-                    { memberId: 'DHW-01', name: 'പ്രസിഡന്റ്', phone: '9123456780', blood: 'B+ve', address: 'പനയാൽ', vari: '₹600', kuri: '₹300', attendance: 'വന്നു', role: 'admin' },
-                    { memberId: 'DHW-02', name: 'സുഭാഷ്', phone: '9876543210', blood: 'A+ve', address: 'ബേക്കൽ', vari: '₹600', kuri: '₹0', attendance: 'വന്നില്ല (ഇല്ല)', role: 'member' }
-                ];
-                db.ref('members').set(members);
+                let defaultMembers = {
+                    'm0': { memberId: 'DHW-00', name: 'സൂപ്പർ അഡ്മിൻ', phone: '9999999999', blood: 'O+ve', address: 'കാസർഗോഡ്', vari: '₹600', kuri: '₹300', attendance: 'വന്നു', role: 'superadmin' },
+                    'm1': { memberId: 'DHW-01', name: 'പ്രസിഡന്റ്', phone: '9123456780', blood: 'B+ve', address: 'പനയാൽ', vari: '₹600', kuri: '₹300', attendance: 'വന്നു', role: 'admin' },
+                    'm2': { memberId: 'DHW-02', name: 'സുഭാഷ്', phone: '9876543210', blood: 'A+ve', address: 'ബേക്കൽ', vari: '₹600', kuri: '₹0', attendance: 'വന്നില്ല (ഇല്ല)', role: 'member' }
+                };
+                db.ref('members').set(defaultMembers);
+                return;
             }
             if (currentUser) {
                 let updatedUser = members.find(m => m.phone === currentUser.phone);
@@ -273,7 +273,6 @@
             document.getElementById('display-role-id').innerText = `${user.memberId} | ${roleText}`;
             document.getElementById('user-initial').innerText = user.name.charAt(0);
 
-            // പ്രൊഫൈൽ വിവരങ്ങൾ
             document.getElementById('profile-id').innerText = user.memberId;
             document.getElementById('profile-name').innerText = user.name;
             document.getElementById('profile-phone').innerText = user.phone;
@@ -281,13 +280,11 @@
             document.getElementById('profile-blood').innerText = user.blood || '-';
             document.getElementById('profile-address').innerText = user.address || '-';
 
-            // ബോക്സ് വാല്യൂസ്
             document.getElementById('box-vari').innerText = user.vari || '₹0';
             document.getElementById('box-kuri300').innerText = user.kuri || '₹0';
             document.getElementById('box-kuri1000').innerText = '₹1000';
             document.getElementById('box-attendance').innerText = user.attendance || 'ഹാജർ';
 
-            // റോൾ അനുസരിച്ച് പാനൽ മാറ്റങ്ങൾ
             if (user.role === 'superadmin') {
                 document.getElementById('super-admin-controls').classList.remove('hidden');
                 document.getElementById('panel-title').innerText = 'സൂപ്പർ അഡ്മിൻ മാനേജ്മെന്റ് പാനൽ';
@@ -341,8 +338,8 @@
                 return;
             }
 
-            members.push({ memberId, name, phone, blood, address, vari: '₹0', kuri: '₹0', attendance: 'വന്നു', role });
-            db.ref('members').set(members);
+            let newRef = db.ref('members').push();
+            newRef.set({ memberId, name, phone, blood, address, vari: '₹0', kuri: '₹0', attendance: 'വന്നു', role });
 
             document.getElementById('new-member-id').value = '';
             document.getElementById('new-name').value = '';
@@ -353,29 +350,38 @@
             alert('അംഗത്തെ വിജയകരമായി ചേർത്തു!');
         }
 
-        function editSheetData(index) {
-            let m = members[index];
-            let vari = prompt(`${m.name}-ന്റെ വരിസംഖ്യ തുക നൽകുക (ഉദാ: ₹600 അല്ലെങ്കിൽ കൂട്ടിയത്):`, m.vari);
+        function editSheetData(firebaseKey) {
+            let m = members.find(item => item.firebaseKey === firebaseKey);
+            if (!m) return;
+
+            let vari = prompt(`${m.name}-ന്റെ വരിസംഖ്യ തുക നൽകുക:`, m.vari);
             let kuri = prompt(`${m.name}-ന്റെ കുറി തുക നൽകുക:`, m.kuri);
             let attendance = prompt(`${m.name}-ന്റെ ഹാജർ (വന്നു / വന്നില്ല):`, m.attendance);
 
-            if (vari !== null) m.vari = vari;
-            if (kuri !== null) m.kuri = kuri;
-            if (attendance !== null) m.attendance = attendance;
+            let updates = {};
+            if (vari !== null) updates.vari = vari;
+            if (kuri !== null) updates.kuri = kuri;
+            if (attendance !== null) updates.attendance = attendance;
 
-            db.ref('members').set(members);
-            alert('വിവരങ്ങൾ ലൈവ് ആയി അപ്ഡേറ്റ് ചെയ്തു!');
+            db.ref('members/' + firebaseKey).update(updates, (error) => {
+                if (!error) {
+                    alert('വിവരങ്ങൾ ലൈവ് ആയി അപ്ഡേറ്റ് ചെയ്തു!');
+                }
+            });
         }
 
-        function deleteMember(index) {
+        function deleteMember(firebaseKey) {
             if (currentUser.role !== 'superadmin') {
-                alert('ഡിലീറ്റ് ചെയ്യാൻ സൂപ്പർ അഡ്മിന് മാത്രമേ അധികാരമുള്ളൂ!');
+                alert('അംഗങ്ങളെ ഡിലീറ്റ് ചെയ്യാൻ സൂപ്പർ അഡ്മിന് മാത്രമേ അധികാരമുള്ളൂ!');
                 return;
             }
 
-            if (confirm('ഈ അംഗത്തെ നീക്കം ചെയ്യണമെന്ന് ഉറപ്പാണോ?')) {
-                members.splice(index, 1);
-                db.ref('members').set(members);
+            if (confirm('ഈ അംഗത്തെ സംഘത്തിൽ നിന്ന് പൂർണ്ണമായി നീക്കം ചെയ്യണമെന്ന് ഉറപ്പാണോ?')) {
+                db.ref('members/' + firebaseKey).remove((error) => {
+                    if (!error) {
+                        alert('അംഗത്തെ വിജയകരമായി ഡിലീറ്റ് ചെയ്തു!');
+                    }
+                });
             }
         }
 
@@ -389,9 +395,7 @@
             let isAdminOrSuper = currentUser && (currentUser.role === 'admin' || currentUser.role === 'superadmin');
             let isSuper = currentUser && currentUser.role === 'superadmin';
 
-            document.getElementById('action-th').style.display = isAdminOrSuper ? '' : 'none';
-
-            members.forEach((m, idx) => {
+            members.forEach((m) => {
                 let attColor = (m.attendance && m.attendance.includes('ഇല്ല')) ? 'color: red; font-weight: bold;' : 'color: green;';
 
                 reportBody.innerHTML += `
@@ -406,8 +410,8 @@
 
                 let actionBtns = '';
                 if (isAdminOrSuper) {
-                    let editBtn = `<button style="background:#0288d1; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; margin-right:2px;" onclick="editSheetData(${idx})">എഡിറ്റ്</button>`;
-                    let delBtn = isSuper ? `<button style="background:red; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="deleteMember(${idx})">ഡിലീറ്റ്</button>` : '';
+                    let editBtn = `<button style="background:#0288d1; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; margin-right:2px;" onclick="editSheetData('${m.firebaseKey}')">എഡിറ്റ്</button>`;
+                    let delBtn = isSuper ? `<button style="background:red; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="deleteMember('${m.firebaseKey}')">ഡിലീറ്റ്</button>` : '';
                     actionBtns = `<td>${editBtn} ${delBtn}</td>`;
                 }
 
