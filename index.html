@@ -6,43 +6,61 @@
     <title>ധ്വനി പുരുഷ സ്വയം സഹായ സംഘം</title>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { margin: 0; padding: 0; background-color: #f4f6f9; color: #333; }
-        header { background: #6200ea; color: white; padding: 15px; text-align: center; }
-        .container { padding: 15px; max-width: 650px; margin: auto; }
-        .card { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 15px; }
+        body { margin: 0; padding: 0; background: linear-gradient(135deg, #f5f7fa, #c3cfe2); color: #333; min-height: 100vh; }
+        
+        /* ഗ്രേഡിയന്റ് ഹെഡർ & ലോഗോ */
+        header { background: linear-gradient(135deg, #6200ea, #b388ff); color: white; padding: 15px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .logo-container { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 5px; }
+        .app-logo { width: 40px; height: 40px; background: white; color: #6200ea; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+
+        .container { padding: 15px; max-width: 700px; margin: auto; }
+        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 15px; }
         h2, h3 { margin-top: 0; color: #6200ea; }
-        input, select { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 4px; }
-        button { background: #6200ea; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; width: 100%; font-size: 16px; }
-        button:hover { background: #3700b3; }
+        input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; }
+        button { background: linear-gradient(135deg, #6200ea, #7c4dff); color: white; border: none; padding: 12px 15px; border-radius: 6px; cursor: pointer; width: 100%; font-size: 16px; font-weight: bold; margin-top: 5px; box-shadow: 0 2px 5px rgba(98,0,234,0.3); }
+        button:hover { background: linear-gradient(135deg, #3700b3, #6200ea); }
+        
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; font-size: 13px; }
+        th, td { border: 1px solid #eee; padding: 10px; text-align: center; font-size: 13px; }
         th { background-color: #6200ea; color: white; }
-        .action-btn { background: #0288d1; color: white; border: none; padding: 5px 8px; border-radius: 3px; cursor: pointer; margin: 2px; }
+        .action-btn { background: #0288d1; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; margin: 2px; }
         .hidden { display: none; }
-        .badge { background: #ede7f6; color: #6200ea; padding: 3px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; }
-        .birthday-banner { background: #ffeb3b; color: #d32f2f; padding: 10px; border-radius: 5px; text-align: center; font-weight: bold; margin-bottom: 10px; }
+        .badge { background: #ede7f6; color: #6200ea; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; }
+        
+        .birthday-banner { background: linear-gradient(135deg, #ffeb3b, #ff9800); color: #d32f2f; padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        
+        /* ഐഡി കാർഡ് ഡിസൈൻ */
+        .id-card { background: linear-gradient(135deg, #6200ea, #b388ff); color: white; padding: 25px; border-radius: 15px; box-shadow: 0 8px 20px rgba(98,0,234,0.3); margin-bottom: 15px; }
+        .id-card h3 { color: white; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 8px; }
+        
+        .nav-tabs { display: flex; justify-content: space-around; background: #e0e0e0; padding: 6px; border-radius: 8px; margin-bottom: 15px; }
+        .nav-tabs button { background: transparent; color: #333; width: auto; padding: 8px 14px; font-size: 14px; box-shadow: none; font-weight: normal; }
+        .nav-tabs button.active { background: #6200ea; color: white; border-radius: 6px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
     </style>
 </head>
 <body>
 
     <header>
-        <h2>ധ്വനി പുരുഷ സ്വയം സഹായ സംഘം</h2>
-        <p style="margin: 0; font-size: 14px;">ക്ലബ് മാനേജ്മെന്റ് സിസ്റ്റം</p>
+        <div class="logo-container">
+            <div class="app-logo">ധ</div>
+            <h2 style="margin: 0; font-size: 20px; color: white;">ധ്വനി പുരുഷ സ്വയം സഹായ സംഘം</h2>
+        </div>
+        <p style="margin: 0; font-size: 13px; opacity: 0.9;">രജിസ്റ്റർഡ് ക്ലബ് മാനേജ്മെന്റ് സിസ്റ്റം</p>
     </header>
 
     <div class="container">
         <!-- ലോഗിൻ സെക്ഷൻ -->
         <div id="login-section" class="card">
-            <h3>ലോഗിൻ ചെയ്യുക</h3>
+            <h3>മെമ്പർ / അഡ്മിൻ ലോഗിൻ</h3>
             <label>രജിസ്റ്റർ ചെയ്ത ഫോൺ നമ്പർ നൽകുക:</label>
-            <input type="text" id="login-phone" placeholder="ഫോൺ നമ്പർ">
+            <input type="text" id="login-phone" placeholder="ഉദാ: 9876543210">
             <button onclick="loginApp()">ലോഗിൻ ചെയ്യുക</button>
         </div>
 
         <!-- സൂപ്പർ അഡ്മിൻ ഡാഷ്‌ബോർഡ് -->
         <div id="super-admin-dashboard" class="card hidden">
             <h3>സൂപ്പർ അഡ്മിൻ പാനൽ</h3>
-            <p>അഡ്മിൻമാരെ നിയമിക്കാനും മാറ്റാനും ഉള്ള സെക്ഷൻ:</p>
+            <p>അഡ്മിൻമാരെ നിയമിക്കാനും മാറ്റാനുമുള്ള അധികാരം:</p>
             <table>
                 <thead>
                     <tr>
@@ -60,14 +78,16 @@
 
         <!-- അഡ്മിൻ ഡാഷ്‌ബോർഡ് -->
         <div id="admin-dashboard" class="card hidden">
-            <h3>അഡ്മിൻ പാനൽ</h3>
-            <div style="background: #f0f4c3; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
-                <h4 style="margin: 0 0 10px 0; color: #827717;">പുതിയ അംഗത്തെ ചേർക്കുക</h4>
+            <h3>അഡ്മിൻ മാനേജ്മെന്റ് പാനൽ</h3>
+            
+            <div style="background: #f3e5f5; padding: 15px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #ce93d8;">
+                <h4 style="margin: 0 0 10px 0; color: #6200ea;">പുതിയ അംഗത്തെ ചേർക്കുക</h4>
                 <input type="text" id="new-name" placeholder="അംഗത്തിന്റെ പേര്">
                 <input type="text" id="new-phone" placeholder="ഫോൺ നമ്പർ (ലോഗിൻ ചെയ്യാൻ)">
                 <input type="text" id="new-blood" placeholder="ബ്ലഡ് ഗ്രൂപ്പ് (ഉദാ: O+ve)">
+                <label style="font-size: 12px; color: #666;">ജനനത്തീയതി (DOB):</label>
                 <input type="date" id="new-dob">
-                <input type="text" id="new-address" placeholder="അഡ്രസ്">
+                <input type="text" id="new-address" placeholder="മുഴുവൻ വിലാസം (അഡ്രസ്)">
                 <input type="text" id="new-amount" placeholder="അടച്ച തുക / പലിശ (₹)">
                 <select id="new-attendance">
                     <option value="വന്നു">ഹാജർ: വന്നു</option>
@@ -76,18 +96,16 @@
                 <button onclick="addMember()">മെമ്പറെ ആഡ് ചെയ്യുക</button>
             </div>
 
-            <h3>എല്ലാ അംഗങ്ങളുടെയും വിവരങ്ങൾ</h3>
+            <h3>അംഗങ്ങളുടെ ലിസ്റ്റും അപ്ഡേറ്റും</h3>
             <div style="overflow-x:auto;">
                 <table>
                     <thead>
                         <tr>
-                            <th>പേര്</th>
+                            <th>പേര് & ബ്ലഡ്</th>
                             <th>ഫോൺ</th>
-                            <th>ബ്ലഡ്</th>
-                            <th>DOB</th>
                             <th>തുക/പലിശ</th>
                             <th>ഹാജർ</th>
-                            <th>റോൾ</th>
+                            <th>ആക്ഷൻ</th>
                         </tr>
                     </thead>
                     <tbody id="admin-table-body"></tbody>
@@ -97,40 +115,71 @@
             <button style="background: #555;" onclick="logout()">ലോഗൗട്ട്</button>
         </div>
 
-        <!-- മെമ്പർ ഡാഷ്‌ബോർഡ് -->
+        <!-- മെമ്പർ ഡാഷ്‌ബോർഡ് (ഹോം, പ്രൊഫൈൽ, റിപ്പോർട്ട്സ്) -->
         <div id="member-dashboard" class="card hidden">
             <div id="bday-alert" class="hidden"></div>
-            <h3>സ്വാഗതം, <span id="welcome-name"></span>!</h3>
-            <div style="background: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
-                <p><strong>പേര്:</strong> <span id="my-name"></span></p>
-                <p><strong>ഫോൺ നമ്പർ:</strong> <span id="my-phone"></span></p>
-                <p><strong>ബ്ലഡ് ഗ്രൂപ്പ്:</strong> <span id="my-blood"></span></p>
-                <p><strong>ജനന്മീയതി (DOB):</strong> <span id="my-dob"></span></p>
-                <p><strong>അഡ്രസ്:</strong> <span id="my-address"></span></p>
-                <p><strong>അടച്ച തുക / പലിശ:</strong> ₹<span id="my-amount"></span></p>
-                <p><strong>ഹാജർ നില:</strong> <span id="my-attendance"></span></p>
+            
+            <div class="nav-tabs">
+                <button id="tab-home-btn" class="active" onclick="switchTab('home')">ഹോം</button>
+                <button id="tab-profile-btn" onclick="switchTab('profile')">ഐഡി പ്രൊഫൈൽ</button>
+                <button id="tab-report-btn" onclick="switchTab('report')">റിപ്പോർട്ട്</button>
             </div>
+
+            <!-- ഹോം ടാബ് -->
+            <div id="tab-home" class="tab-content">
+                <h3>സ്വാഗതം, <span id="home-welcome-name"></span>!</h3>
+                <p>ധ്വനി പുരുഷ സ്വയം സഹായ സംഘത്തിന്റെ ഔദ്യോഗിക ആപ്പിലേക്ക് സ്വാഗതം. നിങ്ങളുടെ പ്രതിമാസ സേവിങ്സ് വിവരങ്ങളും ഹാജർ നിലയും പ്രൊഫൈൽ കാർഡും പരിശോധിക്കാവുന്നതാണ്.</p>
+            </div>
+
+            <!-- പ്രൊഫൈൽ / ഐഡി കാർഡ് ടാബ് -->
+            <div id="tab-profile" class="tab-content hidden">
+                <div class="id-card">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                        <div style="width: 35px; height: 35px; background: white; color: #6200ea; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">ധ</div>
+                        <h3 style="margin: 0; border: none; padding: 0;">ധ്വനി സംഘം ഐഡി കാർഡ്</h3>
+                    </div>
+                    <hr style="border: 0.5px solid rgba(255,255,255,0.3); margin: 10px 0;">
+                    <p><strong>പേര്:</strong> <span id="my-name"></span></p>
+                    <p><strong>ഫോൺ നമ്പർ (ID):</strong> <span id="my-phone"></span></p>
+                    <p><strong>ബ്ലഡ് ഗ്രൂപ്പ്:</strong> <span id="my-blood"></span></p>
+                    <p><strong>ജനനത്തീയതി:</strong> <span id="my-dob"></span></p>
+                    <p><strong>വിലാസം:</strong> <span id="my-address"></span></p>
+                </div>
+            </div>
+
+            <!-- റിപ്പോർട്ട് ടാബ് -->
+            <div id="tab-report" class="tab-content hidden">
+                <h3>നിങ്ങളുടെ സ്റ്റാറ്റസ് റിപ്പോർട്ട്</h3>
+                <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
+                    <p><strong>അടച്ച തുക / പലിശ:</strong> ₹<span id="my-amount"></span></p>
+                    <p><strong>ഹാജർ നില:</strong> <span id="my-attendance"></span></p>
+                </div>
+            </div>
+
+            <br>
             <button style="background: #555;" onclick="logout()">ലോഗൗട്ട്</button>
         </div>
     </div>
 
     <script>
-        // പ്രാരംഭ ഡാറ്റ (ആദ്യം സൂപ്പർ അഡ്മിൻ, അഡ്മിൻ, മെമ്പർമാർ)
         let members = JSON.parse(localStorage.getItem('dhwani_members')) || [
             { name: 'രാജ് (സൂപ്പർ അഡ്മിൻ)', phone: '9999999999', blood: 'O+ve', dob: '1990-01-01', address: 'ധ്വനി നഗർ, കാസർഗോഡ്', amount: '5000', attendance: 'വന്നു', role: 'superadmin' },
             { name: 'വിനോദ് (അഡ്മിൻ)', phone: '9123456780', blood: 'B+ve', dob: '1992-05-15', address: 'പനയാൽ, കാസർഗോഡ്', amount: '1500', attendance: 'വന്നു', role: 'admin' },
             { name: 'സുരേഷ് (മെമ്പർ)', phone: '9876543210', blood: 'A+ve', dob: '1995-09-29', address: 'ബേക്കൽ, കാസർഗോഡ്', amount: '1000', attendance: 'വന്നു', role: 'member' }
         ];
 
+        let loggedInUser = null;
+
         function loginApp() {
             let phone = document.getElementById('login-phone').value.trim();
             let user = members.find(m => m.phone === phone);
 
             if (!user) {
-                alert('ഈ ഫോൺ നമ്പറിൽ അംഗങ്ങളെ കണ്ടെത്താനായില്ല!');
+                alert('ഈ ഫോൺ നമ്പറിൽ അംഗങ്ങളെ കണ്ടെത്താനായില്ല! രജിസ്റ്റർ ചെയ്ത നമ്പർ നൽകുക.');
                 return;
             }
 
+            loggedInUser = user;
             document.getElementById('login-section').classList.add('hidden');
             document.getElementById('login-phone').value = '';
 
@@ -142,7 +191,7 @@
                 renderAdminTable();
             } else {
                 document.getElementById('member-dashboard').classList.remove('hidden');
-                document.getElementById('welcome-name').innerText = user.name;
+                document.getElementById('home-welcome-name').innerText = user.name;
                 document.getElementById('my-name').innerText = user.name;
                 document.getElementById('my-phone').innerText = user.phone;
                 document.getElementById('my-blood').innerText = user.blood || '-';
@@ -151,9 +200,21 @@
                 document.getElementById('my-amount').innerText = user.amount || '0';
                 document.getElementById('my-attendance').innerText = user.attendance || '-';
 
-                // ജന്മദിന പരിശോധന (ഇന്നത്തെ ദിവസവും മാസവും ഒത്തുവന്നാൽ ആശംസ കാണിക്കും)
                 checkBirthday(user.dob);
             }
+        }
+
+        function switchTab(tabName) {
+            document.getElementById('tab-home').classList.add('hidden');
+            document.getElementById('tab-profile').classList.add('hidden');
+            document.getElementById('tab-report').classList.add('hidden');
+
+            document.getElementById('tab-home-btn').classList.remove('active');
+            document.getElementById('tab-profile-btn').classList.remove('active');
+            document.getElementById('tab-report-btn').classList.remove('active');
+
+            document.getElementById('tab-' + tabName).classList.remove('hidden');
+            document.getElementById('tab-' + tabName + '-btn').classList.add('active');
         }
 
         function checkBirthday(dob) {
@@ -163,10 +224,10 @@
             let bdayAlert = document.getElementById('bday-alert');
             
             if (today.getDate() === bday.getDate() && today.getMonth() === bday.getMonth()) {
-                bdayAlert.innerHTML = `🎉 ജന്മദിനാശംസകൾ ${document.getElementById('welcome-name').innerText}! ആശംസകൾ നേരുന്നു! 🎂`;
-                bdayAlert.classList.remove('hidden');
+                bdayAlert.innerHTML = `🎉 ജന്മദിനാശംസകൾ ${loggedInUser.name}! ആശംസകൾ നേരുന്നു! 🎂`;
+                bdayAlert.className = 'birthday-banner';
             } else {
-                bdayAlert.classList.add('hidden');
+                bdayAlert.className = 'hidden';
             }
         }
 
@@ -196,6 +257,26 @@
 
             renderAdminTable();
             alert('പുതിയ അംഗത്തെ വിജയകരമായി ചേർത്തു!');
+        }
+
+        function updateMemberData(index) {
+            let newAmount = prompt('പുതിയ തുക / പലിശ നൽകുക:', members[index].amount);
+            let newAtt = prompt('ഹാജർ നില മാറ്റുക (വന്നു / വന്നില്ല):', members[index].attendance);
+            
+            if (newAmount !== null) members[index].amount = newAmount;
+            if (newAtt !== null) members[index].attendance = newAtt;
+
+            localStorage.setItem('dhwani_members', JSON.stringify(members));
+            renderAdminTable();
+            alert('വിവരങ്ങൾ വിജയകരമായി അപ്ഡേറ്റ് ചെയ്തു!');
+        }
+
+        function deleteMember(index) {
+            if (confirm('ഈ അംഗത്തെ നീക്കം ചെയ്യണമെന്ന് ഉറപ്പാണോ?')) {
+                members.splice(index, 1);
+                localStorage.setItem('dhwani_members', JSON.stringify(members));
+                renderAdminTable();
+            }
         }
 
         function changeRole(index, newRole) {
@@ -234,22 +315,24 @@
         function renderAdminTable() {
             let tbody = document.getElementById('admin-table-body');
             tbody.innerHTML = '';
-            members.forEach(m => {
+            members.forEach((m, index) => {
                 tbody.innerHTML += `
                     <tr>
-                        <td>${m.name}</td>
+                        <td><strong>${m.name}</strong><br><small>${m.blood || ''}</small></td>
                         <td>${m.phone}</td>
-                        <td>${m.blood || '-'}</td>
-                        <td>${m.dob || '-'}</td>
                         <td>₹${m.amount || 0}</td>
                         <td>${m.attendance || '-'}</td>
-                        <td><span class="badge">${m.role}</span></td>
+                        <td>
+                            <button class="action-btn" onclick="updateMemberData(${index})">എഡിറ്റ്</button>
+                            <button class="action-btn" style="background:#d32f2f;" onclick="deleteMember(${index})">ഡിലീറ്റ്</button>
+                        </td>
                     </tr>
                 `;
             });
         }
 
         function logout() {
+            loggedInUser = null;
             document.getElementById('super-admin-dashboard').classList.add('hidden');
             document.getElementById('admin-dashboard').classList.add('hidden');
             document.getElementById('member-dashboard').classList.add('hidden');
