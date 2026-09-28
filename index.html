@@ -8,28 +8,23 @@
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { margin: 0; padding: 0; background-color: #f4f6f9; color: #333; padding-bottom: 70px; }
         
-        /* ടോപ്പ് ഹെഡർ */
         .top-header { display: flex; justify-content: space-between; align-items: center; background: white; padding: 10px 15px; border-bottom: 1px solid #eee; }
         .logo-area { display: flex; align-items: center; gap: 8px; border: 1px solid #ff4081; padding: 5px 10px; border-radius: 20px; }
         .logo-circle { width: 30px; height: 30px; background: #6200ea; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
         .reg-badge { border: 1px solid #ff4081; color: #d81b60; padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: bold; background: #fff; }
 
-        /* യൂസർ കാർഡ് */
         .user-banner { background: linear-gradient(135deg, #7c4dff, #3f51b5); color: white; margin: 15px; padding: 15px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; }
         .user-info { display: flex; align-items: center; gap: 12px; }
         .user-avatar { width: 45px; height: 45px; background: #ddd; border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; font-weight: bold; color: #333; }
 
-        /* അലേർട്ട് കാർഡുകൾ */
         .alert-card { background: linear-gradient(135deg, #3f51b5, #1a237e); color: white; margin: 15px; padding: 15px; border-radius: 15px; }
         .bday-card { background: linear-gradient(135deg, #2196f3, #00bcd4); color: white; margin: 15px; padding: 15px; border-radius: 15px; }
 
-        /* ഡാഷ്‌ബോർഡ് ഗ്രേഡ് ബോക്സുകൾ */
         .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px; }
         .grid-box { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #eee; cursor: pointer; }
         .grid-box h4 { margin: 0 0 8px 0; font-size: 14px; color: #555; }
         .grid-box .amount { font-size: 18px; font-weight: bold; color: #000; margin: 5px 0; }
 
-        /* ബോട്ടം നാവിഗേഷൻ ബാർ */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); border-top: 1px solid #eee; z-index: 1000; }
         .nav-item { text-align: center; color: #666; font-size: 12px; cursor: pointer; background: none; border: none; }
         .nav-item.active { color: #6200ea; font-weight: bold; }
@@ -44,6 +39,10 @@
         th, td { border: 1px solid #ddd; padding: 8px; text-align: center; font-size: 13px; }
         th { background: #6200ea; color: white; }
     </style>
+
+    <!-- Firebase SDK (Compat Version) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 </head>
 <body>
 
@@ -60,7 +59,6 @@
     <!-- മെയിൻ ആപ്പ് കണ്ടെയ്നർ -->
     <div id="main-app" class="container hidden">
         
-        <!-- ടോപ്പ് ഹെഡർ -->
         <div class="top-header">
             <div class="logo-area">
                 <div class="logo-circle">D</div>
@@ -69,19 +67,17 @@
             <div class="reg-badge">Reg No : KSR/CA/32/2021</div>
         </div>
 
-        <!-- യൂസർ പ്രൊഫൈൽ ബാനർ -->
         <div class="user-banner">
             <div class="user-info">
                 <div class="user-avatar" id="user-initial">ധ</div>
                 <div>
-                    <h3 id="display-name" style="margin: 0; font-size: 16px;">സുരേഷ് കുമാർ</h3>
+                    <h3 id="display-name" style="margin: 0; font-size: 16px;">മെമ്പർ</h3>
                     <p id="display-role-id" style="margin: 0; font-size: 12px; opacity: 0.9;">അംഗം (Member)</p>
                 </div>
             </div>
             <div style="font-size: 20px;">🔔</div>
         </div>
 
-        <!-- ടാബ് 1: ഹോം -->
         <div id="tab-home-content">
             <div class="alert-card">
                 <div style="font-size: 11px; background: #ff9800; color: white; display: inline-block; padding: 2px 8px; border-radius: 4px; font-weight: bold; margin-bottom: 5px;">🏆 കുറി ലേലം ഉറപ്പിച്ചു!</div>
@@ -92,13 +88,13 @@
 
             <div class="bday-card">
                 <p style="margin: 0; font-size: 14px; font-weight: bold;">🎂 ജന്മദിനാശംസകൾ! Happy Birthday!</p>
-                <p style="margin: 5px 0 0 0; font-size: 12px; opacity: 0.9;">ഇന്ന് നമ്മുടെ വിനോദ് കെ-യുടെ പിറനാളാണ്. 🎉</p>
+                <p style="margin: 5px 0 0 0; font-size: 12px; opacity: 0.9;">ഇന്ന് നമ്മുടെ അംഗങ്ങളുടെ പിറനാളാണ്. 🎉</p>
             </div>
 
             <div class="grid-container">
                 <div class="grid-box" onclick="switchTab('reports')">
                     <h4>ആഴ്ച സമ്പാദ്യം</h4>
-                    <div class="amount" id="home-amount">₹12,500</div>
+                    <div class="amount" id="home-amount">₹0</div>
                     <small style="color: #6200ea;">രജിസ്റ്റർ ബോക്സ് കാണുക →</small>
                 </div>
                 <div class="grid-box" onclick="switchTab('reports')">
@@ -109,7 +105,6 @@
             </div>
         </div>
 
-        <!-- ടാബ് 2: പ്രൊഫൈൽ / ഐഡി കാർഡ് -->
         <div id="tab-profile-content" class="card hidden">
             <h3>മെമ്പർ ഐഡി പ്രൊഫൈൽ</h3>
             <p><strong>പേര്:</strong> <span id="profile-name"></span></p>
@@ -119,14 +114,12 @@
             <p><strong>വിലാസം:</strong> <span id="profile-address"></span></p>
         </div>
 
-        <!-- ടാബ് 3: റിപ്പോർട്ട്സ് & അറ്റൻഡൻസ് രജിസ്റ്റർ -->
         <div id="tab-reports-content" class="card hidden">
             <h3>സമ്പൂർണ്ണ റിപ്പോർട്ടും അറ്റൻഡൻസും</h3>
             <p><strong>മൊത്തം അടച്ച തുക:</strong> ₹<span id="report-amount"></span></p>
             <p><strong>ഹാജർ നില / ആഴ്ചകൾ:</strong> <span id="report-weeks" style="color: #6200ea; font-weight: bold;"></span></p>
         </div>
 
-        <!-- ടാബ് 4: സെറ്റിംഗ്സ് / അഡ്മിൻ പാനൽ -->
         <div id="tab-settings-content" class="card hidden">
             <h3>സെറ്റിംഗ്സ് & അഡ്മിൻ പാനൽ</h3>
             <div id="admin-controls" class="hidden" style="background: #f3e5f5; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
@@ -164,7 +157,6 @@
             <button class="action-btn" style="background: #555;" onclick="logout()">ലോഗൗട്ട് ചെയ്യുക</button>
         </div>
 
-        <!-- ബോട്ടം നാവിഗേഷൻ ബാർ -->
         <div class="bottom-nav">
             <button class="nav-item active" id="nav-home" onclick="switchTab('home')">
                 <div>🏠</div>Home
@@ -183,13 +175,45 @@
     </div>
 
     <script>
-        let members = JSON.parse(localStorage.getItem('dhwani_members')) || [
-            { name: 'സുരേഷ് കുമാർ', phone: '9876543210', blood: 'A+ve', dob: '1995-09-29', address: 'ബേക്കൽ, കാസർഗോഡ്', amount: '12500', weeks: 'ആഴ്ച 1, 2, 3', role: 'member' },
-            { name: 'വിനോദ് കെ', phone: '9123456780', blood: 'B+ve', dob: '1992-05-15', address: 'പനയാൽ, കാസർഗോഡ്', amount: '15000', weeks: 'ആഴ്ച 1, 2, 3, 4', role: 'admin' },
-            { name: 'രാജ്', phone: '9999999999', blood: 'O+ve', dob: '1990-01-01', address: 'കാസർഗോഡ്', amount: '25000', weeks: 'എല്ലാ ആഴ്ചയും', role: 'superadmin' }
-        ];
+        // Firebase Configuration with Database URL
+        const firebaseConfig = {
+          apiKey: "AIzaSyCePKpXJupEEI1jhECcXXx-K1IBUFLpA_A",
+          authDomain: "dhwani-sangham.firebaseapp.com",
+          databaseURL: "https://dhwani-sangham-default-rtdb.firebaseio.com",
+          projectId: "dhwani-sangham",
+          storageBucket: "dhwani-sangham.firebasestorage.app",
+          messagingSenderId: "254290228686",
+          appId: "1:254290228686:web:786680bccd5795f73ea79f"
+        };
 
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        let members = [];
         let currentUser = null;
+
+        // Real-time listener from Firebase Database
+        db.ref('members').on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                members = Object.values(data);
+            } else {
+                members = [
+                    { name: 'സുരേഷ് കുമാർ', phone: '9876543210', blood: 'A+ve', dob: '1995-09-29', address: 'ബേക്കൽ, കാസർഗോഡ്', amount: '12500', weeks: 'ആഴ്ച 1, 2, 3', role: 'member' },
+                    { name: 'വിനോദ് കെ', phone: '9123456780', blood: 'B+ve', dob: '1992-05-15', address: 'പനയാൽ, കാസർഗോഡ്', amount: '15000', weeks: 'ആഴ്ച 1, 2, 3, 4', role: 'admin' },
+                    { name: 'രാജ്', phone: '9999999999', blood: 'O+ve', dob: '1990-01-01', address: 'കാസർഗോഡ്', amount: '25000', weeks: 'എല്ലാ ആഴ്ചയും', role: 'superadmin' }
+                ];
+                db.ref('members').set(members);
+            }
+            if (currentUser) {
+                let updatedUser = members.find(m => m.phone === currentUser.phone);
+                if (updatedUser) {
+                    currentUser = updatedUser;
+                    updateUIWithUserData();
+                }
+            }
+            renderAdminTable();
+        });
 
         function loginApp() {
             let phone = document.getElementById('login-phone').value.trim();
@@ -203,8 +227,11 @@
             currentUser = user;
             document.getElementById('login-section').classList.add('hidden');
             document.getElementById('main-app').classList.remove('hidden');
+            updateUIWithUserData();
+        }
 
-            // ഡാറ്റ ഫിൽ ചെയ്യുക
+        function updateUIWithUserData() {
+            let user = currentUser;
             document.getElementById('display-name').innerText = user.name;
             document.getElementById('display-role-id').innerText = `${user.role === 'admin' ? 'അഡ്മിൻ (Admin)' : user.role === 'superadmin' ? 'സൂപ്പർ അഡ്മിൻ' : 'അംഗം (Member)'}`;
             document.getElementById('user-initial').innerText = user.name.charAt(0);
@@ -222,7 +249,6 @@
             if (user.role === 'admin' || user.role === 'superadmin') {
                 document.getElementById('admin-controls').classList.remove('hidden');
             }
-            renderAdminTable();
         }
 
         function switchTab(tab) {
@@ -272,8 +298,16 @@
             }
 
             members.push({ name, phone, blood, dob, address, amount: amount || '0', weeks: weeks || 'ആഴ്ച 1', role });
-            localStorage.setItem('dhwani_members', JSON.stringify(members));
-            renderAdminTable();
+            db.ref('members').set(members);
+
+            document.getElementById('new-name').value = '';
+            document.getElementById('new-phone').value = '';
+            document.getElementById('new-blood').value = '';
+            document.getElementById('new-dob').value = '';
+            document.getElementById('new-address').value = '';
+            document.getElementById('new-amount').value = '';
+            document.getElementById('new-weeks').value = '';
+
             alert('അംഗത്തെ വിജയകരമായി ചേർത്തു!');
         }
 
@@ -285,16 +319,14 @@
             if (newAmount !== null) m.amount = newAmount;
             if (newWeeks !== null) m.weeks = newWeeks;
 
-            localStorage.setItem('dhwani_members', JSON.stringify(members));
-            renderAdminTable();
-            alert('വിവരങ്ങൾ അപ്ഡേറ്റ് ചെയ്തു!');
+            db.ref('members').set(members);
+            alert('വിവരങ്ങൾ ലൈവ് ആയി അപ്ഡേറ്റ് ചെയ്തു!');
         }
 
         function deleteMember(index) {
             if (confirm('ഈ അംഗത്തെ നീക്കം ചെയ്യണമെന്ന് ഉറപ്പാണോ?')) {
                 members.splice(index, 1);
-                localStorage.setItem('dhwani_members', JSON.stringify(members));
-                renderAdminTable();
+                db.ref('members').set(members);
             }
         }
 
@@ -302,8 +334,8 @@
             let tbody = document.getElementById('admin-members-list');
             tbody.innerHTML = '';
             members.forEach((m, idx) => {
-                let editBtn = (currentUser.role === 'admin' || currentUser.role === 'superadmin') ? `<button style="background:#0288d1; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="updateMember(${idx})">എഡിറ്റ്</button>` : '';
-                let delBtn = (currentUser.role === 'admin' || currentUser.role === 'superadmin') ? `<button style="background:red; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="deleteMember(${idx})">ഡിലീറ്റ്</button>` : '';
+                let editBtn = (currentUser && (currentUser.role === 'admin' || currentUser.role === 'superadmin')) ? `<button style="background:#0288d1; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="updateMember(${idx})">എഡിറ്റ്</button>` : '';
+                let delBtn = (currentUser && (currentUser.role === 'admin' || currentUser.role === 'superadmin')) ? `<button style="background:red; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="deleteMember(${idx})">ഡിലീറ്റ്</button>` : '';
 
                 tbody.innerHTML += `
                     <tr>
