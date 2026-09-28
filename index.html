@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ധ്വനി പുരുഷ സ്വയം സഹായ സംഘം - അക്കൗണ്ടിംഗ് സിസ്റ്റം</title>
+    <title>ധ്വനി പുരുഷ സ്വയം സഹായ സംഘം</title>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { margin: 0; padding: 0; background-color: #f4f6f9; color: #333; padding-bottom: 80px; }
         
         #welcome-popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 9999; }
         .popup-box { background: white; padding: 30px; border-radius: 15px; text-align: center; width: 90%; max-width: 400px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
-        .popup-logo { width: 65px; height: 65px; background: #6200ea; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: bold; margin: 0 auto 15px auto; border: 2px solid #ff4081; animation: pulse 1.5s infinite; }
-
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
+        .popup-logo { width: 65px; height: 65px; background: #6200ea; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: bold; margin: 0 auto 15px auto; border: 2px solid #ff4081; }
 
         .top-header { position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; background: white; padding: 12px 15px; border-bottom: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .logo-area { display: flex; align-items: center; gap: 8px; border: 1px solid #ff4081; padding: 5px 12px; border-radius: 20px; }
@@ -24,16 +22,10 @@
         .user-avatar { width: 45px; height: 45px; background: #ddd; border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; font-weight: bold; color: #333; font-size: 18px; }
 
         .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 15px; }
-        .dash-box { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 4px solid #6200ea; text-align: center; cursor: pointer; transition: 0.2s; }
-        .dash-box:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .dash-box { background: white; padding: 20px 15px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 4px solid #6200ea; text-align: center; cursor: pointer; transition: 0.2s; }
+        .dash-box:hover { transform: translateY(-2px); background: #faf5ff; }
         .dash-box h4 { margin: 0 0 5px 0; font-size: 13px; color: #555; }
         .dash-box .val { font-size: 18px; font-weight: bold; color: #000; }
-
-        /* ബോക്സ് ടൈപ്പ് അറ്റൻഡൻസ് രജിസ്റ്റർ */
-        .register-grid { display: flex; gap: 5px; justify-content: center; }
-        .reg-box { width: 28px; height: 28px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; border-radius: 4px; background: #fff; }
-        .reg-box.yes { background: #e8f5e9; color: #2e7d32; border-color: #a5d6a7; }
-        .reg-box.no { background: #ffebee; color: #c62828; border-color: #ef9a9a; }
 
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); border-top: 1px solid #eee; z-index: 1000; }
         .nav-item { text-align: center; color: #666; font-size: 12px; cursor: pointer; background: none; border: none; }
@@ -44,13 +36,19 @@
         .hidden { display: none !important; }
         .card { background: white; margin: 15px; padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         input, select { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; }
-        button.action-btn { background: #6200ea; color: white; border: none; padding: 10px; border-radius: 6px; width: 100%; font-weight: bold; cursor: pointer; }
+        button.action-btn { background: #6200ea; color: white; border: none; padding: 12px; border-radius: 6px; width: 100%; font-weight: bold; cursor: pointer; font-size: 15px; }
         
+        /* ബോക്സ് ക്ലിക്ക് ചെയ്യുമ്പോൾ വരുന്ന പോപ്പ്-അപ്പ് വിൻഡോ (Modal) */
+        #box-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 3000; }
+        .modal-card { background: white; width: 92%; max-width: 500px; max-height: 85vh; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .modal-body { overflow-y: auto; flex-grow: 1; margin: 10px 0; }
+
         .sheet-table-wrapper { overflow-x: auto; margin-top: 10px; }
         .sheet-table { width: 100%; border-collapse: collapse; white-space: nowrap; }
         .sheet-table th, .sheet-table td { border: 1px solid #ccc; padding: 8px 10px; text-align: center; font-size: 13px; }
         .sheet-table th { background: #6200ea; color: white; position: sticky; top: 0; }
         .sheet-table tr:nth-child(even) { background-color: #fafafa; }
+        .checkbox-large { width: 20px; height: 20px; cursor: pointer; }
     </style>
 
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -63,7 +61,7 @@
         <div class="popup-box">
             <div class="popup-logo">ധ</div>
             <h3 style="margin: 0 0 5px 0; color: #6200ea;">ധ്വനി പുരുഷ സ്വയം സഹായ സംഘം</h3>
-            <p style="font-size: 13px; color: #666; margin-bottom: 15px;">സ്വാഗതം! ലൈവ് അക്കൗണ്ടിംഗ് ആപ്പിലേക്ക് പ്രവേശിക്കുക.</p>
+            <p style="font-size: 13px; color: #666; margin-bottom: 15px;">സ്വാഗതം! ആപ്പിലേക്ക് പ്രവേശിക്കുക.</p>
             <button class="action-btn" onclick="openLoginSection()">ആപ്പ് തുറക്കുക</button>
         </div>
     </div>
@@ -100,43 +98,33 @@
             <div style="font-size: 20px;">📊</div>
         </div>
 
-        <!-- ഹോം ടാബ് (ഡാഷ്‌ബോർഡ് & ടോട്ടൽ അക്കൗണ്ട്സ്) -->
+        <!-- ഹോം ടാബ് (4 പ്രധാന ബോക്സുകൾ) -->
         <div id="tab-home-content">
-            <div class="card" style="background: linear-gradient(135deg, #00897b, #004d40); color: white; margin: 15px;">
-                <h3 style="margin-top: 0; font-size: 16px;">💰 സംഘം ഫിനാൻസ് സംഗ്രഹം (Live Accounts)</h3>
-                <p style="margin: 5px 0;">ആകെ വരിസംഖ്യ വരവ്: <strong id="sum-vari">₹0</strong></p>
-                <p style="margin: 5px 0;">₹300 കുറി ആകെ വരവ്: <strong id="sum-kuri300">₹0</strong></p>
-                <p style="margin: 5px 0;">₹1000 കുറി ആകെ വരവ്: <strong id="sum-kuri1000">₹0</strong></p>
-                <p style="margin: 5px 0;">പലിശ വരവ് ആകെ: <strong id="sum-interest">₹0</strong></p>
-                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.3); margin: 10px 0;">
-                <h4 style="margin: 0; font-size: 18px;">മൊത്തം ഫണ്ട്: <span id="sum-grand-total">₹0</span></h4>
-            </div>
-
             <div class="dashboard-grid">
-                <div class="dash-box" onclick="switchTab('reports')">
-                    <h4>എന്റെ വരിസംഖ്യ</h4>
-                    <div class="val" id="box-vari">₹0</div>
-                    <small style="color: #6200ea;">വിശദമായി കാണുക →</small>
+                <div class="dash-box" onclick="openBoxModal('vari')">
+                    <h4>വരിസംഖ്യ രജിസ്റ്റർ</h4>
+                    <div class="val" id="box-vari-val">തൊട്ട് നോക്കുക</div>
+                    <small style="color: #6200ea;">ലിസ്റ്റ് & മാർക്ക് →</small>
                 </div>
-                <div class="dash-box" onclick="switchTab('reports')">
-                    <h4>₹300 കുറി സ്റ്റാറ്റസ്</h4>
-                    <div class="val" id="box-kuri300">₹0</div>
-                    <small style="color: #2196f3;">ചാർട്ട് കാണുക →</small>
+                <div class="dash-box" style="border-left-color: #2196f3;" onclick="openBoxModal('kuri300')">
+                    <h4>₹300 കുറി ചാർട്ട്</h4>
+                    <div class="val" id="box-kuri300-val">ലിസ്റ്റ് കാണുക</div>
+                    <small style="color: #2196f3;">മാർക്ക് ചെയ്യുക →</small>
                 </div>
-                <div class="dash-box" onclick="switchTab('reports')">
-                    <h4>₹1000 കുറി സ്റ്റാറ്റസ്</h4>
-                    <div class="val" id="box-kuri1000">₹0</div>
-                    <small style="color: #ff9800;">ചാർട്ട് കാണുക →</small>
+                <div class="dash-box" style="border-left-color: #ff9800;" onclick="openBoxModal('kuri1000')">
+                    <h4>₹1000 കുറി ചാർട്ട്</h4>
+                    <div class="val" id="box-kuri1000-val">ലിസ്റ്റ് കാണുക</div>
+                    <small style="color: #ff9800;">മാർക്ക് ചെയ്യുക →</small>
                 </div>
-                <div class="dash-box" onclick="switchTab('reports')">
-                    <h4>ഹാജർ നില (4 ആഴ്ച)</h4>
-                    <div class="val" id="box-attendance">ടിക്ക് ചെയ്തത്</div>
-                    <small style="color: #4caf50;">റെക്കോർഡ് →</small>
+                <div class="dash-box" style="border-left-color: #4caf50;" onclick="openBoxModal('attendance')">
+                    <h4>അറ്റൻഡൻസ് രജിസ്റ്റർ</h4>
+                    <div class="val">ഹാജർ പട്ടിക</div>
+                    <small style="color: #4caf50;">ടിക്ക് ചെയ്യുക →</small>
                 </div>
             </div>
         </div>
 
-        <!-- പ്രൊഫൈൽ ടാബ് (ഡിജിറ്റൽ ഐഡി കാർഡ്) -->
+        <!-- പ്രൊഫൈൽ ടാബ് (സ്വന്തം ഐഡി കാർഡ് & വിവരങ്ങൾ മാത്രം) -->
         <div id="tab-profile-content" class="card hidden">
             <div style="border: 2px dashed #6200ea; padding: 15px; border-radius: 10px; background: #faf5ff;">
                 <h3 style="text-align: center; color: #6200ea; margin-top: 0;">ഡിജിറ്റൽ ഐഡി കാർഡ്</h3>
@@ -149,30 +137,26 @@
             </div>
         </div>
 
-        <!-- ഫിനാൻസ് ഷീറ്റ് റിപ്പോർട്ട്സ് ടാബ് (മെമ്പർമാർക്ക് കഴിഞ്ഞ ആഴ്ചകളിലെ കണക്ക് കാണാൻ) -->
+        <!-- റിപ്പോർട്ട്സ് ടാബ് -->
         <div id="tab-reports-content" class="card hidden">
-            <h3>ധ്വനി അക്കൗണ്ട്സ് & അറ്റൻഡൻസ് രജിസ്റ്റർ</h3>
-            <p style="font-size: 12px; color: #666;">കഴിഞ്ഞ 4 ആഴ്ചകളിലെ നിങ്ങളുടെ വരവും ഹാജറും താഴെ കാണാം:</p>
+            <h3>ധ്വനി അക്കൗണ്ട്സ് സംഗ്രഹം</h3>
+            <p style="font-size: 13px; color: #666;">നിങ്ങളുടെ സ്വന്തം സ്റ്റാറ്റസ് ഇവിടെ പരിശോധിക്കാം:</p>
             <div class="sheet-table-wrapper">
                 <table class="sheet-table">
                     <thead>
                         <tr>
-                            <th>പേര്</th>
-                            <th>ആഴ്ച 1</th>
-                            <th>ആഴ്ച 2</th>
-                            <th>ആഴ്ച 3</th>
-                            <th>ആഴ്ച 4 (ഈ ആഴ്ച)</th>
-                            <th>ആകെ തുക (₹)</th>
+                            <th>വിഭാഗം</th>
+                            <th>നിലവിലെ അവസ്ഥ</th>
                         </tr>
                     </thead>
-                    <tbody id="finance-sheet-body"></tbody>
+                    <tbody id="my-report-body"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- അഡ്മിൻ മാനേജ്മെന്റ് പാനൽ (തുകയും പലിശയും അപ്ഡേറ്റ് ചെയ്യാൻ) -->
+        <!-- മാനേജ്മെന്റ് / സെറ്റിംഗ്സ് ടാബ് (സൂപ്പർ അഡ്മിന് മാത്രം മെമ്പർമാരെ ആഡ് ചെയ്യാൻ) -->
         <div id="tab-settings-content" class="card hidden">
-            <h3 id="panel-title">അക്കൗണ്ട്സ് മാനേജ്മെന്റ് പാനൽ</h3>
+            <h3>മാനേജ്മെന്റ് പാനൽ</h3>
             
             <div id="super-admin-controls" class="hidden" style="background: #e8eaf6; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
                 <h4 style="color: #3f51b5; margin-top:0;">പുതിയ അംഗത്തെ ചേർക്കുക (Super Admin Only)</h4>
@@ -189,25 +173,7 @@
                 <button class="action-btn" onclick="addMember()">മെമ്പറെ ആഡ് ചെയ്യുക</button>
             </div>
 
-            <h4 style="margin-top: 20px;">തുകയും പലിശയും ഫിനാൻസ് എൻട്രി എഡിറ്റ് ചെയ്യുക</h4>
-            <p style="font-size: 12px; color: #666;">ഓരോ മെമ്പറുടെയും വരിസംഖ്യ, കുറി, പലിശ എന്നിവ ഇവിടെ എന്റർ ചെയ്താൽ ടോട്ടൽ അക്കൗണ്ട്സ് ഓട്ടോമാറ്റിക് അപ്ഡേറ്റ് ആകും.</p>
-            
-            <div class="sheet-table-wrapper">
-                <table class="sheet-table">
-                    <thead>
-                        <tr>
-                            <th>പേര്</th>
-                            <th>വരിസംഖ്യ (₹)</th>
-                            <th>കുറി (₹)</th>
-                            <th>പലിശ (₹)</th>
-                            <th>ഹാജർ (4 ആഴ്ച)</th>
-                            <th>ആക്ഷൻ</th>
-                        </tr>
-                    </thead>
-                    <tbody id="admin-accounting-body"></tbody>
-                </table>
-            </div>
-
+            <p style="font-size: 13px; color: #666;">മുകളിലുള്ള ഹോം ബോക്സുകളിൽ (വരിസംഖ്യ, കുറി, അറ്റൻഡൻസ്) തൊട്ടാൽ അഡ്മിൻമാർക്ക് മാർക്ക് ചെയ്യാനുള്ള ചാർട്ടുകൾ തുറന്നുവരും.</p>
             <br>
             <button class="action-btn" style="background: #555;" onclick="logout()">ലോഗൗട്ട് ചെയ്യുക</button>
         </div>
@@ -230,6 +196,39 @@
 
     </div>
 
+    <!-- ഹോം ബോക്സ് തൊടുമ്പോൾ തുറക്കുന്ന ലിസ്റ്റ് & സബ്മിറ്റ് മോഡൽ (Modal) -->
+    <div id="box-modal" class="hidden">
+        <div class="modal-card">
+            <h3 id="modal-title" style="color: #6200ea; margin-top: 0;">രജിസ്റ്റർ ചാർട്ട്</h3>
+            <div id="modal-desc" style="font-size: 12px; color: #666; margin-bottom: 10px;"></div>
+            
+            <!-- പുറത്തുനിന്നുള്ളവരെ കുറിയിൽ ചേർക്കാനുള്ള ചെറിയ ഫോം (കുറി ബോക്സുകളിൽ മാത്രം കാണിക്കും) -->
+            <div id="modal-add-external" class="hidden" style="background: #f1f3f4; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
+                <input type="text" id="ext-name" placeholder="പുറത്തുനിന്നുള്ള ആളുടെ പേര്" style="margin: 4px 0; padding: 6px;">
+                <button style="background: #2e7d32; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;" onclick="addExternalPerson()">കുറിയിലേക്ക് ചേർക്കുക</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="sheet-table-wrapper">
+                    <table class="sheet-table">
+                        <thead>
+                            <tr>
+                                <th>പേര് & ഐഡി</th>
+                                <th id="modal-col-header">സ്റ്റാറ്റസ് (ടിക്ക് ചെയ്യുക)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="modal-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                <button class="action-btn" id="modal-submit-btn" style="background: #2e7d32;" onclick="submitModalChanges()">സബ്മിറ്റ് ചെയ്യുക</button>
+                <button class="action-btn" style="background: #666;" onclick="closeBoxModal()">ക്ലോസ്</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const firebaseConfig = {
           apiKey: "AIzaSyCePKpXJupEEI1jhECcXXx-K1IBUFLpA_A",
@@ -246,6 +245,7 @@
 
         let members = [];
         let currentUser = null;
+        let currentActiveBox = '';
 
         function openLoginSection() {
             document.getElementById('welcome-popup').classList.add('hidden');
@@ -261,9 +261,9 @@
                 });
             } else {
                 let defaultMembers = {
-                    'm0': { memberId: 'DHW-00', name: 'സൂപ്പർ അഡ്മിൻ', phone: '9999999999', blood: 'O+ve', address: 'കാസർഗോഡ്', vari: 600, kuri: 300, interest: 50, w1: true, w2: true, w3: true, w4: true, role: 'superadmin' },
-                    'm1': { memberId: 'DHW-01', name: 'പ്രസിഡന്റ്', phone: '9123456780', blood: 'B+ve', address: 'പനയാൽ', vari: 600, kuri: 300, interest: 0, w1: true, w2: true, w3: true, w4: true, role: 'admin' },
-                    'm2': { memberId: 'DHW-02', name: 'സുഭാഷ്', phone: '9876543210', blood: 'A+ve', address: 'ബേക്കൽ', vari: 300, kuri: 0, interest: 0, w1: true, w2: false, w3: true, w4: false, role: 'member' }
+                    'm0': { memberId: 'DHW-00', name: 'സൂപ്പർ അഡ്മിൻ', phone: '9999999999', blood: 'O+ve', address: 'കാസർഗോഡ്', variPaid: true, kuri300Paid: true, kuri1000Paid: false, attendance: true, role: 'superadmin' },
+                    'm1': { memberId: 'DHW-01', name: 'പ്രസിഡന്റ്', phone: '9123456780', blood: 'B+ve', address: 'പനയാൽ', variPaid: true, kuri300Paid: true, kuri1000Paid: true, attendance: true, role: 'admin' },
+                    'm2': { memberId: 'DHW-02', name: 'സുഭാഷ്', phone: '9876543210', blood: 'A+ve', address: 'ബേക്കൽ', variPaid: false, kuri300Paid: false, kuri1000Paid: false, attendance: false, role: 'member' }
                 };
                 db.ref('members').set(defaultMembers);
                 return;
@@ -275,7 +275,6 @@
                     updateUIWithUserData();
                 }
             }
-            renderAccountingSheets();
         });
 
         function loginApp() {
@@ -301,50 +300,36 @@
             if (user.role === 'superadmin') roleText = 'സൂപ്പർ അഡ്മിൻ';
             else if (user.role === 'admin') roleText = 'അഡ്മിൻ (ഭാരവാഹി)';
             
-            document.getElementById('display-role-id').innerText = `${user.memberId} | ${roleText}`;
+            document.getElementById('display-role-id').innerText = `${user.memberId || 'EXT'} | ${roleText}`;
             document.getElementById('user-initial').innerText = user.name.charAt(0);
 
-            document.getElementById('profile-id').innerText = user.memberId;
+            // പ്രൊഫൈൽ
+            document.getElementById('profile-id').innerText = user.memberId || 'പുറത്തുനിന്നുള്ള അംഗം';
             document.getElementById('profile-name').innerText = user.name;
-            document.getElementById('profile-phone').innerText = user.phone;
+            document.getElementById('profile-phone').innerText = user.phone || 'ബാധകമല്ല';
             document.getElementById('profile-role').innerText = roleText;
             document.getElementById('profile-blood').innerText = user.blood || '-';
             document.getElementById('profile-address').innerText = user.address || '-';
 
-            // യൂസറുടെ സ്വന്തം ബോക്സുകൾ
-            let totalUserPaid = Number(user.vari || 0) + Number(user.kuri || 0) + Number(user.interest || 0);
-            document.getElementById('box-vari').innerText = '₹' + (user.vari || 0);
-            document.getElementById('box-kuri300').innerText = '₹' + (user.kuri || 0);
-            document.getElementById('box-kuri1000').innerText = '₹0';
-            document.getElementById('box-attendance').innerText = (user.w4 ? 'വന്നു' : 'വന്നില്ല');
+            // ബോക്സ് പ്രിവ്യൂ
+            document.getElementById('box-vari-val').innerText = user.variPaid ? 'അടച്ചു (₹600)' : 'ബാക്കിയുണ്ട്';
+            document.getElementById('box-kuri300-val').innerText = user.kuri300Paid ? 'അടച്ചു' : 'ഇല്ല';
+            document.getElementById('box-kuri1000-val').innerText = user.kuri1000Paid ? 'അടച്ചു' : 'ഇല്ല';
 
-            // സംഘത്തിന്റെ ടോട്ടൽ അക്കൗണ്ട്സ് കാൽക്കുലേറ്റ് ചെയ്യുക
-            let totalVariSum = 0;
-            let totalKuriSum = 0;
-            let totalInterestSum = 0;
+            // റിപ്പോർട്ട്സ് ടേബിൾ (സ്വന്തം വിവരങ്ങൾ മാത്രം)
+            let reportBody = document.getElementById('my-report-body');
+            reportBody.innerHTML = `
+                <tr><td>വരിസംഖ്യ (₹600)</td><td><strong>${user.variPaid ? 'അടച്ചു ✓' : 'അടച്ചിട്ടില്ല ✗'}</strong></td></tr>
+                <tr><td>₹300 കുറി</td><td><strong>${user.kuri300Paid ? 'അടച്ചു ✓' : 'അടച്ചിട്ടില്ല ✗'}</strong></td></tr>
+                <tr><td>₹1000 കുറി</td><td><strong>${user.kuri1000Paid ? 'അടച്ചു ✓' : 'അടച്ചിട്ടില്ല ✗'}</strong></td></tr>
+                <tr><td>ഹാജർ നില</td><td><strong>${user.attendance ? 'വന്നു ✓' : 'വന്നില്ല ✗'}</strong></td></tr>
+            `;
 
-            members.forEach(m => {
-                totalVariSum += Number(m.vari || 0);
-                totalKuriSum += Number(m.kuri || 0);
-                totalInterestSum += Number(m.interest || 0);
-            });
-
-            document.getElementById('sum-vari').innerText = '₹' + totalVariSum;
-            document.getElementById('sum-kuri300').innerText = '₹' + totalKuriSum;
-            document.getElementById('sum-kuri1000').innerText = '₹0';
-            document.getElementById('sum-interest').innerText = '₹' + totalInterestSum;
-            document.getElementById('sum-grand-total').innerText = '₹' + (totalVariSum + totalKuriSum + totalInterestSum);
-
-            if (user.role === 'superadmin' || user.role === 'admin') {
-                let saControls = document.getElementById('super-admin-controls');
-                if (user.role === 'superadmin') {
-                    saControls.classList.remove('hidden');
-                } else {
-                    saControls.classList.add('hidden');
-                }
-                document.getElementById('panel-title').innerText = (user.role === 'superadmin') ? 'സൂപ്പർ അഡ്മിൻ അക്കൗണ്ട്സ് പാനൽ' : 'അഡ്മിൻ ഫിനാൻസ് പാനൽ';
+            if (user.role === 'superadmin') {
+                document.getElementById('super-admin-controls').classList.remove('hidden');
+            } else {
+                document.getElementById('super-admin-controls').classList.add('hidden');
             }
-            renderAccountingSheets();
         }
 
         function switchTab(tab) {
@@ -392,7 +377,7 @@
             }
 
             let newRef = db.ref('members').push();
-            newRef.set({ memberId, name, phone, blood, address, vari: 0, kuri: 0, interest: 0, w1: true, w2: true, w3: true, w4: true, role });
+            newRef.set({ memberId, name, phone, blood, address, variPaid: false, kuri300Paid: false, kuri1000Paid: false, attendance: false, role });
 
             document.getElementById('new-member-id').value = '';
             document.getElementById('new-name').value = '';
@@ -403,95 +388,122 @@
             alert('അംഗത്തെ വിജയകരമായി ചേർത്തു!');
         }
 
-        function editMemberFinance(firebaseKey) {
-            let m = members.find(item => item.firebaseKey === firebaseKey);
-            if (!m) return;
+        // ബോക്സ് ക്ലിക്ക് ചെയ്യുമ്പോൾ ലിസ്റ്റ് തുറക്കൽ
+        function openBoxModal(boxType) {
+            // സുരക്ഷാ പരിശോധന: സാധാരണ മെമ്പർമാർക്ക് ഇത് തുറക്കാൻ അനുവാദമില്ല
+            if (!currentUser || (currentUser.role !== 'admin' && currentUser.role !== 'superadmin')) {
+                alert('ഈ രജിസ്റ്റർ പരിശോധിക്കാനും മാർക്ക് ചെയ്യാനും അഡ്മിൻ അനുമതി ആവശ്യമാണ്!');
+                return;
+            }
 
-            let vari = prompt(`${m.name}-ന്റെ വരിസംഖ്യ തുക നൽകുക (₹):`, m.vari || 0);
-            let kuri = prompt(`${m.name}-ന്റെ കുറി തുക നൽകുക (₹):`, m.kuri || 0);
-            let interest = prompt(`${m.name}-ന്റെ പലിശ തുക നൽകുക (₹):`, m.interest || 0);
-            let attendanceW4 = confirm(`${m.name} ഈ ആഴ്ച (ആഴ്ച 4) സംഘത്തിൽ വന്നിരുന്നോ?\nOK = വന്നു | Cancel = വന്നില്ല`);
+            currentActiveBox = boxType;
+            let title = '';
+            let desc = '';
+            let extBox = document.getElementById('modal-add-external');
 
-            let updates = {};
-            if (vari !== null) updates.vari = Number(vari);
-            if (kuri !== null) updates.kuri = Number(kuri);
-            if (interest !== null) updates.interest = Number(interest);
-            updates.w4 = attendanceW4;
+            if (boxType === 'vari') {
+                title = 'വരിസംഖ്യ രജിസ്റ്റർ ചാർട്ട്';
+                desc = 'ഈ ആഴ്ച വരിസംഖ്യ (₹600) അടച്ച അംഗങ്ങളെ ടിക്ക് ചെയ്യുക:';
+                extBox.classList.add('hidden');
+            } else if (boxType === 'kuri300') {
+                title = '₹300 കുറി രജിസ്റ്റർ ചാർട്ട്';
+                desc = '₹300 കുറി അടച്ച അംഗങ്ങളെ ടിക്ക് ചെയ്യുക (പുറത്തുനിന്നുള്ളവരെയും ചേർക്കാം):';
+                extBox.classList.remove('hidden');
+            } else if (boxType === 'kuri1000') {
+                title = '₹1000 കുറി രജിസ്റ്റർ ചാർട്ട്';
+                desc = '₹1000 കുറി അടച്ച അംഗങ്ങളെ ടിക്ക് ചെയ്യുക (പുറത്തുനിന്നുള്ളവരെയും ചേർക്കാം):';
+                extBox.classList.remove('hidden');
+            } else if (boxType === 'attendance') {
+                title = 'അറ്റൻഡൻസ് രജിസ്റ്റർ ചാർട്ട്';
+                desc = 'ഇന്നത്തെ യോഗത്തിൽ പങ്കെടുത്ത അംഗങ്ങളുടെ ഹാജർ ടിക്ക് ചെയ്യുക:';
+                extBox.classList.add('hidden');
+            }
 
-            db.ref('members/' + firebaseKey).update(updates, (error) => {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-desc').innerText = desc;
+
+            let tbody = document.getElementById('modal-table-body');
+            tbody.innerHTML = '';
+
+            members.forEach((m) => {
+                let isChecked = false;
+                if (boxType === 'vari') isChecked = m.variPaid;
+                else if (boxType === 'kuri300') isChecked = m.kuri300Paid;
+                else if (boxType === 'kuri1000') isChecked = m.kuri1000Paid;
+                else if (boxType === 'attendance') isChecked = m.attendance;
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td style="text-align: left;"><strong>${m.name}</strong><br><small style="color: #666;">(${m.memberId || 'പുറത്തുനിന്നുള്ളയാൾ'})</small></td>
+                        <td><input type="checkbox" class="checkbox-large modal-check" data-key="${m.firebaseKey}" ${isChecked ? 'checked' : ''}></td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('box-modal').classList.remove('hidden');
+        }
+
+        function closeBoxModal() {
+            document.getElementById('box-modal').classList.add('hidden');
+        }
+
+        // പുറത്തുനിന്നുള്ളവരെ കുറിയിലേക്ക് ചേർക്കാൻ
+        function addExternalPerson() {
+            let name = document.getElementById('ext-name').value.trim();
+            if (!name) {
+                alert('പേര് നൽകുക!');
+                return;
+            }
+
+            let newRef = db.ref('members').push();
+            let newPerson = {
+                memberId: 'EXT-KURI',
+                name: name + ' (പുറത്തുനിന്ന്)',
+                phone: '',
+                blood: '-',
+                address: '-',
+                variPaid: false,
+                kuri300Paid: (currentActiveBox === 'kuri300'),
+                kuri1000Paid: (currentActiveBox === 'kuri1000'),
+                attendance: false,
+                role: 'member'
+            };
+
+            newRef.set(newPerson, (error) => {
                 if (!error) {
-                    alert('അക്കൗണ്ട്സ് ലൈവ് ആയി അപ്ഡേറ്റ് ചെയ്തു!');
+                    alert('വ്യക്തിയെ കുറിയിലേക്ക് വിജയകരമായി ചേർത്തു!');
+                    document.getElementById('ext-name').value = '';
+                    closeBoxModal();
                 }
             });
         }
 
-        function deleteMember(firebaseKey) {
-            if (!currentUser || currentUser.role !== 'superadmin') {
-                alert('സൂപ്പർ അഡ്മിന് മാത്രമേ ഡിലീറ്റ് ചെയ്യാൻ പറ്റൂ!');
-                return;
-            }
+        // സബ്മിറ്റ് ബട്ടൺ അമർത്തുമ്പോൾ ഡാറ്റാബേസ് അപ്ഡേറ്റ് ആവുന്നു
+        function submitModalChanges() {
+            let checkboxes = document.querySelectorAll('.modal-check');
+            let updates = {};
 
-            if (confirm('ഈ അംഗത്തെ നീക്കം ചെയ്യണമെന്ന് ഉറപ്പാണോ?')) {
-                db.ref('members/' + firebaseKey).remove((error) => {
-                    if (!error) {
-                        alert('വിജയകരമായി ഡിലീറ്റ് ചെയ്തു!');
-                    }
-                });
-            }
-        }
+            checkboxes.forEach(chk => {
+                let key = chk.getAttribute('data-key');
+                let isChecked = chk.checked;
 
-        function renderAccountingSheets() {
-            let reportBody = document.getElementById('finance-sheet-body');
-            let adminAccountingBody = document.getElementById('admin-accounting-body');
-            
-            if (!reportBody || !adminAccountingBody) return;
+                if (currentActiveBox === 'vari') {
+                    updates[`members/${key}/variPaid`] = isChecked;
+                } else if (currentActiveBox === 'kuri300') {
+                    updates[`members/${key}/kuri300Paid`] = isChecked;
+                } else if (currentActiveBox === 'kuri1000') {
+                    updates[`members/${key}/kuri1000Paid`] = isChecked;
+                } else if (currentActiveBox === 'attendance') {
+                    updates[`members/${key}/attendance`] = isChecked;
+                }
+            });
 
-            reportBody.innerHTML = '';
-            adminAccountingBody.innerHTML = '';
-
-            let isAdminOrSuper = currentUser && (currentUser.role === 'admin' || currentUser.role === 'superadmin');
-            let isSuper = currentUser && currentUser.role === 'superadmin';
-
-            members.forEach((m) => {
-                let totalRowAmount = Number(m.vari || 0) + Number(m.kuri || 0) + Number(m.interest || 0);
-
-                // ബോക്സ് ടൈപ്പ് ഹാജർ സൂചകങ്ങൾ (4 ആഴ്ചകൾ)
-                let w1Box = `<div class="reg-box ${m.w1 ? 'yes' : 'no'}">${m.w1 ? '✓' : '✗'}</div>`;
-                let w2Box = `<div class="reg-box ${m.w2 ? 'yes' : 'no'}">${m.w2 ? '✓' : '✗'}</div>`;
-                let w3Box = `<div class="reg-box ${m.w3 ? 'yes' : 'no'}">${m.w3 ? '✓' : '✗'}</div>`;
-                let w4Box = `<div class="reg-box ${m.w4 ? 'yes' : 'no'}">${m.w4 ? '✓' : '✗'}</div>`;
-
-                let attendanceGrid = `<div class="register-grid">${w1Box}${w2Box}${w3Box}${w4Box}</div>`;
-
-                // മെമ്പർമാർക്കുള്ള റിപ്പോർട്ട്സ് ടേബിൾ
-                reportBody.innerHTML += `
-                    <tr>
-                        <td><strong>${m.name}</strong></td>
-                        <td>${w1Box}</td>
-                        <td>${w2Box}</td>
-                        <td>${w3Box}</td>
-                        <td>${w4Box}</td>
-                        <td><strong>₹${totalRowAmount}</strong></td>
-                    </tr>
-                `;
-
-                // അഡ്മിൻ അക്കൗണ്ട്സ് മാനേജ്മെന്റ് ടേബിൾ
-                if (isAdminOrSuper) {
-                    let actionButtons = `<button style="background:#0288d1; color:white; border:none; padding:5px 8px; border-radius:4px; cursor:pointer;" onclick="editMemberFinance('${m.firebaseKey}')">എഡിറ്റ്</button>`;
-                    if (isSuper) {
-                        actionButtons += ` <button style="background:red; color:white; border:none; padding:5px 8px; border-radius:4px; cursor:pointer;" onclick="deleteMember('${m.firebaseKey}')">ഡിലീറ്റ്</button>`;
-                    }
-
-                    adminAccountingBody.innerHTML += `
-                        <tr>
-                            <td><strong>${m.name}</strong><br><small style="color:#666;">(വരി: ₹${m.vari || 0} | കുറി: ₹${m.kuri || 0} | പലിശ: ₹${m.interest || 0})</small></td>
-                            <td>₹${m.vari || 0}</td>
-                            <td>₹${m.kuri || 0}</td>
-                            <td>₹${m.interest || 0}</td>
-                            <td>${attendanceGrid}</td>
-                            <td>${actionButtons}</td>
-                        </tr>
-                    `;
+            db.ref().update(updates, (error) => {
+                if (!error) {
+                    alert('വിവരങ്ങൾ വിജയകരമായി സബ്മിറ്റ് ചെയ്ത് സേവ് ചെയ്തു!');
+                    closeBoxModal();
+                } else {
+                    alert('സേവ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു.');
                 }
             });
         }
