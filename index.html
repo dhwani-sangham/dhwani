@@ -8,163 +8,249 @@
         * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { margin: 0; padding: 0; background-color: #f4f6f9; color: #333; }
         header { background: #6200ea; color: white; padding: 15px; text-align: center; }
-        .container { padding: 15px; max-width: 600px; margin: auto; }
+        .container { padding: 15px; max-width: 650px; margin: auto; }
         .card { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 15px; }
         h2, h3 { margin-top: 0; color: #6200ea; }
         input, select { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 4px; }
         button { background: #6200ea; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; width: 100%; font-size: 16px; }
         button:hover { background: #3700b3; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; font-size: 14px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; font-size: 13px; }
         th { background-color: #6200ea; color: white; }
-        .delete-btn { background: #d32f2f; color: white; border: none; padding: 5px 8px; border-radius: 3px; cursor: pointer; }
-        .delete-btn:hover { background: #9a0007; }
+        .action-btn { background: #0288d1; color: white; border: none; padding: 5px 8px; border-radius: 3px; cursor: pointer; margin: 2px; }
         .hidden { display: none; }
+        .badge { background: #ede7f6; color: #6200ea; padding: 3px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; }
+        .birthday-banner { background: #ffeb3b; color: #d32f2f; padding: 10px; border-radius: 5px; text-align: center; font-weight: bold; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
     <header>
         <h2>ധ്വനി പുരുഷ സ്വയം സഹായ സംഘം</h2>
-        <p style="margin: 0; font-size: 14px;">മെമ്പർ മാനേജ്മെന്റ് സിസ്റ്റം</p>
+        <p style="margin: 0; font-size: 14px;">ക്ലബ് മാനേജ്മെന്റ് സിസ്റ്റം</p>
     </header>
 
     <div class="container">
-        <!-- ലോഗിൻ / അഡ്മിൻ പാനൽ സെലക്ഷൻ -->
+        <!-- ലോഗിൻ സെക്ഷൻ -->
         <div id="login-section" class="card">
-            <h3>ലോഗിൻ / വിഭാഗം തിരഞ്ഞെടുക്കുക</h3>
-            <select id="user-role">
-                <option value="admin">അഡ്മിൻ (Admin)</option>
-                <option value="member">മെമ്പർ (Member)</option>
-            </select>
-            <button onclick="proceedApp()">തുടരുക</button>
+            <h3>ലോഗിൻ ചെയ്യുക</h3>
+            <label>രജിസ്റ്റർ ചെയ്ത ഫോൺ നമ്പർ നൽകുക:</label>
+            <input type="text" id="login-phone" placeholder="ഫോൺ നമ്പർ">
+            <button onclick="loginApp()">ലോഗിൻ ചെയ്യുക</button>
         </div>
 
-        <!-- അഡ്മിൻ ഡാഷ്‌ബോർഡ് (മെമ്പർമാരെ ചേർക്കാനും കാണാനുമുള്ള സ്ഥലം) -->
-        <div id="admin-dashboard" class="card hidden">
-            <h3>അഡ്മിൻ ഡാഷ്‌ബോർഡ്</h3>
-            <p>പുതിയ അംഗത്തെ ചേർക്കുക:</p>
-            <input type="text" id="member-name" placeholder="അംഗത്തിന്റെ പേര്">
-            <input type="text" id="member-phone" placeholder="ഫോൺ നമ്പർ">
-            <input type="text" id="member-amount" placeholder="സേവിങ്സ് തുക (₹)">
-            <button onclick="addMember()">മെമ്പറെ ആഡ് ചെയ്യുക</button>
-
-            <h3 style="margin-top: 20px;">അംഗങ്ങളുടെ പട്ടিকা</h3>
+        <!-- സൂപ്പർ അഡ്മിൻ ഡാഷ്‌ബോർഡ് -->
+        <div id="super-admin-dashboard" class="card hidden">
+            <h3>സൂപ്പർ അഡ്മിൻ പാനൽ</h3>
+            <p>അഡ്മിൻമാരെ നിയമിക്കാനും മാറ്റാനും ഉള്ള സെക്ഷൻ:</p>
             <table>
                 <thead>
                     <tr>
                         <th>പേര്</th>
                         <th>ഫോൺ</th>
-                        <th>തുക (₹)</th>
-                        <th>ആക്ഷൻ</th>
+                        <th>റോൾ</th>
+                        <th>മാറ്റം വരുത്തുക</th>
                     </tr>
                 </thead>
-                <tbody id="member-table-body">
-                    <!-- ഡാറ്റകൾ ഇവിടെ ഡയനാമിക് ആയിവരും -->
-                </tbody>
+                <tbody id="super-admin-table-body"></tbody>
             </table>
             <br>
-            <button style="background: #555;" onclick="logout()">ബാക്ക് / ലോഗൗട്ട്</button>
+            <button style="background: #555;" onclick="logout()">ലോഗൗട്ട്</button>
+        </div>
+
+        <!-- അഡ്മിൻ ഡാഷ്‌ബോർഡ് -->
+        <div id="admin-dashboard" class="card hidden">
+            <h3>അഡ്മിൻ പാനൽ</h3>
+            <div style="background: #f0f4c3; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+                <h4 style="margin: 0 0 10px 0; color: #827717;">പുതിയ അംഗത്തെ ചേർക്കുക</h4>
+                <input type="text" id="new-name" placeholder="അംഗത്തിന്റെ പേര്">
+                <input type="text" id="new-phone" placeholder="ഫോൺ നമ്പർ (ലോഗിൻ ചെയ്യാൻ)">
+                <input type="text" id="new-blood" placeholder="ബ്ലഡ് ഗ്രൂപ്പ് (ഉദാ: O+ve)">
+                <input type="date" id="new-dob">
+                <input type="text" id="new-address" placeholder="അഡ്രസ്">
+                <input type="text" id="new-amount" placeholder="അടച്ച തുക / പലിശ (₹)">
+                <select id="new-attendance">
+                    <option value="വന്നു">ഹാജർ: വന്നു</option>
+                    <option value="വന്നില്ല">ഹാജർ: വന്നില്ല</option>
+                </select>
+                <button onclick="addMember()">മെമ്പറെ ആഡ് ചെയ്യുക</button>
+            </div>
+
+            <h3>എല്ലാ അംഗങ്ങളുടെയും വിവരങ്ങൾ</h3>
+            <div style="overflow-x:auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>പേര്</th>
+                            <th>ഫോൺ</th>
+                            <th>ബ്ലഡ്</th>
+                            <th>DOB</th>
+                            <th>തുക/പലിശ</th>
+                            <th>ഹാജർ</th>
+                            <th>റോൾ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-table-body"></tbody>
+                </table>
+            </div>
+            <br>
+            <button style="background: #555;" onclick="logout()">ലോഗൗട്ട്</button>
         </div>
 
         <!-- മെമ്പർ ഡാഷ്‌ബോർഡ് -->
         <div id="member-dashboard" class="card hidden">
-            <h3>മെമ്പർ ഡാഷ്‌ബോർഡ്</h3>
-            <p>സംഘത്തിലെ അംഗങ്ങളുടെ വിവരങ്ങൾ താഴെ കാണാം:</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>പേര്</th>
-                        <th>ഫോൺ</th>
-                        <th>സേവിങ്സ് (₹)</th>
-                    </tr>
-                </thead>
-                <tbody id="member-view-table-body">
-                    <!-- ഡാറ്റകൾ ഇവിടെയും കാണിക്കും -->
-                </tbody>
-            </table>
-            <br>
-            <button style="background: #555;" onclick="logout()">ബാക്ക് / ലോഗൗട്ട്</button>
+            <div id="bday-alert" class="hidden"></div>
+            <h3>സ്വാഗതം, <span id="welcome-name"></span>!</h3>
+            <div style="background: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
+                <p><strong>പേര്:</strong> <span id="my-name"></span></p>
+                <p><strong>ഫോൺ നമ്പർ:</strong> <span id="my-phone"></span></p>
+                <p><strong>ബ്ലഡ് ഗ്രൂപ്പ്:</strong> <span id="my-blood"></span></p>
+                <p><strong>ജനന്മീയതി (DOB):</strong> <span id="my-dob"></span></p>
+                <p><strong>അഡ്രസ്:</strong> <span id="my-address"></span></p>
+                <p><strong>അടച്ച തുക / പലിശ:</strong> ₹<span id="my-amount"></span></p>
+                <p><strong>ഹാജർ നില:</strong> <span id="my-attendance"></span></p>
+            </div>
+            <button style="background: #555;" onclick="logout()">ലോഗൗട്ട്</button>
         </div>
     </div>
 
     <script>
-        // ലോക്കൽ സ്റ്റോറേജിൽ നിന്ന് ഡാറ്റ എടുക്കുക അല്ലെങ്കിൽ ഒഴിഞ്ഞ ലിസ്റ്റ് നൽകുക
+        // പ്രാരംഭ ഡാറ്റ (ആദ്യം സൂപ്പർ അഡ്മിൻ, അഡ്മിൻ, മെമ്പർമാർ)
         let members = JSON.parse(localStorage.getItem('dhwani_members')) || [
-            { name: 'സുരേഷ്', phone: '9876543210', amount: '1000' },
-            { name: 'വിനോദ്', phone: '9123456780', amount: '1500' }
+            { name: 'രാജ് (സൂപ്പർ അഡ്മിൻ)', phone: '9999999999', blood: 'O+ve', dob: '1990-01-01', address: 'ധ്വനി നഗർ, കാസർഗോഡ്', amount: '5000', attendance: 'വന്നു', role: 'superadmin' },
+            { name: 'വിനോദ് (അഡ്മിൻ)', phone: '9123456780', blood: 'B+ve', dob: '1992-05-15', address: 'പനയാൽ, കാസർഗോഡ്', amount: '1500', attendance: 'വന്നു', role: 'admin' },
+            { name: 'സുരേഷ് (മെമ്പർ)', phone: '9876543210', blood: 'A+ve', dob: '1995-09-29', address: 'ബേക്കൽ, കാസർഗോഡ്', amount: '1000', attendance: 'വന്നു', role: 'member' }
         ];
 
-        function proceedApp() {
-            let role = document.getElementById('user-role').value;
+        function loginApp() {
+            let phone = document.getElementById('login-phone').value.trim();
+            let user = members.find(m => m.phone === phone);
+
+            if (!user) {
+                alert('ഈ ഫോൺ നമ്പറിൽ അംഗങ്ങളെ കണ്ടെത്താനായില്ല!');
+                return;
+            }
+
             document.getElementById('login-section').classList.add('hidden');
-            
-            if (role === 'admin') {
+            document.getElementById('login-phone').value = '';
+
+            if (user.role === 'superadmin') {
+                document.getElementById('super-admin-dashboard').classList.remove('hidden');
+                renderSuperAdminTable();
+            } else if (user.role === 'admin') {
                 document.getElementById('admin-dashboard').classList.remove('hidden');
                 renderAdminTable();
             } else {
                 document.getElementById('member-dashboard').classList.remove('hidden');
-                renderMemberTable();
+                document.getElementById('welcome-name').innerText = user.name;
+                document.getElementById('my-name').innerText = user.name;
+                document.getElementById('my-phone').innerText = user.phone;
+                document.getElementById('my-blood').innerText = user.blood || '-';
+                document.getElementById('my-dob').innerText = user.dob || '-';
+                document.getElementById('my-address').innerText = user.address || '-';
+                document.getElementById('my-amount').innerText = user.amount || '0';
+                document.getElementById('my-attendance').innerText = user.attendance || '-';
+
+                // ജന്മദിന പരിശോധന (ഇന്നത്തെ ദിവസവും മാസവും ഒത്തുവന്നാൽ ആശംസ കാണിക്കും)
+                checkBirthday(user.dob);
+            }
+        }
+
+        function checkBirthday(dob) {
+            if (!dob) return;
+            let today = new Date();
+            let bday = new Date(dob);
+            let bdayAlert = document.getElementById('bday-alert');
+            
+            if (today.getDate() === bday.getDate() && today.getMonth() === bday.getMonth()) {
+                bdayAlert.innerHTML = `🎉 ജന്മദിനാശംസകൾ ${document.getElementById('welcome-name').innerText}! ആശംസകൾ നേരുന്നു! 🎂`;
+                bdayAlert.classList.remove('hidden');
+            } else {
+                bdayAlert.classList.add('hidden');
             }
         }
 
         function addMember() {
-            let name = document.getElementById('member-name').value;
-            let phone = document.getElementById('member-phone').value;
-            let amount = document.getElementById('member-amount').value;
+            let name = document.getElementById('new-name').value.trim();
+            let phone = document.getElementById('new-phone').value.trim();
+            let blood = document.getElementById('new-blood').value.trim();
+            let dob = document.getElementById('new-dob').value;
+            let address = document.getElementById('new-address').value.trim();
+            let amount = document.getElementById('new-amount').value.trim();
+            let attendance = document.getElementById('new-attendance').value;
 
             if (name === '' || phone === '') {
-                alert('ദയവായി പേരും ഫോൺ നമ്പറും നൽകുക!');
+                alert('അംഗത്തിന്റെ പേരും ഫോൺ നമ്പറും നിർബന്ധമാണ്!');
                 return;
             }
 
-            members.push({ name, phone, amount: amount || '0' });
+            members.push({ name, phone, blood, dob, address, amount: amount || '0', attendance, role: 'member' });
             localStorage.setItem('dhwani_members', JSON.stringify(members));
 
-            document.getElementById('member-name').value = '';
-            document.getElementById('member-phone').value = '';
-            document.getElementById('member-amount').value = '';
+            document.getElementById('new-name').value = '';
+            document.getElementById('new-phone').value = '';
+            document.getElementById('new-blood').value = '';
+            document.getElementById('new-dob').value = '';
+            document.getElementById('new-address').value = '';
+            document.getElementById('new-amount').value = '';
 
             renderAdminTable();
-            alert('അംഗത്തെ വിജയകരമായി ചേർത്തു!');
+            alert('പുതിയ അംഗത്തെ വിജയകരമായി ചേർത്തു!');
         }
 
-        function deleteMember(index) {
-            members.splice(index, 1);
+        function changeRole(index, newRole) {
+            members[index].role = newRole;
             localStorage.setItem('dhwani_members', JSON.stringify(members));
-            renderAdminTable();
+            renderSuperAdminTable();
+            alert('റോൾ വിജയകരമായി മാറ്റിയിരിക്കുന്നു!');
         }
 
-        function renderAdminTable() {
-            let tbody = document.getElementById('member-table-body');
+        function renderSuperAdminTable() {
+            let tbody = document.getElementById('super-admin-table-body');
             tbody.innerHTML = '';
             members.forEach((m, index) => {
+                let roleActions = '';
+                if (m.role !== 'superadmin') {
+                    if (m.role === 'admin') {
+                        roleActions = `<button class="action-btn" style="background:#e65100;" onclick="changeRole(${index}, 'member')">മെമ്പർ ആക്കുക</button>`;
+                    } else {
+                        roleActions = `<button class="action-btn" onclick="changeRole(${index}, 'admin')">അഡ്മിൻ ആക്കുക</button>`;
+                    }
+                } else {
+                    roleActions = `<span class="badge">Super Admin</span>`;
+                }
+
                 tbody.innerHTML += `
                     <tr>
                         <td>${m.name}</td>
                         <td>${m.phone}</td>
-                        <td>₹${m.amount}</td>
-                        <td><button class="delete-btn" onclick="deleteMember(${index})">ഡിലീറ്റ്</button></td>
+                        <td><span class="badge">${m.role}</span></td>
+                        <td>${roleActions}</td>
                     </tr>
                 `;
             });
         }
 
-        function renderMemberTable() {
-            let tbody = document.getElementById('member-view-table-body');
+        function renderAdminTable() {
+            let tbody = document.getElementById('admin-table-body');
             tbody.innerHTML = '';
             members.forEach(m => {
                 tbody.innerHTML += `
                     <tr>
                         <td>${m.name}</td>
                         <td>${m.phone}</td>
-                        <td>₹${m.amount}</td>
+                        <td>${m.blood || '-'}</td>
+                        <td>${m.dob || '-'}</td>
+                        <td>₹${m.amount || 0}</td>
+                        <td>${m.attendance || '-'}</td>
+                        <td><span class="badge">${m.role}</span></td>
                     </tr>
                 `;
             });
         }
 
         function logout() {
+            document.getElementById('super-admin-dashboard').classList.add('hidden');
             document.getElementById('admin-dashboard').classList.add('hidden');
             document.getElementById('member-dashboard').classList.add('hidden');
             document.getElementById('login-section').classList.remove('hidden');
