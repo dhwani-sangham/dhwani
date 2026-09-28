@@ -20,12 +20,12 @@
         .user-avatar { width: 45px; height: 45px; background: #ddd; border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; font-weight: bold; color: #333; }
 
         /* അലേർട്ട് കാർഡുകൾ */
-        .alert-card { background: linear-gradient(135deg, #3f51b5, #1a237e); color: white; margin: 15px; padding: 15px; border-radius: 15px; position: relative; }
+        .alert-card { background: linear-gradient(135deg, #3f51b5, #1a237e); color: white; margin: 15px; padding: 15px; border-radius: 15px; }
         .bday-card { background: linear-gradient(135deg, #2196f3, #00bcd4); color: white; margin: 15px; padding: 15px; border-radius: 15px; }
 
         /* ഡാഷ്‌ബോർഡ് ഗ്രേഡ് ബോക്സുകൾ */
         .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px; }
-        .grid-box { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #eee; }
+        .grid-box { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #eee; cursor: pointer; }
         .grid-box h4 { margin: 0 0 8px 0; font-size: 14px; color: #555; }
         .grid-box .amount { font-size: 18px; font-weight: bold; color: #000; margin: 5px 0; }
 
@@ -75,15 +75,14 @@
                 <div class="user-avatar" id="user-initial">ധ</div>
                 <div>
                     <h3 id="display-name" style="margin: 0; font-size: 16px;">സുരേഷ് കുമാർ</h3>
-                    <p id="display-role-id" style="margin: 0; font-size: 12px; opacity: 0.9;">അംഗം (Member) • ID: DHW-03</p>
+                    <p id="display-role-id" style="margin: 0; font-size: 12px; opacity: 0.9;">അംഗം (Member)</p>
                 </div>
             </div>
             <div style="font-size: 20px;">🔔</div>
         </div>
 
-        <!-- ടാബ് ഉള്ളടക്കങ്ങൾ -->
+        <!-- ടാബ് 1: ഹോം -->
         <div id="tab-home-content">
-            <!-- ആഴ്ചക്കുറി അലേർട്ട് -->
             <div class="alert-card">
                 <div style="font-size: 11px; background: #ff9800; color: white; display: inline-block; padding: 2px 8px; border-radius: 4px; font-weight: bold; margin-bottom: 5px;">🏆 കുറി ലേലം ഉറപ്പിച്ചു!</div>
                 <h4 style="margin: 5px 0; font-size: 15px;">ആഴ്ചക്കുറി (Week 38 ലേലം)</h4>
@@ -91,40 +90,28 @@
                 <p style="margin: 5px 0 0 0; font-weight: bold; color: #ffeb3b;">വിളിച്ച തുക: ₹24,500</p>
             </div>
 
-            <!-- ജന്മദിന അലേർട്ട് -->
             <div class="bday-card">
                 <p style="margin: 0; font-size: 14px; font-weight: bold;">🎂 ജന്മദിനാശംസകൾ! Happy Birthday!</p>
-                <p style="margin: 5px 0 0 0; font-size: 12px; opacity: 0.9;">ഇന്ന് നമ്മുടെ വിനോദ് കെ-യുടെ (DHW-02) പിറനാളാണ്. 🎉</p>
+                <p style="margin: 5px 0 0 0; font-size: 12px; opacity: 0.9;">ഇന്ന് നമ്മുടെ വിനോദ് കെ-യുടെ പിറനാളാണ്. 🎉</p>
             </div>
 
-            <!-- ഡാഷ്‌ബോർഡ് ബോക്സുകൾ -->
             <div class="grid-container">
-                <div class="grid-box">
+                <div class="grid-box" onclick="switchTab('reports')">
                     <h4>ആഴ്ച സമ്പാദ്യം</h4>
-                    <div class="amount">₹12,500</div>
-                    <small style="color: #6200ea; cursor: pointer;" onclick="switchTab('reports')">രജിസ്റ്റർ ബോക്സ് കാണുക →</small>
+                    <div class="amount" id="home-amount">₹12,500</div>
+                    <small style="color: #6200ea;">രജിസ്റ്റർ ബോക്സ് കാണുക →</small>
                 </div>
-                <div class="grid-box">
+                <div class="grid-box" onclick="switchTab('reports')">
                     <h4>ആഴ്ചക്കുറി</h4>
                     <div class="amount">₹600/ആഴ്ച</div>
-                    <small style="color: #6200ea; cursor: pointer;" onclick="switchTab('reports')">(2 കുറി) കാണുക →</small>
-                </div>
-                <div class="grid-box">
-                    <h4>മാസക്കുറി (2-ാം ഞായർ)</h4>
-                    <div class="amount">₹1,000</div>
-                    <small style="color: #6200ea; cursor: pointer;" onclick="switchTab('reports')">രജിസ്റ്റർ കാണുക →</small>
-                </div>
-                <div class="grid-box">
-                    <h4>അടയ്ക്കാനുള്ള തുക</h4>
-                    <div class="amount" style="color: #d32f2f;">₹2,450</div>
-                    <small style="color: #6200ea; cursor: pointer;" onclick="switchTab('reports')">വിവരങ്ങൾ →</small>
+                    <small style="color: #6200ea;">ഹാജർ വിവരങ്ങൾ →</small>
                 </div>
             </div>
         </div>
 
-        <!-- പ്രൊഫൈൽ ടാബ് (ഐഡി കാർഡ്) -->
+        <!-- ടാബ് 2: പ്രൊഫൈൽ / ഐഡി കാർഡ് -->
         <div id="tab-profile-content" class="card hidden">
-            <h3>മെമ്പർ ഐഡി കാർഡ്</h3>
+            <h3>മെമ്പർ ഐഡി പ്രൊഫൈൽ</h3>
             <p><strong>പേര്:</strong> <span id="profile-name"></span></p>
             <p><strong>ഫോൺ നമ്പർ:</strong> <span id="profile-phone"></span></p>
             <p><strong>ബ്ലഡ് ഗ്രൂപ്പ്:</strong> <span id="profile-blood"></span></p>
@@ -132,27 +119,33 @@
             <p><strong>വിലാസം:</strong> <span id="profile-address"></span></p>
         </div>
 
-        <!-- റിപ്പോർട്ട്സ് ടാബ് -->
+        <!-- ടാബ് 3: റിപ്പോർട്ട്സ് & അറ്റൻഡൻസ് രജിസ്റ്റർ -->
         <div id="tab-reports-content" class="card hidden">
             <h3>സമ്പൂർണ്ണ റിപ്പോർട്ടും അറ്റൻഡൻസും</h3>
-            <p><strong>മൊത്തം സേവിങ്സ്:</strong> ₹<span id="report-amount"></span></p>
-            <p><strong>ഹാജരായ ആഴ്ചകൾ:</strong> <span id="report-weeks"></span></p>
+            <p><strong>മൊത്തം അടച്ച തുക:</strong> ₹<span id="report-amount"></span></p>
+            <p><strong>ഹാജർ നില / ആഴ്ചകൾ:</strong> <span id="report-weeks" style="color: #6200ea; font-weight: bold;"></span></p>
         </div>
 
-        <!-- അഡ്മിൻ മാനേജ്മെന്റ് സെക്ഷൻ (അഡ്മിൻമാർക്ക് മാത്രം കാണാം) -->
-        <div id="admin-panel-content" class="card hidden" style="border: 2px dashed #6200ea;">
-            <h3>അഡ്മിൻ മാനേജ്മെന്റ് പാനൽ</h3>
-            <div style="background: #f3e5f5; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
-                <h4 style="margin: 0 0 8px 0; color: #6200ea;">പുതിയ അംഗത്തെ ചേർക്കുക</h4>
+        <!-- ടാബ് 4: സെറ്റിംഗ്സ് / അഡ്മിൻ പാനൽ -->
+        <div id="tab-settings-content" class="card hidden">
+            <h3>സെറ്റിംഗ്സ് & അഡ്മിൻ പാനൽ</h3>
+            <div id="admin-controls" class="hidden" style="background: #f3e5f5; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                <h4 style="color: #6200ea; margin-top:0;">പുതിയ അംഗത്തെ ചേർക്കുക</h4>
                 <input type="text" id="new-name" placeholder="പേര്">
-                <input type="text" id="new-phone" placeholder="ഫോൺ നമ്പർ">
+                <input type="text" id="new-phone" placeholder="ഫോൺ നമ്പർ (ലോഗിൻ)">
                 <input type="text" id="new-blood" placeholder="ബ്ലഡ് ഗ്രൂപ്പ്">
                 <input type="date" id="new-dob">
                 <input type="text" id="new-address" placeholder="അഡ്രസ്">
                 <input type="text" id="new-amount" placeholder="തുക (₹)">
+                <input type="text" id="new-weeks" placeholder="ഹാജരായ ആഴ്ചകൾ (ഉദാ: ആഴ്ച 1, 2)">
+                <select id="new-role">
+                    <option value="member">മെമ്പർ (Member)</option>
+                    <option value="admin">അഡ്മിൻ (Admin)</option>
+                </select>
                 <button class="action-btn" onclick="addMember()">മെമ്പറെ ആഡ് ചെയ്യുക</button>
             </div>
-            <h4>എല്ലാ അംഗങ്ങളുടെയും പട്ടിക</h4>
+
+            <h4>എല്ലാ അംഗങ്ങളുടെയും ലിസ്റ്റ് & അറ്റൻഡൻസ് രജിസ്റ്റർ</h4>
             <div style="overflow-x: auto;">
                 <table>
                     <thead>
@@ -160,12 +153,15 @@
                             <th>പേര്</th>
                             <th>ഫോൺ</th>
                             <th>തുക</th>
+                            <th>ആഴ്ചകൾ / ഹാജർ</th>
                             <th>ആക്ഷൻ</th>
                         </tr>
                     </thead>
                     <tbody id="admin-members-list"></tbody>
                 </table>
             </div>
+            <br>
+            <button class="action-btn" style="background: #555;" onclick="logout()">ലോഗൗട്ട് ചെയ്യുക</button>
         </div>
 
         <!-- ബോട്ടം നാവിഗേഷൻ ബാർ -->
@@ -189,7 +185,7 @@
     <script>
         let members = JSON.parse(localStorage.getItem('dhwani_members')) || [
             { name: 'സുരേഷ് കുമാർ', phone: '9876543210', blood: 'A+ve', dob: '1995-09-29', address: 'ബേക്കൽ, കാസർഗോഡ്', amount: '12500', weeks: 'ആഴ്ച 1, 2, 3', role: 'member' },
-            { name: 'വിനോദ് കെ', phone: '9123456780', blood: 'B+ve', dob: '1992-05-15', address: 'പനയാൽ, കാസർഗോഡ്', amount: '15000', weeks: 'എല്ലാ ആഴ്ചയും', role: 'admin' },
+            { name: 'വിനോദ് കെ', phone: '9123456780', blood: 'B+ve', dob: '1992-05-15', address: 'പനയാൽ, കാസർഗോഡ്', amount: '15000', weeks: 'ആഴ്ച 1, 2, 3, 4', role: 'admin' },
             { name: 'രാജ്', phone: '9999999999', blood: 'O+ve', dob: '1990-01-01', address: 'കാസർഗോഡ്', amount: '25000', weeks: 'എല്ലാ ആഴ്ചയും', role: 'superadmin' }
         ];
 
@@ -208,9 +204,9 @@
             document.getElementById('login-section').classList.add('hidden');
             document.getElementById('main-app').classList.remove('hidden');
 
-            // പ്രൊഫൈൽ ഡാറ്റ സെറ്റ് ചെയ്യുക
+            // ഡാറ്റ ഫിൽ ചെയ്യുക
             document.getElementById('display-name').innerText = user.name;
-            document.getElementById('display-role-id').innerText = `${user.role === 'admin' ? 'അഡ്മിൻ (Admin)' : user.role === 'superadmin' ? 'സൂപ്പർ അഡ്മിൻ' : 'അംഗം (Member)'} • ID: DHW-03`;
+            document.getElementById('display-role-id').innerText = `${user.role === 'admin' ? 'അഡ്മിൻ (Admin)' : user.role === 'superadmin' ? 'സൂപ്പർ അഡ്മിൻ' : 'അംഗം (Member)'}`;
             document.getElementById('user-initial').innerText = user.name.charAt(0);
 
             document.getElementById('profile-name').innerText = user.name;
@@ -221,18 +217,19 @@
 
             document.getElementById('report-amount').innerText = user.amount || '0';
             document.getElementById('report-weeks').innerText = user.weeks || 'ഇല്ല';
+            document.getElementById('home-amount').innerText = '₹' + (user.amount || '0');
 
-            // അഡ്മിൻ ആണെങ്കിൽ അഡ്മിൻ പാനൽ കാണിക്കുക
             if (user.role === 'admin' || user.role === 'superadmin') {
-                document.getElementById('admin-panel-content').classList.remove('hidden');
-                renderAdminTable();
+                document.getElementById('admin-controls').classList.remove('hidden');
             }
+            renderAdminTable();
         }
 
         function switchTab(tab) {
             document.getElementById('tab-home-content').classList.add('hidden');
             document.getElementById('tab-profile-content').classList.add('hidden');
             document.getElementById('tab-reports-content').classList.add('hidden');
+            document.getElementById('tab-settings-content').classList.add('hidden');
             
             document.getElementById('nav-home').classList.remove('active');
             document.getElementById('nav-profile').classList.remove('active');
@@ -249,49 +246,82 @@
                 document.getElementById('tab-reports-content').classList.remove('hidden');
                 document.getElementById('nav-reports').classList.add('active');
             } else if (tab === 'settings') {
-                alert('ലോഗൗട്ട് ചെയ്യാൻ ആപ്പ് റീസ്റ്റാർട്ട് ചെയ്യുക അല്ലെങ്കിൽ റിഫ്രഷ് ചെയ്യുക.');
+                document.getElementById('tab-settings-content').classList.remove('hidden');
                 document.getElementById('nav-settings').classList.add('active');
             }
         }
 
         function addMember() {
+            if (currentUser.role !== 'admin' && currentUser.role !== 'superadmin') {
+                alert('അഡ്മിൻമാർക്ക് മാത്രമേ പുതിയ അംഗങ്ങളെ ചേർക്കാൻ അനുവാദമുള്ളൂ!');
+                return;
+            }
+
             let name = document.getElementById('new-name').value.trim();
             let phone = document.getElementById('new-phone').value.trim();
             let blood = document.getElementById('new-blood').value.trim();
             let dob = document.getElementById('new-dob').value;
             let address = document.getElementById('new-address').value.trim();
             let amount = document.getElementById('new-amount').value.trim();
+            let weeks = document.getElementById('new-weeks').value.trim();
+            let role = document.getElementById('new-role').value;
 
             if (!name || !phone) {
                 alert('പേരും ഫോൺ നമ്പറും നൽകുക!');
                 return;
             }
 
-            members.push({ name, phone, blood, dob, address, amount: amount || '0', weeks: 'ആഴ്ച 1', role: 'member' });
+            members.push({ name, phone, blood, dob, address, amount: amount || '0', weeks: weeks || 'ആഴ്ച 1', role });
             localStorage.setItem('dhwani_members', JSON.stringify(members));
             renderAdminTable();
-            alert('മെമ്പറെ വിജയകരമായി ചേർത്തു!');
+            alert('അംഗത്തെ വിജയകരമായി ചേർത്തു!');
+        }
+
+        function updateMember(index) {
+            let m = members[index];
+            let newAmount = prompt('പുതിയ തുക നൽകുക:', m.amount);
+            let newWeeks = prompt('ഹാജരായ ആഴ്ചകൾ നൽകുക (ഉദാ: ആഴ്ച 1, 2):', m.weeks);
+
+            if (newAmount !== null) m.amount = newAmount;
+            if (newWeeks !== null) m.weeks = newWeeks;
+
+            localStorage.setItem('dhwani_members', JSON.stringify(members));
+            renderAdminTable();
+            alert('വിവരങ്ങൾ അപ്ഡേറ്റ് ചെയ്തു!');
+        }
+
+        function deleteMember(index) {
+            if (confirm('ഈ അംഗത്തെ നീക്കം ചെയ്യണമെന്ന് ഉറപ്പാണോ?')) {
+                members.splice(index, 1);
+                localStorage.setItem('dhwani_members', JSON.stringify(members));
+                renderAdminTable();
+            }
         }
 
         function renderAdminTable() {
             let tbody = document.getElementById('admin-members-list');
             tbody.innerHTML = '';
             members.forEach((m, idx) => {
+                let editBtn = (currentUser.role === 'admin' || currentUser.role === 'superadmin') ? `<button style="background:#0288d1; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="updateMember(${idx})">എഡിറ്റ്</button>` : '';
+                let delBtn = (currentUser.role === 'admin' || currentUser.role === 'superadmin') ? `<button style="background:red; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="deleteMember(${idx})">ഡിലീറ്റ്</button>` : '';
+
                 tbody.innerHTML += `
                     <tr>
-                        <td>${m.name}</td>
+                        <td><strong>${m.name}</strong><br><small>${m.blood || ''}</small></td>
                         <td>${m.phone}</td>
                         <td>₹${m.amount}</td>
-                        <td><button style="background:red; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="deleteMember(${idx})">ഡിലീറ്റ്</button></td>
+                        <td><small>${m.weeks || 'ഇല്ല'}</small></td>
+                        <td>${editBtn} ${delBtn}</td>
                     </tr>
                 `;
             });
         }
 
-        function deleteMember(idx) {
-            members.splice(idx, 1);
-            localStorage.setItem('dhwani_members', JSON.stringify(members));
-            renderAdminTable();
+        function logout() {
+            currentUser = null;
+            document.getElementById('main-app').classList.add('hidden');
+            document.getElementById('login-section').classList.remove('hidden');
+            document.getElementById('login-phone').value = '';
         }
     </script>
 </body>
