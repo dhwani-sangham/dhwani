@@ -26,8 +26,11 @@
         .dash-box h4 { margin: 0 0 5px 0; font-size: 13px; color: #555; }
         .dash-box .val { font-size: 16px; font-weight: bold; color: #000; }
 
-        .member-card-item { background: white; padding: 12px 15px; margin: 10px 15px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; cursor: pointer; border-left: 4px solid #ff4081; }
-        .member-card-item:hover { background: #f8f9fa; }
+        .member-card-item { background: white; padding: 12px 15px; margin: 10px 15px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; border-left: 4px solid #ff4081; }
+        
+        .btn-group { display: flex; gap: 5px; }
+        .mark-btn { background: #0288d1; color: white; border: none; padding: 6px 10px; border-radius: 5px; font-size: 12px; cursor: pointer; font-weight: bold; }
+        .del-btn { background: #d32f2f; color: white; border: none; padding: 6px 10px; border-radius: 5px; font-size: 12px; cursor: pointer; font-weight: bold; }
 
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); border-top: 1px solid #eee; z-index: 1000; }
         .nav-item { text-align: center; color: #666; font-size: 12px; cursor: pointer; background: none; border: none; }
@@ -168,8 +171,10 @@
                 <button class="action-btn" onclick="addMember()">മെമ്പറെ ആഡ് ചെയ്യുക</button>
             </div>
 
-            <h4 style="margin-top: 20px;">അംഗങ്ങളുടെ ലിസ്റ്റ് (വിശദാംശങ്ങൾ കാണാൻ ഓരോരുത്തരുടെയും മേൽ ക്ലിക്ക് ചെയ്യുക)</h4>
-            <div id="admin-member-list-container" style="max-height: 400px; overflow-y: auto; margin-top: 10px;"></div>
+            <h4 style="margin-top: 20px;">അംഗങ്ങളുടെ ലിസ്റ്റ് & മാർക്കിംഗ് പാനൽ</h4>
+            <p style="font-size: 12px; color: #666;">ഓരോ അംഗത്തിന്റെയും നേരെ കാണുന്ന 'മാർക്ക് ചെയ്യുക' ബട്ടൺ വഴി വരിസംഖ്യയും കുറിയും ഹാജറും എഡിറ്റ് ചെയ്യാം.</p>
+            
+            <div id="admin-member-list-container" style="max-height: 450px; overflow-y: auto; margin-top: 10px;"></div>
 
             <br>
             <button class="action-btn" style="background: #555;" onclick="logout()">ലോഗൗട്ട് ചെയ്യുക</button>
@@ -191,28 +196,6 @@
             </button>
         </div>
 
-    </div>
-
-    <!-- മെമ്പർ വിവരങ്ങൾ കാണാനുള്ള പോപ്പ്-അപ്പ് മോഡൽ -->
-    <div id="member-detail-modal" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 4000;">
-        <div class="card" style="width: 90%; max-width: 450px; max-height: 85vh; overflow-y: auto; margin: auto;">
-            <h3 id="modal-member-title" style="color: #6200ea; margin-top: 0;">മെമ്പർ വിവരങ്ങൾ</h3>
-            <p><strong>മെമ്പർ ഐഡി:</strong> <span id="modal-id"></span></p>
-            <p><strong>ഫോൺ നമ്പർ:</strong> <span id="modal-phone"></span></p>
-            <p><strong>പദവി:</strong> <span id="modal-role"></span></p>
-            <p><strong>ബ്ലഡ് ഗ്രൂപ്പ്:</strong> <span id="modal-blood"></span></p>
-            <p><strong>വിലാസം:</strong> <span id="modal-address"></span></p>
-            <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
-            <p><strong>വരിസംഖ്യ സ്റ്റാറ്റസ്:</strong> <span id="modal-vari" style="color: #00897b; font-weight: bold;"></span></p>
-            <p><strong>കുറി സ്റ്റാറ്റസ്:</strong> <span id="modal-kuri" style="color: #e65100; font-weight: bold;"></span></p>
-            <p><strong>ഹാജർ നില:</strong> <span id="modal-attendance"></span></p>
-            
-            <div style="display: flex; gap: 10px; margin-top: 20px;">
-                <button class="action-btn" id="modal-edit-btn" style="background: #0288d1;">എഡിറ്റ് ചെയ്യുക</button>
-                <button class="action-btn" id="modal-delete-btn" style="background: #d32f2f;">ഡിലീറ്റ് ചെയ്യുക</button>
-            </div>
-            <button class="action-btn" style="background: #666; margin-top: 10px;" onclick="closeMemberModal()">മടങ്ങിപ്പോവുക</button>
-        </div>
     </div>
 
     <script>
@@ -369,45 +352,6 @@
             alert('അംഗത്തെ വിജയകരമായി ചേർത്തു!');
         }
 
-        function openMemberDetail(firebaseKey) {
-            let m = members.find(item => item.firebaseKey === firebaseKey);
-            if (!m) return;
-
-            document.getElementById('modal-member-title').innerText = m.name;
-            document.getElementById('modal-id').innerText = m.memberId || '-';
-            document.getElementById('modal-phone').innerText = m.phone || '-';
-            document.getElementById('modal-role').innerText = m.role === 'superadmin' ? 'സൂപ്പർ അഡ്മിൻ' : m.role === 'admin' ? 'അഡ്മിൻ' : 'മെമ്പർ';
-            document.getElementById('modal-blood').innerText = m.blood || '-';
-            document.getElementById('modal-address').innerText = m.address || '-';
-            document.getElementById('modal-vari').innerText = m.vari || '-';
-            document.getElementById('modal-kuri').innerText = m.kuri || '-';
-            document.getElementById('modal-attendance').innerText = m.attendance || '-';
-
-            let editBtn = document.getElementById('modal-edit-btn');
-            let delBtn = document.getElementById('modal-delete-btn');
-
-            editBtn.onclick = function() {
-                closeMemberModal();
-                editSheetData(firebaseKey);
-            };
-
-            if (currentUser && currentUser.role === 'superadmin') {
-                delBtn.style.display = 'block';
-                delBtn.onclick = function() {
-                    closeMemberModal();
-                    deleteMember(firebaseKey);
-                };
-            } else {
-                delBtn.style.display = 'none';
-            }
-
-            document.getElementById('member-detail-modal').classList.remove('hidden');
-        }
-
-        function closeMemberModal() {
-            document.getElementById('member-detail-modal').classList.add('hidden');
-        }
-
         function editSheetData(firebaseKey) {
             if (!currentUser || (currentUser.role !== 'admin' && currentUser.role !== 'superadmin')) {
                 alert('ഈ വിവരങ്ങൾ മാറ്റാൻ അനുമതി വേണം!');
@@ -417,9 +361,9 @@
             let m = members.find(item => item.firebaseKey === firebaseKey);
             if (!m) return;
 
-            let vari = prompt(`${m.name}-ന്റെ വരിസംഖ്യ സ്റ്റാറ്റസ്:`, m.vari);
+            let vari = prompt(`${m.name}-ന്റെ വരിസംഖ്യ സ്റ്റാറ്റസ് (ഉദാ: വന്നു / വന്നില്ല):`, m.vari);
             let kuri = prompt(`${m.name}-ന്റെ കുറി സ്റ്റാറ്റസ്:`, m.kuri);
-            let attendance = prompt(`${m.name}-ന്റെ ഹാജർ:`, m.attendance);
+            let attendance = prompt(`${m.name}-ന്റെ ഹാജർ (വന്നു / വന്നില്ല):`, m.attendance);
             
             let newRole = m.role;
             if (currentUser.role === 'superadmin') {
@@ -435,7 +379,7 @@
 
             db.ref('members/' + firebaseKey).update(updates, (error) => {
                 if (!error) {
-                    alert('വിവരങ്ങൾ അപ്ഡേറ്റ് ചെയ്തു!');
+                    alert('വിവരങ്ങൾ ലൈവ് ആയി അപ്ഡേറ്റ് ചെയ്തു!');
                 }
             });
         }
@@ -465,6 +409,7 @@
             adminMemberList.innerHTML = '';
 
             let isAdminOrSuper = currentUser && (currentUser.role === 'admin' || currentUser.role === 'superadmin');
+            let isSuper = currentUser && currentUser.role === 'superadmin';
 
             members.forEach((m) => {
                 let attColor = (m.attendance && m.attendance.includes('ഇല്ല')) ? 'color: red; font-weight: bold;' : 'color: green;';
@@ -482,13 +427,22 @@
 
                 if (isAdminOrSuper) {
                     let roleBadge = m.role === 'superadmin' ? '👑 സൂപ്പർ അഡ്മിൻ' : m.role === 'admin' ? '⭐ അഡ്മിൻ' : 'അംഗം';
+                    
+                    let actionButtons = `<button class="mark-btn" onclick="editSheetData('${m.firebaseKey}')">മാർക്ക് ചെയ്യുക</button>`;
+                    if (isSuper) {
+                        actionButtons += `<button class="del-btn" onclick="deleteMember('${m.firebaseKey}')">ഡിലീറ്റ്</button>`;
+                    }
+
                     adminMemberList.innerHTML += `
-                        <div class="member-card-item" onclick="openMemberDetail('${m.firebaseKey}')">
+                        <div class="member-card-item">
                             <div>
                                 <strong>${m.memberId || ''} - ${m.name}</strong><br>
-                                <small style="color: #666;">ഫോൺ: ${m.phone || '-'} | പദവി: ${roleBadge}</small>
+                                <small style="color: #666;">ഫോൺ: ${m.phone || '-'} | പദവി: ${roleBadge}</small><br>
+                                <small style="color: #00897b;">വരി: ${m.vari || '-'} | കുറി: ${m.kuri || '-'} | ഹാജർ: <span style="${attColor}">${m.attendance || '-'}</span></small>
                             </div>
-                            <div style="color: #6200ea; font-size: 13px; font-weight: bold;">ഡീറ്റെയിൽസ് →</div>
+                            <div class="btn-group">
+                                ${actionButtons}
+                            </div>
                         </div>
                     `;
                 }
