@@ -36,7 +36,6 @@
         input, select { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; }
         button.action-btn { background: #6200ea; color: white; border: none; padding: 10px; border-radius: 6px; width: 100%; font-weight: bold; cursor: pointer; }
         
-        /* ഫിനാൻസ് ഷീറ്റ് ടേബിൾ ഡിസൈൻ */
         .sheet-table-wrapper { overflow-x: auto; margin-top: 10px; }
         .sheet-table { width: 100%; border-collapse: collapse; white-space: nowrap; }
         .sheet-table th, .sheet-table td { border: 1px solid #ccc; padding: 8px 10px; text-align: center; font-size: 13px; }
@@ -49,7 +48,6 @@
 </head>
 <body>
 
-    <!-- ലോഗിൻ പേജ് -->
     <div id="login-section" class="container" style="margin-top: 50px;">
         <div class="card">
             <h2>ധ്വനി പുരുഷ സ്വയം സഹായ സംഘം</h2>
@@ -59,7 +57,6 @@
         </div>
     </div>
 
-    <!-- മെയിൻ ആപ്പ് കണ്ടെയ്നർ -->
     <div id="main-app" class="container hidden">
         
         <div class="top-header">
@@ -117,7 +114,6 @@
             <p><strong>വിലാസം:</strong> <span id="profile-address"></span></p>
         </div>
 
-        <!-- ഫിനാൻസ് ഷീറ്റ് & അറ്റൻഡൻസ് റിപ്പോർട്ട്സ് ടാബ് -->
         <div id="tab-reports-content" class="card hidden">
             <h3>ധ്വനി ഫിനാൻസ് & അറ്റൻഡൻസ് ഷീറ്റ്</h3>
             <p style="font-size: 13px; color: #666;">ഓരോ ആഴ്ചയിലെയും വരവും ഹാജറും രേഖപ്പെടുത്തിയ ഷീറ്റ്:</p>
@@ -139,22 +135,25 @@
             </div>
         </div>
 
-        <!-- സെറ്റിംഗ്സ് & അഡ്മിൻ പാനൽ (ഫിനാൻസ് ഷീറ്റ് എഡിറ്റ് ചെയ്യാൻ) -->
         <div id="tab-settings-content" class="card hidden">
-            <h3>അഡ്മിൻ ഫിനാൻസ് മാനേജ്മെന്റ് പാനൽ</h3>
+            <h3 id="panel-title">മാനേജ്മെന്റ് പാനൽ</h3>
             
-            <div id="admin-controls" class="hidden" style="background: #f3e5f5; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                <h4 style="color: #6200ea; margin-top:0;">പുതിയ അംഗത്തെ ചേർക്കുക</h4>
+            <div id="super-admin-controls" class="hidden" style="background: #e8eaf6; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                <h4 style="color: #3f51b5; margin-top:0;">പുതിയ അംഗത്തെ / അഡ്മിനെ ചേർക്കുക (Super Admin Only)</h4>
                 <input type="text" id="new-name" placeholder="പേര്">
                 <input type="text" id="new-phone" placeholder="ഫോൺ നമ്പർ (ലോഗിൻ)">
                 <input type="text" id="new-blood" placeholder="ബ്ലഡ് ഗ്രൂപ്പ്">
                 <input type="date" id="new-dob">
                 <input type="text" id="new-address" placeholder="അഡ്രസ്">
-                <button class="action-btn" onclick="addMember()">മെമ്പറെ ആഡ് ചെയ്യുക</button>
+                <select id="new-role">
+                    <option value="member">മെമ്പർ (Member)</option>
+                    <option value="admin">അഡ്മിൻ (Admin)</option>
+                </select>
+                <button class="action-btn" onclick="addMember()">പുതിയ അംഗത്തെ ആഡ് ചെയ്യുക</button>
             </div>
 
-            <h4>ഫിനാൻസ് ഷീറ്റ് എഡിറ്റ് / അറ്റൻഡൻസ് മാർക്ക് ചെയ്യുക</h4>
-            <p style="font-size: 12px; color: #666;">ഓരോ അംഗത്തിന്റെയും ആഴ്ചകളിലെ സ്റ്റാറ്റസ് ഇവിടെ നേരിട്ട് മാറ്റാവുന്നതാണ് (Live ആയി സിങ്ക് ആകും).</p>
+            <h4>ഫിനാൻസ് ഷീറ്റ് & അറ്റൻഡൻസ് മാർക്കിംഗ് പാനൽ</h4>
+            <p style="font-size: 12px; color: #666;">അഡ്മിൻമാർക്കും സൂപ്പർ അഡ്മിൻമാർക്കും ഇവിടെ ഹാജറും തുകയും എഡിറ്റ് ചെയ്ത് മാർക്ക് ചെയ്യാവുന്നതാണ്.</p>
             <div class="sheet-table-wrapper">
                 <table class="sheet-table">
                     <thead>
@@ -165,7 +164,7 @@
                             <th>ആഴ്ച 3</th>
                             <th>ആഴ്ച 4</th>
                             <th>ആകെ (₹)</th>
-                            <th>ആക്ഷൻ</th>
+                            <th id="action-th">ആക്ഷൻ</th>
                         </tr>
                     </thead>
                     <tbody id="admin-finance-body"></tbody>
@@ -215,9 +214,9 @@
                 members = Object.values(data);
             } else {
                 members = [
-                    { name: 'സുരേഷ് കുമാർ', phone: '9876543210', blood: 'A+ve', dob: '1995-09-29', address: 'ബേക്കൽ', w1: 'വന്നു (₹600)', w2: 'വന്നു (₹600)', w3: 'വന്നില്ല', w4: '-', total: '12500', role: 'member' },
-                    { name: 'വിനോദ് കെ', phone: '9123456780', blood: 'B+ve', dob: '1992-05-15', address: 'പനയാൽ', w1: 'വന്നു (₹600)', w2: 'വന്നു (₹600)', w3: 'വന്നു (₹600)', w4: 'വന്നു (₹600)', total: '15000', role: 'admin' },
-                    { name: 'രാജ്', phone: '9999999999', blood: 'O+ve', dob: '1990-01-01', address: 'കാസർഗോഡ്', w1: 'വന്നു (₹600)', w2: 'വന്നു (₹600)', w3: 'വന്നു (₹600)', w4: 'വന്നു (₹600)', total: '25000', role: 'superadmin' }
+                    { name: 'രാജ് (സൂപ്പർ അഡ്മിൻ)', phone: '9999999999', blood: 'O+ve', dob: '1990-01-01', address: 'കാസർഗോഡ്', w1: 'വന്നു (₹600)', w2: 'വന്നു (₹600)', w3: 'വന്നു (₹600)', w4: 'വന്നു (₹600)', total: '25000', role: 'superadmin' },
+                    { name: 'വിനോദ് കെ (അഡ്മിൻ)', phone: '9123456780', blood: 'B+ve', dob: '1992-05-15', address: 'പനയാൽ', w1: 'വന്നു (₹600)', w2: 'വന്നു (₹600)', w3: 'വന്നു (₹600)', w4: 'വന്നു (₹600)', total: '15000', role: 'admin' },
+                    { name: 'സുരേഷ് കുമാർ (മെമ്പർ)', phone: '9876543210', blood: 'A+ve', dob: '1995-09-29', address: 'ബേക്കൽ', w1: 'വന്നു (₹600)', w2: 'വന്നു (₹600)', w3: 'വന്നില്ല', w4: '-', total: '12500', role: 'member' }
                 ];
                 db.ref('members').set(members);
             }
@@ -249,7 +248,12 @@
         function updateUIWithUserData() {
             let user = currentUser;
             document.getElementById('display-name').innerText = user.name;
-            document.getElementById('display-role-id').innerText = `${user.role === 'admin' ? 'അഡ്മിൻ (Admin)' : user.role === 'superadmin' ? 'സൂപ്പർ അഡ്മിൻ' : 'അംഗം (Member)'}`;
+            
+            let roleText = 'അംഗം (Member)';
+            if (user.role === 'superadmin') roleText = 'സൂപ്പർ അഡ്മിൻ';
+            else if (user.role === 'admin') roleText = 'അഡ്മിൻ (Admin)';
+            
+            document.getElementById('display-role-id').innerText = roleText;
             document.getElementById('user-initial').innerText = user.name.charAt(0);
 
             document.getElementById('profile-name').innerText = user.name;
@@ -260,8 +264,12 @@
 
             document.getElementById('home-amount').innerText = '₹' + (user.total || '0');
 
-            if (user.role === 'admin' || user.role === 'superadmin') {
-                document.getElementById('admin-controls').classList.remove('hidden');
+            if (user.role === 'superadmin') {
+                document.getElementById('super-admin-controls').classList.remove('hidden');
+                document.getElementById('panel-title').innerText = 'സൂപ്പർ അഡ്മിൻ മാനേജ്മെന്റ് പാനൽ';
+            } else {
+                document.getElementById('super-admin-controls').classList.add('hidden');
+                document.getElementById('panel-title').innerText = 'അഡ്മിൻ ഫിനാൻസ് പാനൽ';
             }
         }
 
@@ -292,8 +300,8 @@
         }
 
         function addMember() {
-            if (currentUser.role !== 'admin' && currentUser.role !== 'superadmin') {
-                alert('അഡ്മിൻമാർക്ക് മാത്രമേ പുതിയ അംഗങ്ങളെ ചേർക്കാൻ അനുവാദമുള്ളൂ!');
+            if (currentUser.role !== 'superadmin') {
+                alert('പുതിയ അംഗങ്ങളെയും അഡ്മിൻമാരെയും ചേർക്കാൻ സൂപ്പർ അഡ്മിന് മാത്രമേ അധികാരമുള്ളൂ!');
                 return;
             }
 
@@ -302,13 +310,14 @@
             let blood = document.getElementById('new-blood').value.trim();
             let dob = document.getElementById('new-dob').value;
             let address = document.getElementById('new-address').value.trim();
+            let role = document.getElementById('new-role').value;
 
             if (!name || !phone) {
                 alert('പേരും ഫോൺ നമ്പറും നൽകുക!');
                 return;
             }
 
-            members.push({ name, phone, blood, dob, address, w1: '-', w2: '-', w3: '-', w4: '-', total: '0', role: 'member' });
+            members.push({ name, phone, blood, dob, address, w1: '-', w2: '-', w3: '-', w4: '-', total: '0', role });
             db.ref('members').set(members);
 
             document.getElementById('new-name').value = '';
@@ -321,12 +330,17 @@
         }
 
         function editSheetData(index) {
+            if (!currentUser || (currentUser.role !== 'admin' && currentUser.role !== 'superadmin')) {
+                alert('ഈ വിവരങ്ങൾ മാറ്റാൻ അഡ്മിൻ അനുമതി വേണം!');
+                return;
+            }
+
             let m = members[index];
-            let w1 = prompt('ആഴ്ച 1 സ്റ്റാറ്റസ് (ഉദാ: വന്നു / വന്തില്ല):', m.w1);
-            let w2 = prompt('ആഴ്ച 2 സ്റ്റാറ്റസ്:', m.w2);
-            let w3 = prompt('ആഴ്ച 3 സ്റ്റാറ്റസ്:', m.w3);
-            let w4 = prompt('ആഴ്ച 4 സ്റ്റാറ്റസ്:', m.w4);
-            let total = prompt('ആകെ തുക (₹):', m.total);
+            let w1 = prompt(`${m.name}-ന്റെ ആഴ്ച 1 സ്റ്റാറ്റസ് (ഉദാ: വന്നു / വന്നില്ല):`, m.w1);
+            let w2 = prompt(`${m.name}-ന്റെ ആഴ്ച 2 സ്റ്റാറ്റസ്:`, m.w2);
+            let w3 = prompt(`${m.name}-ന്റെ ആഴ്ച 3 സ്റ്റാറ്റസ്:`, m.w3);
+            let w4 = prompt(`${m.name}-ന്റെ ആഴ്ച 4 സ്റ്റാറ്റസ്:`, m.w4);
+            let total = prompt(`${m.name}-ന്റെ ആകെ തുക (₹):`, m.total);
 
             if (w1 !== null) m.w1 = w1;
             if (w2 !== null) m.w2 = w2;
@@ -339,6 +353,11 @@
         }
 
         function deleteMember(index) {
+            if (currentUser.role !== 'superadmin') {
+                alert('അംഗങ്ങളെ ഡിലീറ്റ് ചെയ്യാൻ സൂപ്പർ അഡ്മിന് മാത്രമേ അധികാരമുള്ളൂ!');
+                return;
+            }
+
             if (confirm('ഈ അംഗത്തെ നീക്കം ചെയ്യണമെന്ന് ഉറപ്പാണോ?')) {
                 members.splice(index, 1);
                 db.ref('members').set(members);
@@ -352,8 +371,12 @@
             reportBody.innerHTML = '';
             adminBody.innerHTML = '';
 
+            let isAdminOrSuper = currentUser && (currentUser.role === 'admin' || currentUser.role === 'superadmin');
+            let isSuper = currentUser && currentUser.role === 'superadmin';
+
+            document.getElementById('action-th').style.display = isAdminOrSuper ? '' : 'none';
+
             members.forEach((m, idx) => {
-                // മെമ്പർമാർ കാണുന്ന ഷീറ്റ്
                 reportBody.innerHTML += `
                     <tr>
                         <td><strong>${m.name}</strong></td>
@@ -365,24 +388,22 @@
                     </tr>
                 `;
 
-                // അഡ്മിൻ എഡിറ്റ് ചെയ്യുന്ന ഷീറ്റ്
-                let adminBtns = '';
-                if (currentUser && (currentUser.role === 'admin' || currentUser.role === 'superadmin')) {
-                    adminBtns = `
-                        <button style="background:#0288d1; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; margin-right:2px;" onclick="editSheetData(${idx})">എഡിറ്റ്</button>
-                        <button style="background:red; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="deleteMember(${idx})">ഡിലീറ്റ്</button>
-                    `;
+                let actionBtns = '';
+                if (isAdminOrSuper) {
+                    let editBtn = `<button style="background:#0288d1; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; margin-right:2px;" onclick="editSheetData(${idx})">മാർക്ക് ചെയ്യുക</button>`;
+                    let delBtn = isSuper ? `<button style="background:red; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="deleteMember(${idx})">ഡിലീറ്റ്</button>` : '';
+                    actionBtns = `<td>${editBtn} ${delBtn}</td>`;
                 }
 
                 adminBody.innerHTML += `
                     <tr>
-                        <td><strong>${m.name}</strong></td>
+                        <td><strong>${m.name}</strong><br><small style="color:#666;">(${m.role === 'superadmin' ? 'Super Admin' : m.role === 'admin' ? 'Admin' : 'Member'})</small></td>
                         <td>${m.w1 || '-'}</td>
                         <td>${m.w2 || '-'}</td>
                         <td>${m.w3 || '-'}</td>
                         <td>${m.w4 || '-'}</td>
                         <td><strong>₹${m.total || '0'}</strong></td>
-                        <td>${adminBtns}</td>
+                        ${isAdminOrSuper ? actionBtns : ''}
                     </tr>
                 `;
             });
