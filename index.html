@@ -48,15 +48,17 @@
 </head>
 <body>
 
+    <!-- ലോഗിൻ പേജ് -->
     <div id="login-section" class="container" style="margin-top: 50px;">
         <div class="card">
             <h2>ധ്വനി പുരുഷ സ്വയം സഹായ സംഘം</h2>
             <p>ലോഗിൻ ചെയ്യാൻ നിങ്ങളുടെ ഫോൺ നമ്പർ നൽകുക:</p>
-            <input type="text" id="login-phone" placeholder="ഫോൺ നമ്പർ (ഉദാ: 9876543210)">
+            <input type="text" id="login-phone" placeholder="ഫോൺ നമ്പർ (ഉദാ: 9999999999)">
             <button class="action-btn" onclick="loginApp()">ലോഗിൻ ചെയ്യുക</button>
         </div>
     </div>
 
+    <!-- മെയിൻ ആപ്പ് കണ്ടെയ്നർ -->
     <div id="main-app" class="container hidden">
         
         <div class="top-header">
@@ -114,9 +116,10 @@
             <p><strong>വിലാസം:</strong> <span id="profile-address"></span></p>
         </div>
 
+        <!-- ഫിനാൻസ് ഷീറ്റ് റിപ്പോർട്ട്സ് ടാബ് -->
         <div id="tab-reports-content" class="card hidden">
             <h3>ധ്വനി ഫിനാൻസ് & അറ്റൻഡൻസ് ഷീറ്റ്</h3>
-            <p style="font-size: 13px; color: #666;">ഓരോ ആഴ്ചയിലെയും വരവും ഹാജറും രേഖപ്പെടുത്തിയ ഷീറ്റ്:</p>
+            <p style="font-size: 13px; color: #666;">സംഘത്തിലെ മുഴുവൻ അംഗങ്ങളുടെയും വരവും ഹാജറും:</p>
             
             <div class="sheet-table-wrapper">
                 <table class="sheet-table">
@@ -135,13 +138,15 @@
             </div>
         </div>
 
+        <!-- സെറ്റിംഗ്സ് / അഡ്മിൻ പാനൽ -->
         <div id="tab-settings-content" class="card hidden">
             <h3 id="panel-title">മാനേജ്മെന്റ് പാനൽ</h3>
             
+            <!-- സൂപ്പർ അഡ്മിൻ മാത്രം കാണുന്ന പുതിയ അംഗത്തെ ചേർക്കാനുള്ള ബോക്സ് -->
             <div id="super-admin-controls" class="hidden" style="background: #e8eaf6; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
                 <h4 style="color: #3f51b5; margin-top:0;">പുതിയ അംഗത്തെ / അഡ്മിനെ ചേർക്കുക (Super Admin Only)</h4>
                 <input type="text" id="new-name" placeholder="പേര്">
-                <input type="text" id="new-phone" placeholder="ഫോൺ നമ്പർ (ലോഗിൻ)">
+                <input type="text" id="new-phone" placeholder="ഫോൺ നമ്പർ (ലോഗിൻ നമ്പർ)">
                 <input type="text" id="new-blood" placeholder="ബ്ലഡ് ഗ്രൂപ്പ്">
                 <input type="date" id="new-dob">
                 <input type="text" id="new-address" placeholder="അഡ്രസ്">
@@ -152,8 +157,8 @@
                 <button class="action-btn" onclick="addMember()">പുതിയ അംഗത്തെ ആഡ് ചെയ്യുക</button>
             </div>
 
-            <h4>ഫിനാൻസ് ഷീറ്റ് & അറ്റൻഡൻസ് മാർക്കിംഗ് പാനൽ</h4>
-            <p style="font-size: 12px; color: #666;">അഡ്മിൻമാർക്കും സൂപ്പർ അഡ്മിൻമാർക്കും ഇവിടെ ഹാജറും തുകയും എഡിറ്റ് ചെയ്ത് മാർക്ക് ചെയ്യാവുന്നതാണ്.</p>
+            <h4>ഫിനാൻസ് ഷീറ്റ് & ഹാജർ മാർക്ക് ചെയ്യേണ്ട പട്ടിക</h4>
+            <p style="font-size: 12px; color: #666;">അഡ്മിൻമാർക്കും സൂപ്പർ അഡ്മിൻമാർക്കും ഇവിടെ വിവരങ്ങൾ എഡിറ്റ് ചെയ്യാം.</p>
             <div class="sheet-table-wrapper">
                 <table class="sheet-table">
                     <thead>
@@ -235,7 +240,7 @@
             let user = members.find(m => m.phone === phone);
 
             if (!user) {
-                alert('ഫോൺ നമ്പർ കണ്ടെത്താനായില്ല! രജിസ്റ്റർ ചെയ്ത നമ്പർ നൽകുക.');
+                alert('ഫോൺ നമ്പർ കണ്ടെത്താനായില്ല! സൂപ്പർ അഡ്മിൻ നൽകിയ നമ്പർ ഉപയോഗിക്കുക.');
                 return;
             }
 
